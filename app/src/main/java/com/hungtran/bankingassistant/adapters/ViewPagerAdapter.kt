@@ -3,10 +3,10 @@ package com.hungtran.bankingassistant.adapters
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.util.Log.println
+import com.hungtran.bankingassistant.ui.coin.CoinFragment
 import com.hungtran.bankingassistant.ui.map.MapFragment
 import com.hungtran.bankingassistant.ui.news.NewsFragment
-import com.hungtran.bankingassistant.ui.rate.RateFragment
+import com.hungtran.bankingassistant.ui.maket.MaketFragment
 import com.hungtran.bankingassistant.ui.setting.SettingFragment
 
 /**
@@ -24,14 +24,15 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         var fragment = Fragment()
         when (p0) {
             0 -> fragment = NewsFragment()
-            1 -> fragment = RateFragment()
+            1 -> fragment = MaketFragment()
             2 -> fragment = MapFragment()
-            3 -> fragment = SettingFragment()
+            3 -> fragment = CoinFragment()
+            4 -> fragment = SettingFragment()
         }
         return fragment
     }
 
     override fun getCount(): Int {
-        return 4
+        return 5
     }
 }

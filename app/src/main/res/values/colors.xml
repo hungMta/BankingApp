@@ -7,4 +7,6 @@
     <color name="colorBlack">#000000</color>
     <color name="colorTabUnselect">#999999</color>
     <color name="colorTransparent">@android:color/transparent</color>
+    <color name="tab_backgroud_selected">#ffffff</color>
+    <color name="tab_backgroud_unselected">#008577</color>
 </resources>

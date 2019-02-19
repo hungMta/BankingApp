@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">BankingAssistant</string>
+    <string name="interest_rate">Lãi suất</string>
+    <string name="exchange_rate">Ngoại tệ</string>
+    <string name="coin">Coin</string>
+    <string name="gold">Vàng</string>
+    <string name="personal">Cá nhân</string>
+    <string name="Enterprise">Doanh nghiệp</string>
+
 </resources>

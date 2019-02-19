@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <info.hoang8f.android.segmented.SegmentedGroup xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rateSegmented"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        segmentedgroup:sc_border_width="0dp"
+        segmentedgroup:sc_corner_radius="0dp">
+
+
+        <RadioButton
+            android:id="@+id/btnRatePersonalRate"
+            style="@style/RadioButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/personal" />
+
+        <RadioButton
+            android:id="@+id/btnRateEnterpriseRate"
+            style="@style/RadioButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Enterprise" />
+    </info.hoang8f.android.segmented.SegmentedGroup>
+
+    <FrameLayout
+        android:id="@+id/rateFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

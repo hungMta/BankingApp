@@ -3,22 +3,22 @@
 
     <item
         android:id="@+id/navigation_news"
-        android:icon="@drawable/ic_comment_black_24dp"
+        android:icon="@drawable/ic_comment_white"
         android:title="" />
 
     <item
         android:id="@+id/navigation_rate"
-        android:icon="@drawable/ic_attach_money_black_24dp"
+        android:icon="@drawable/ic_attach_money_white"
         android:title="" />
 
     <item
         android:id="@+id/navigation_map"
-        android:icon="@drawable/ic_place_black_24dp"
+        android:icon="@drawable/ic_place_white"
         android:title="" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_person_black_24dp"
+        android:icon="@drawable/ic_person_white"
         android:title="" />
 
 </menu>
