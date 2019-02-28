@@ -5,48 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <info.hoang8f.android.segmented.SegmentedGroup xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/segmented"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        segmentedgroup:sc_border_width="2dp"
-        segmentedgroup:sc_corner_radius="10dp">
 
-        <RadioButton
-            android:id="@+id/btnInterestRate"
-            style="@style/RadioButton"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/interest_rate" />
-
-        <RadioButton
-            android:id="@+id/btnExchangeRate"
-            style="@style/RadioButton"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/exchange_rate" />
-
-        <RadioButton
-            android:id="@+id/btnGold"
-            style="@style/RadioButton"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/gold" />
-    </info.hoang8f.android.segmented.SegmentedGroup>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/rateViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/tabLayout" />
 
 </LinearLayout>
