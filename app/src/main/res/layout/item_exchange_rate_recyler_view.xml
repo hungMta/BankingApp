@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="21dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layoutItem"
+        android:layout_width="match_parent"
+        android:weightSum="4"
+        android:layout_height="20dp">
+
+        <TextView
+            android:id="@+id/txtCurrencyName"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/colorBlack"
+            android:gravity="center|left"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_height="match_parent"
+            android:text="@string/exchange_rate"
+            android:background="@drawable/border_left_right_white"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/colorBlack"
+            android:gravity="center|right"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_right_white"
+            android:text="@string/buy_cash"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/colorBlack"
+            android:gravity="center|right"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_height="match_parent"
+            android:text="@string/buy_card"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/colorBlack"
+            android:gravity="center|right"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_height="match_parent"
+            android:text="@string/sell"
+            android:background="@drawable/border_left_right_white"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLightGray"
+        />
+</LinearLayout>

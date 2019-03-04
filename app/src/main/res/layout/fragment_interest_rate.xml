@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
+        android:background="@color/colorWhite"
         android:weightSum="2"
         segmentedgroup:sc_border_width="0dp"
         segmentedgroup:sc_corner_radius="0dp">

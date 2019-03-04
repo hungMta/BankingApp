@@ -6,5 +6,8 @@
     <string name="gold">Vàng</string>
     <string name="personal">Cá nhân</string>
     <string name="Enterprise">Doanh nghiệp</string>
-
+    <string name="bank">Ngân hàng</string>
+    <string name="buy_cash">Mua TM</string>
+    <string name="buy_card">Mua CK</string>
+    <string name="sell">Bán</string>
 </resources>

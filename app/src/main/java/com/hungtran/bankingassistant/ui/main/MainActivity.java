@@ -35,6 +35,7 @@ public class MainActivity extends BaseActivity implements  TabLayout.OnTabSelect
     private void setupTabbar() {
         MainViewPagerAdapter viewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(viewPagerAdapter);
+        mViewPager.setOffscreenPageLimit(5);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setIcon(R.drawable.tab_news_selector).setText("Tin tức");
         mTabLayout.getTabAt(1).setIcon(R.drawable.tab_rate_selector).setText("Thị trường");

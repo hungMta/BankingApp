@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/personal" />
+        android:background="@drawable/bg_white_corner_radius"
+        android:layout_height="match_parent" />
 
 </android.support.constraint.ConstraintLayout>

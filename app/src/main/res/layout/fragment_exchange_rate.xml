@@ -1,9 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    >
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/bg_white_corner_radius"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="40dp"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bank"
+                android:layout_marginRight="5dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VietCom Bank"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_drop_down"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:weightSum="4"
+            android:layout_height="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:text="@string/exchange_rate"
+                android:background="@drawable/border_left_right_white"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_right_white"
+                android:text="@string/buy_cash"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:text="@string/buy_card"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:text="@string/sell"
+                android:background="@drawable/border_left_right_white"
+                />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/reyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            />
+
+    </LinearLayout>
 
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_centerInParent="true"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:visibility="gone"
+        />
 
-
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
