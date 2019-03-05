@@ -44,6 +44,7 @@ public class ExchangeRatePresenter implements ExchangeRateContract.Presenter {
             @Override
             public void onNext(ExchangeRateResponse exchangeRateResponse) {
                 Log.d(TAG, "onNext: " + exchangeRateResponse);
+                exchangeRateResponse.formatMoney();
                 mView.showExchangeRates(exchangeRateResponse.getExchangeRates());
                 mView.hideProgressBar();
             }

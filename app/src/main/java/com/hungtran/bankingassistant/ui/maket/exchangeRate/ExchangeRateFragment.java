@@ -46,13 +46,14 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
     TextView mTxtCurrentBankName;
 
 
-
+    private ExchangeRate currentExchangeRate;
     private ExchangeRateRecylerViewAdapter mViewAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private PopupWindow mBanksPopup;
 
     private static ExchangeRateFragment instance;
     private ExchangeRatePresenter mPresenter;
+    private List<ExchangeRate> exchangeRates;
 
     public static ExchangeRateFragment getInstance() {
         if (instance == null) {
@@ -72,7 +73,7 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mPresenter = new ExchangeRatePresenter(this);
-//        mPresenter.getExchangeRates();
+        mPresenter.getExchangeRates();
         setupRecyclerView();
         mLayoutChooseBank.setOnClickListener(this);
     }
@@ -80,6 +81,9 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
     @Override
     public void showExchangeRates(List<ExchangeRate> list) {
         mViewAdapter.updateAdapter(list.get(0).getCurrencies());
+        this.exchangeRates = list;
+        this.currentExchangeRate = list.get(0);
+        mTxtCurrentBankName.setText(currentExchangeRate.getName());
     }
 
     @Override
@@ -114,7 +118,7 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
 
     private PopupWindow showBankListPopup() {
         mBanksPopup = new PopupWindow(getContext());
-        BankPopupRecylerViewAdapter adapter = new BankPopupRecylerViewAdapter(new ArrayList<Bank>());
+        BankPopupRecylerViewAdapter adapter = new BankPopupRecylerViewAdapter(this.exchangeRates);
         adapter.setOnItemClick(this);
         RecyclerView recyclerView = new RecyclerView(getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -129,7 +133,10 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
     }
 
     @Override
-    public void itemBankPopupClick(Bank bank) {
+    public void itemBankPopupClick(ExchangeRate exchangeRate) {
+        this.currentExchangeRate = exchangeRate;
+        mTxtCurrentBankName.setText(currentExchangeRate.getName());
+        mViewAdapter.updateAdapter(exchangeRate.getCurrencies());
         Log.d(TAG, "itemBankPopupClick: ");
         mBanksPopup.dismiss();
     }

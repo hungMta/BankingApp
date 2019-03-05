@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.adapters.MainViewPagerAdapter;
+import com.hungtran.bankingassistant.util.DataHelper;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
 import butterknife.BindView;
@@ -30,6 +31,14 @@ public class MainActivity extends BaseActivity implements  TabLayout.OnTabSelect
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         setupTabbar();
+        String m1 = DataHelper.formatMoney(2657.59);
+        String m2 = DataHelper.formatMoney(8393);
+        String m3 = DataHelper.formatMoney(1234.5);
+        String m4 = DataHelper.formatMoney(888);
+        String m5 = DataHelper.formatMoney(23150);
+        String m6 = DataHelper.formatMoney(17326.08);
+        String m7 = DataHelper.formatMoney(324.91);
+        return;
     }
 
     private void setupTabbar() {
