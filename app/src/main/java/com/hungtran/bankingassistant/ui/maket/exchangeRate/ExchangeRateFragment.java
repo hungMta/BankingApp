@@ -1,15 +1,25 @@
 package com.hungtran.bankingassistant.ui.maket.exchangeRate;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
+import com.hungtran.bankingassistant.adapters.BankPopupRecylerViewAdapter;
 import com.hungtran.bankingassistant.adapters.ExchangeRateRecylerViewAdapter;
+import com.hungtran.bankingassistant.model.Bank;
 import com.hungtran.bankingassistant.model.Currency;
 import com.hungtran.bankingassistant.model.ExchangeRate;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
@@ -20,16 +30,26 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ExchangeRateFragment extends BaseFragment implements ExchangeRateContract.View{
+public class ExchangeRateFragment extends BaseFragment implements ExchangeRateContract.View, View.OnClickListener, BankPopupRecylerViewAdapter.OnItemClick {
 
+    private static final String TAG = "hungtd";
     @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
 
     @BindView(R.id.reyclerView)
     RecyclerView mRecyclerView;
 
+    @BindView(R.id.layoutChooseBank)
+    LinearLayout mLayoutChooseBank;
+
+    @BindView(R.id.txtCurrentBankName)
+    TextView mTxtCurrentBankName;
+
+
+
     private ExchangeRateRecylerViewAdapter mViewAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private PopupWindow mBanksPopup;
 
     private static ExchangeRateFragment instance;
     private ExchangeRatePresenter mPresenter;
@@ -52,8 +72,9 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mPresenter = new ExchangeRatePresenter(this);
-        mPresenter.getExchangeRates();
+//        mPresenter.getExchangeRates();
         setupRecyclerView();
+        mLayoutChooseBank.setOnClickListener(this);
     }
 
     @Override
@@ -77,5 +98,39 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mViewAdapter);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.layoutChooseBank:
+                PopupWindow popUp = showBankListPopup();
+                popUp.showAsDropDown(v, 0, -10);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private PopupWindow showBankListPopup() {
+        mBanksPopup = new PopupWindow(getContext());
+        BankPopupRecylerViewAdapter adapter = new BankPopupRecylerViewAdapter(new ArrayList<Bank>());
+        adapter.setOnItemClick(this);
+        RecyclerView recyclerView = new RecyclerView(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+        mBanksPopup.setFocusable(true);
+        mBanksPopup.setWidth(600);
+        mBanksPopup.setHeight(800);
+        mBanksPopup.setContentView(recyclerView);
+        mBanksPopup.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_white_corner_five_radius));
+        return mBanksPopup;
+    }
+
+    @Override
+    public void itemBankPopupClick(Bank bank) {
+        Log.d(TAG, "itemBankPopupClick: ");
+        mBanksPopup.dismiss();
     }
 }
