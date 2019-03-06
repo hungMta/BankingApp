@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="41dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:gravity="center"
+        android:layout_height="40dp">
+
+        <!--<ImageView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="2"-->
+            <!--android:layout_height="match_parent" />-->
+
+        <TextView
+            android:id="@+id/txtBankName"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:layout_weight="2"
+            android:text="VCB"
+            android:layout_height="match_parent"
+            />
+
+        <TextView
+            android:id="@+id/txtFirstRate"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:layout_weight="2"
+            android:text="5.5"
+            android:layout_height="match_parent"
+            />
+
+        <TextView
+            android:id="@+id/txtSecondRate"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:layout_height="match_parent"
+            android:text="6.5"
+            />
+        <TextView
+            android:id="@+id/txtThreeRate"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:text="6.5"
+            android:layout_height="match_parent"
+            />
+        <TextView
+            android:id="@+id/txtFourRate"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:text="6.5"
+            />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/colorLight2Gray"
+        android:layout_height="1dp"/>
+
+</LinearLayout>

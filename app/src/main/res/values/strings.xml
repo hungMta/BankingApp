@@ -10,4 +10,5 @@
     <string name="buy_cash">Mua TM</string>
     <string name="buy_card">Mua CK</string>
     <string name="sell">Bán</string>
+    <string name="deposit">Tiền gửi</string>
 </resources>

@@ -5,7 +5,7 @@
     android:background="@color/colorPrimary"
     >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -19,6 +19,7 @@
             android:orientation="horizontal"
             android:layout_gravity="center"
             android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
             >
 
@@ -44,7 +45,9 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_below="@+id/layoutChooseBank"
             android:background="@color/colorPrimary"
+            android:id="@+id/layoutHeaderRecycler"
             android:layout_width="match_parent"
             android:weightSum="4"
             android:layout_height="20dp">
@@ -92,10 +95,30 @@
             android:id="@+id/reyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
+            android:layout_above="@id/line"
+            android:layout_below="@+id/layoutHeaderRecycler"
             />
 
-    </LinearLayout>
+
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_above="@+id/txtTimeUpdate"
+            android:background="@color/colorPrimary"
+            android:layout_height="1dp"/>
+
+        <TextView
+            android:id="@+id/txtTimeUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="11dp"
+            android:layout_alignParentBottom="true"
+            android:textSize="8sp"
+            android:gravity="center"
+            android:text="Dữ liệu được cập nhật lúc 19:30:34 19/03/2019"
+            />
+
+    </RelativeLayout>
 
 
     <ProgressBar
