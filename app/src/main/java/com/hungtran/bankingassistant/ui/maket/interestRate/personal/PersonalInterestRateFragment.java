@@ -13,6 +13,7 @@ import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.adapters.BankPopupRecylerViewAdapter;
 import com.hungtran.bankingassistant.adapters.InterestRateRecyclerViewAdapter;
 import com.hungtran.bankingassistant.model.Bank;
+import com.hungtran.bankingassistant.model.ExchangeRate;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -80,34 +81,39 @@ public class PersonalInterestRateFragment extends BaseFragment implements View.O
 
     @Override
     public void onClick(View v) {
+        PopupWindow popupWindow = getBankListPopup();
         switch (v.getId()) {
             case R.id.layoutFirstColumn:
                 break;
             case R.id.layoutSecondColumn:
+                popupWindow.showAsDropDown(v, 0 , -10);
                 break;
             case R.id.layoutThirdColumn:
+                popupWindow.showAsDropDown(v, 0 , -10);
                 break;
             case R.id.layoutFourthColumn:
+                popupWindow.showAsDropDown(v, 0 , -10);
                 break;
             case R.id.layoutFifthColumn:
+                popupWindow.showAsDropDown(v, 0 , -10);
                 break;
         }
     }
 
-
-    private PopupWindow showBankListPopup() {
-        mPeriod = new PopupWindow(getContext());
-        BankPopupRecylerViewAdapter adapter = new BankPopupRecylerViewAdapter(new ArrayList<Bank>());
+    private PopupWindow getBankListPopup() {
+        PopupWindow popupWindow = new PopupWindow(getContext());
+        BankPopupRecylerViewAdapter adapter = new BankPopupRecylerViewAdapter(new ArrayList<ExchangeRate>());
 //        adapter.setOnItemClick(this);
         RecyclerView recyclerView = new RecyclerView(getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
-        mPeriod.setFocusable(true);
-        mPeriod.setWidth(600);
-        mPeriod.setHeight(800);
-        mPeriod.setContentView(recyclerView);
-        mPeriod.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_white_corner_five_radius));
-        return mPeriod;
+        popupWindow.setFocusable(true);
+        popupWindow.setWidth(600);
+        popupWindow.setHeight(800);
+        popupWindow.setContentView(recyclerView);
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_white_corner_five_radius));
+        return popupWindow;
     }
+
 }
