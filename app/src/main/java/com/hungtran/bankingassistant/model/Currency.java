@@ -1,6 +1,7 @@
 package com.hungtran.bankingassistant.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.hungtran.bankingassistant.util.DataHelper;
 
 public class Currency {
 
@@ -28,6 +29,10 @@ public class Currency {
     @SerializedName("image")
     private String imageURL;
 
+    private String buyCashString;
+    private String buyCardString;
+    private String sellCashString;
+    private String sellCardString;
 
     public Currency() {
     }
@@ -105,5 +110,45 @@ public class Currency {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+
+    public String getBuyCashString() {
+        return buyCashString;
+    }
+
+    public void setBuyCashString(String buyCashString) {
+        this.buyCashString = buyCashString;
+    }
+
+    public String getBuyCardString() {
+        return buyCardString;
+    }
+
+    public void setBuyCardString(String buyCardString) {
+        this.buyCardString = buyCardString;
+    }
+
+    public String getSellCashString() {
+        return sellCashString;
+    }
+
+    public void setSellCashString(String sellCashString) {
+        this.sellCashString = sellCashString;
+    }
+
+    public String getSellCardString() {
+        return sellCardString;
+    }
+
+    public void setSellCardString(String sellCardString) {
+        this.sellCardString = sellCardString;
+    }
+
+    public void formatMoney(){
+        this.buyCardString = DataHelper.formatMoney(this.buyCard);
+        this.buyCashString = DataHelper.formatMoney(this.buyCash);
+        this.sellCashString = DataHelper.formatMoney(this.sellCash);
+        this.sellCardString = DataHelper.formatMoney(this.sellCard);
     }
 }

@@ -50,8 +50,13 @@ public class ExchangeRateRecylerViewAdapter extends RecyclerView.Adapter<Recycle
         } else {
             ((CurrencyItem) viewHolder).mLayout.setBackgroundColor(Color.WHITE);
         }
-        ((CurrencyItem) viewHolder).mCurrencyName.setText("number " + i);
+
+        ((CurrencyItem) viewHolder).mCurrencyName.setText(currencies.get(i).getCodeName());
+        ((CurrencyItem) viewHolder).mTxtBuyCash.setText(currencies.get(i).getBuyCashString());
+        ((CurrencyItem) viewHolder).mTxtBuyCard.setText(currencies.get(i).getBuyCardString());
+        ((CurrencyItem) viewHolder).mTxtSellCash.setText(currencies.get(i).getSellCashString());
     }
+
 
     @Override
     public int getItemCount() {
@@ -71,6 +76,15 @@ public class ExchangeRateRecylerViewAdapter extends RecyclerView.Adapter<Recycle
 
         @BindView(R.id.txtCurrencyName)
         TextView mCurrencyName;
+
+        @BindView(R.id.txtBuyCash)
+        TextView mTxtBuyCash;
+
+        @BindView(R.id.txtBuyCard)
+        TextView mTxtBuyCard;
+
+        @BindView(R.id.txtSellCash)
+        TextView mTxtSellCash;
 
         public CurrencyItem(@NonNull View itemView) {
             super(itemView);

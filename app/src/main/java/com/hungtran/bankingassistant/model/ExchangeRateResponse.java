@@ -19,4 +19,13 @@ public class ExchangeRateResponse extends BaseResponse {
     public void setExchangeRates(List<ExchangeRate> exchangeRates) {
         this.exchangeRates = exchangeRates;
     }
+
+
+    public void formatMoney(){
+        for (int i = 0; i < exchangeRates.size(); i ++) {
+            for (int j = 0; j < exchangeRates.get(i).getCurrencies().size(); j ++) {
+                exchangeRates.get(i).getCurrencies().get(j).formatMoney();
+            }
+        }
+    }
 }
