@@ -50,12 +50,12 @@ public class BankPopupRecylerViewAdapter extends RecyclerView.Adapter<RecyclerVi
                 }
             }
         });
-//        ((BankListItem) viewHolder).mBankName.setText(mBanks.get(i).getCodeName());
+        ((BankListItem) viewHolder).mBankName.setText(mBanks.get(i).getCodeName());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mBanks.size();
     }
 
     public class BankListItem extends RecyclerView.ViewHolder {

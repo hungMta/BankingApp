@@ -46,11 +46,11 @@ public class MainActivity extends BaseActivity implements  TabLayout.OnTabSelect
         mViewPager.setAdapter(viewPagerAdapter);
         mViewPager.setOffscreenPageLimit(5);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.getTabAt(0).setIcon(R.drawable.tab_news_selector).setText("Tin tức");
-        mTabLayout.getTabAt(1).setIcon(R.drawable.tab_rate_selector).setText("Thị trường");
-        mTabLayout.getTabAt(2).setIcon(R.drawable.tab_place_selector).setText("Vị trí");
-        mTabLayout.getTabAt(3).setIcon(R.drawable.tab_setting_selector).setText("Tiền ảo");
-        mTabLayout.getTabAt(4).setIcon(R.drawable.tab_setting_selector).setText("Cài đặt");
+        mTabLayout.getTabAt(0).setIcon(R.drawable.tab_news_selector).setText(getResources().getString(R.string.news));
+        mTabLayout.getTabAt(1).setIcon(R.drawable.tab_rate_selector).setText(getResources().getString(R.string.market));
+        mTabLayout.getTabAt(2).setIcon(R.drawable.tab_place_selector).setText(getResources().getString(R.string.place));
+        mTabLayout.getTabAt(3).setIcon(R.drawable.tab_coin_selector).setText(getResources().getString(R.string.coin));
+        mTabLayout.getTabAt(4).setIcon(R.drawable.tab_setting_selector).setText(getResources().getString(R.string.setting));
         mTabLayout.addOnTabSelectedListener(this);
         mViewPager.addOnPageChangeListener(this);
     }

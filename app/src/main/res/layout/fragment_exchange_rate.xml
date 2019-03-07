@@ -26,6 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:text="@string/bank"
                 android:layout_marginRight="5dp"
                 />
@@ -34,6 +35,7 @@
                 android:id="@+id/txtCurrentBankName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:text="VietCom Bank" />
 
             <ImageView
@@ -54,7 +56,7 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.3"
                 android:textColor="@color/colorWhite"
                 android:gravity="center"
                 android:layout_height="match_parent"
@@ -63,7 +65,7 @@
                 />
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.9"
                 android:textColor="@color/colorWhite"
                 android:gravity="center"
                 android:layout_height="match_parent"
@@ -73,7 +75,7 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.9"
                 android:textColor="@color/colorWhite"
                 android:gravity="center"
                 android:layout_height="match_parent"
@@ -81,7 +83,7 @@
                 />
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.9"
                 android:textColor="@color/colorWhite"
                 android:gravity="center"
                 android:layout_height="match_parent"

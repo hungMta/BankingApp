@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="31dp"
+    android:gravity="center"
+    android:id="@+id/layoutItem"
+    >
+        <TextView
+            android:id="@+id/txtTimeDeposit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorBlack"
+            android:text="Vietcom bank"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:layout_above="@id/line"
+            />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLightGray"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

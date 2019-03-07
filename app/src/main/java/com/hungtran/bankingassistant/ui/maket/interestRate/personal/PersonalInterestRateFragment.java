@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -12,16 +13,22 @@ import android.widget.PopupWindow;
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.adapters.BankPopupRecylerViewAdapter;
 import com.hungtran.bankingassistant.adapters.InterestRateRecyclerViewAdapter;
+import com.hungtran.bankingassistant.adapters.TimeDepositRecyclerViewAdapter;
 import com.hungtran.bankingassistant.model.Bank;
 import com.hungtran.bankingassistant.model.ExchangeRate;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PersonalInterestRateFragment extends BaseFragment implements View.OnClickListener {
+public class PersonalInterestRateFragment extends BaseFragment implements View.OnClickListener, TimeDepositRecyclerViewAdapter.OnItemClick{
+    private static final String TAG = "HUNGTD";
+
     private static PersonalInterestRateFragment instance;
 
     @BindView(R.id.reyclerView)
@@ -43,7 +50,7 @@ public class PersonalInterestRateFragment extends BaseFragment implements View.O
     LinearLayout mLayoutFifthColumn;
 
     private InterestRateRecyclerViewAdapter mAdapter;
-    private PopupWindow mPeriod;
+    private PopupWindow mTimeDepositPopup;
 
     public static PersonalInterestRateFragment getInstance(){
         if (instance == null) {
@@ -81,39 +88,46 @@ public class PersonalInterestRateFragment extends BaseFragment implements View.O
 
     @Override
     public void onClick(View v) {
-        PopupWindow popupWindow = getBankListPopup();
+        mTimeDepositPopup  = getBankListPopup();
         switch (v.getId()) {
             case R.id.layoutFirstColumn:
                 break;
             case R.id.layoutSecondColumn:
-                popupWindow.showAsDropDown(v, 0 , -10);
+                mTimeDepositPopup.showAsDropDown(v, 0 , -10);
                 break;
             case R.id.layoutThirdColumn:
-                popupWindow.showAsDropDown(v, 0 , -10);
+                mTimeDepositPopup.showAsDropDown(v, 0 , -10);
                 break;
             case R.id.layoutFourthColumn:
-                popupWindow.showAsDropDown(v, 0 , -10);
+                mTimeDepositPopup.showAsDropDown(v, 0 , -10);
                 break;
             case R.id.layoutFifthColumn:
-                popupWindow.showAsDropDown(v, 0 , -10);
+                mTimeDepositPopup.showAsDropDown(v, 0 , -10);
                 break;
         }
     }
 
     private PopupWindow getBankListPopup() {
         PopupWindow popupWindow = new PopupWindow(getContext());
-        BankPopupRecylerViewAdapter adapter = new BankPopupRecylerViewAdapter(new ArrayList<ExchangeRate>());
-//        adapter.setOnItemClick(this);
+        String[] array = getResources().getStringArray(R.array.deposit_period);
+        List<String> list = Arrays.asList(array);
+        TimeDepositRecyclerViewAdapter adapter = new TimeDepositRecyclerViewAdapter(list);
+        adapter.setOnItemClick(this);
         RecyclerView recyclerView = new RecyclerView(getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
         popupWindow.setFocusable(true);
-        popupWindow.setWidth(600);
-        popupWindow.setHeight(800);
+        popupWindow.setWidth(500);
+        popupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setContentView(recyclerView);
         popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_white_corner_five_radius));
         return popupWindow;
     }
 
+    @Override
+    public void timeDepositItemClicked() {
+        Log.d(TAG, "timeDepositItemClicked: ");
+        mTimeDepositPopup.dismiss();
+    }
 }

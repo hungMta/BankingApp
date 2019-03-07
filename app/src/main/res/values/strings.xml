@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">BankingAssistant</string>
+    <string name="news">Tin tức</string>
+    <string name="market">Thị trường</string>
+    <string name="place">Vị trí</string>
+    <string name="setting">Cài đặt</string>
     <string name="interest_rate">Lãi suất</string>
     <string name="exchange_rate">Ngoại tệ</string>
     <string name="coin">Coin</string>
@@ -11,4 +15,24 @@
     <string name="buy_card">Mua CK</string>
     <string name="sell">Bán</string>
     <string name="deposit">Tiền gửi</string>
+    <string name="unlimited">Không kì hạn</string>
+    <string name="one_month">1 TH</string>
+    <string name="three_month">3 TH</string>
+    <string name="six_month">6 TH</string>
+    <string name="twelve_month">12 TH</string>
+    <string name="eight_teen_month">18 TH</string>
+    <string name="twenty_four_month">24 TH</string>
+    <string name="thirty_six_month">36 TH</string>
+    <string-array name="deposit_period">
+        <item>@string/unlimited</item>
+        <item>@string/one_month</item>
+        <item>@string/three_month</item>
+        <item>@string/six_month</item>
+        <item>@string/twelve_month</item>
+        <item>@string/eight_teen_month</item>
+        <item>@string/twenty_four_month</item>
+        <item>@string/thirty_six_month</item>
+    </string-array>
+    <string name="total_interest_money">Tổng tiền lãi (đ)</string>
+    <string name="total_receiv_money">Tổng nhận (đ)</string>
 </resources>

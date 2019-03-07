@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
     public static final int TIMEOUT_SHORT = 30;
-    private static final String BASE_URL = "http://192.168.0.103:5000";
+    private static final String BASE_URL = "http://10.0.2.2:5000";
     private static BankingApi bankingApi;
     private static OkHttpClient.Builder httpClient;
     private static RxJava2CallAdapterFactory rxAdapter;

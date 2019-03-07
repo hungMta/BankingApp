@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:text="1231232 đ"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content" />
+
+        <include
+            layout="@layout/item_money_edit_text"
+            />
+
+        <include
+            layout="@layout/item_interest_edit_text"
+            />
+
+        <include
+            layout="@layout/item_time_edit_text"
+            />
+
+        <include
+            layout="@layout/item_saving_time_edit_text"
+            />
+
+
+        <include
+            layout="@layout/item_button_option_calculate_money"
+            />
+
+
+    </LinearLayout>
+
+</ScrollView>

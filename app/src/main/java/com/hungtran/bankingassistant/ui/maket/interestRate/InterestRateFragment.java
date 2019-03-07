@@ -59,10 +59,10 @@ public class InterestRateFragment extends BaseFragment implements SegmentedGroup
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        setupFrameLayout();
         mSegmentedGroup.setTintColor(Color.parseColor("#008577"));
         mSegmentedGroup.setOnCheckedChangeListener(this);
         mSegmentedGroup.check(R.id.btnRatePersonalRate);
-        setupFrameLayout();
     }
 
     private void setupFrameLayout() {
@@ -78,6 +78,29 @@ public class InterestRateFragment extends BaseFragment implements SegmentedGroup
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-
+//        switch (checkedId) {
+//            case R.id.btnRatePersonalRate:
+//                mFragmentTransaction = getFragmentManager().beginTransaction();
+//                if (mPersonalInterestRateFragment == null) {
+//                    mPersonalInterestRateFragment = PersonalInterestRateFragment.getInstance();
+//                }
+//                if (!mPersonalInterestRateFragment.isAdded()) {
+//                    mFragmentTransaction.add(R.id.rateFrameLayout, mPersonalInterestRateFragment, PersonalInterestRateFragment.class.getName());
+//                }
+//                mFragmentTransaction.commit();
+//                break;
+//            case R.id.btnRateEnterpriseRate:
+//                mFragmentTransaction = getFragmentManager().beginTransaction();
+//                if (mEnterpriseInterestRateFragment == null) {
+//                    mEnterpriseInterestRateFragment = EnterpriseInterestRateFragment.getInstance();
+//                }
+//                if (!mEnterpriseInterestRateFragment.isAdded()) {
+//                    mFragmentTransaction.add(R.id.rateFrameLayout, mEnterpriseInterestRateFragment, EnterpriseInterestRateFragment.class.getName());
+//                }
+//                mFragmentTransaction.commit();
+//                break;
+//            default:
+//                break;
+//        }
     }
 }

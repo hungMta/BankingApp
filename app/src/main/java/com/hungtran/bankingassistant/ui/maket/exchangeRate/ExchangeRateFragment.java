@@ -101,7 +101,6 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mViewAdapter);
-
     }
 
     @Override
