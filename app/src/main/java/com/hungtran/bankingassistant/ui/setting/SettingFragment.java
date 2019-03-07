@@ -15,6 +15,6 @@ public class SettingFragment extends BaseFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_profile;
+        return R.layout.fragment_caluclator;
     }
 }

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.hungtran.bankingassistant.model.ExchangeRateResponse;
 import com.hungtran.bankingassistant.network.ServiceGenerator;
+import com.hungtran.bankingassistant.util.Constant;
 
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
@@ -34,7 +35,7 @@ public class ExchangeRatePresenter implements ExchangeRateContract.Presenter {
 
     private Observable<ExchangeRateResponse> getExchangeRateObservable() {
         return ServiceGenerator.resquest()
-                .getExchangeRates()
+                .getExchangeRates(Constant.TOKEN)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

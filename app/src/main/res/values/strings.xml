@@ -15,7 +15,7 @@
     <string name="buy_card">Mua CK</string>
     <string name="sell">Bán</string>
     <string name="deposit">Tiền gửi</string>
-    <string name="unlimited">Không kì hạn</string>
+    <string name="unlimited">Không kỳ hạn</string>
     <string name="one_month">1 TH</string>
     <string name="three_month">3 TH</string>
     <string name="six_month">6 TH</string>
@@ -34,5 +34,12 @@
         <item>@string/thirty_six_month</item>
     </string-array>
     <string name="total_interest_money">Tổng tiền lãi (đ)</string>
-    <string name="total_receiv_money">Tổng nhận (đ)</string>
+    <string name="total_receive_money">Tổng nhận (đ)</string>
+    <string name="time_count">Đợt thứ</string>
+    <string name="sending_initial_money">Gửi gốc\n(đ)</string>
+    <string name="recive_interest_money">Nhận lãi\n(đ)</string>
+    <string name="total_recieve">Tổng nhận\n(đ)</string>
+    <string name="total_saving_money">SỐ TIỀN GỬI</string>
+    <string name="time">KỲ HẠN</string>
+    <string name="time_saving">THỜI GIAN GỬI</string>
 </resources>
