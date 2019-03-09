@@ -5,7 +5,7 @@
     android:layout_height="60dp">
 
     <EditText
-        android:id="@+id/edtInterestRate"
+        android:id="@+id/edtTimeSaving"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
@@ -21,6 +21,7 @@
         />
 
     <LinearLayout
+        android:id="@+id/layoutTimeSavingType"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignBottom="@+id/edtInterestRate"
@@ -30,9 +31,9 @@
    >
 
         <TextView
+            android:id="@+id/txtTimeSavingType"
             android:layout_width="wrap_content"
-            android:text="THÁNG"
-            android:textAllCaps="true"
+            android:text="Tháng"
             android:textColor="@color/colorBlack"
             android:gravity="center"
             android:layout_height="match_parent" />

@@ -42,4 +42,8 @@
     <string name="total_saving_money">SỐ TIỀN GỬI</string>
     <string name="time">KỲ HẠN</string>
     <string name="time_saving">THỜI GIAN GỬI</string>
+    <string name="month">Tháng</string>
+    <string name="year">Năm</string>
+    <string name="type_with_draw">Rút lãi định kì</string>
+    <string name="type_with_draw_end">Rút lãi cuối kì</string>
 </resources>

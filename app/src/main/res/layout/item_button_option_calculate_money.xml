@@ -6,6 +6,7 @@
     android:layout_height="60dp">
 
     <Button
+        android:id="@+id/btnWithdrawType"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="Rút lãi định kì"
@@ -15,6 +16,7 @@
         />
 
     <Button
+        android:id="@+id/btnRefresh"
         android:layout_width="wrap_content"
         android:text="Làm mới"
         android:backgroundTint="@color/colorPrimary"

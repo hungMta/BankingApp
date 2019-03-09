@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.hungtran.bankingassistant.R;
+import com.hungtran.bankingassistant.ui.CalculatorFragment;
 import com.hungtran.bankingassistant.ui.coin.CoinFragment;
 import com.hungtran.bankingassistant.ui.maket.MaketFragment;
 import com.hungtran.bankingassistant.ui.map.MapFragment;
@@ -38,7 +39,7 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
                 case 3:
                     fragment = CoinFragment.getInstance(); break;
                 case 4:
-                    fragment = SettingFragment.getInstance(); break;
+                    fragment = CalculatorFragment.getInstance(); break;
             }
         }
         return fragment;
