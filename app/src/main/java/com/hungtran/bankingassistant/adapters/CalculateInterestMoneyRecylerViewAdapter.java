@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.CalculateInterestMoneyModel;
+import com.hungtran.bankingassistant.util.Constant;
 
 import java.util.List;
 
@@ -18,9 +19,11 @@ import butterknife.ButterKnife;
 public class CalculateInterestMoneyRecylerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     List<CalculateInterestMoneyModel> list;
+    private int type;
 
-    public CalculateInterestMoneyRecylerViewAdapter(List<CalculateInterestMoneyModel> list) {
+    public CalculateInterestMoneyRecylerViewAdapter(int type, List<CalculateInterestMoneyModel> list) {
         this.list = list;
+        this.type = type;
     }
 
     @NonNull
@@ -34,9 +37,15 @@ public class CalculateInterestMoneyRecylerViewAdapter extends RecyclerView.Adapt
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         ((CalculateInterestMoneyItem) viewHolder).mTxtTimeCount.setText(String.valueOf(i + 1));
-        ((CalculateInterestMoneyItem) viewHolder).mTxtSendingInitialMoney.setText(list.get(i).getInititalMoneyString());
-        ((CalculateInterestMoneyItem) viewHolder).mTxtReceivingInterestMoney.setText(list.get(i).getReceivingInterestMoneyString());
-        ((CalculateInterestMoneyItem) viewHolder).mTxtTotalReceivingMoney.setText(list.get(i).getTotalReceivingMoneyString());
+        if (type == Constant.TYPE_SAVING) {
+            ((CalculateInterestMoneyItem) viewHolder).mTxtSendingInitialMoney.setText(list.get(i).getInititalMoneyString());
+            ((CalculateInterestMoneyItem) viewHolder).mTxtReceivingInterestMoney.setText(list.get(i).getReceivingInterestMoneyString());
+            ((CalculateInterestMoneyItem) viewHolder).mTxtTotalReceivingMoney.setText(list.get(i).getTotalReceivingMoneyString());
+        } else {
+            ((CalculateInterestMoneyItem) viewHolder).mTxtSendingInitialMoney.setText(list.get(i).getPrincipalPaymentPerMonthString());
+            ((CalculateInterestMoneyItem) viewHolder).mTxtReceivingInterestMoney.setText(list.get(i).getInterestPaymentPerMonthString());
+            ((CalculateInterestMoneyItem) viewHolder).mTxtTotalReceivingMoney.setText(list.get(i).getTotalPaymentPerMonthString());
+        }
     }
 
     @Override

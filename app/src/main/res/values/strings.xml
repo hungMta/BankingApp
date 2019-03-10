@@ -47,4 +47,9 @@
     <string name="year">Năm</string>
     <string name="type_with_draw">Rút lãi định kì</string>
     <string name="type_with_draw_end">Lãi gộp</string>
+    <string name="calculate_saving_money">Tính lãi gửi</string>
+    <string name="calculate_loan_money">Tính lãi vay</string>
+    <string name="loan_money_cap_">SỐ TIỀN VAY</string>
+    <string name="principal_balance">DƯ NỢ GỐC</string>
+    <string name="principal_balance_decreased">DƯ NỢ GIẢM DẦN</string>
 </resources>

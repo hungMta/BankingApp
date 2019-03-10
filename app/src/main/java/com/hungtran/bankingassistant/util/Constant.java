@@ -12,4 +12,8 @@ public class Constant {
     public static final Integer TYPE_SAVING_WITHDRAW_END = 1;
     public static final Integer TYPE_SAVING_MONTH = 0;
     public static final Integer TYPE_SAVING_YEAR = 1;
+    public static final Integer TYPE_PRINCIPAL_BALANCE = 0;
+    public static final Integer TYPE_PRINCIPAL_BALANCE_DECREASE = 1;
+    public static final Integer TYPE_SAVING = 0;
+    public static final Integer TYPE_LOAN = 1;
 }
