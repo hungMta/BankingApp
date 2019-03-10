@@ -12,4 +12,5 @@
     <color name="tab_backgroud_unselected">#008577</color>
     <color name="colorLightGray">#b4b4b4</color>
     <color name="colorLight2Gray">#e2e2e2</color>
+    <color name="colorBlueDark">#2e3679</color>
 </resources>

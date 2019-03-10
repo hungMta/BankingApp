@@ -14,6 +14,7 @@
     <string name="bank">Ngân hàng</string>
     <string name="buy_cash">Mua TM</string>
     <string name="buy_card">Mua CK</string>
+    <string name="buy">Mua</string>
     <string name="sell">Bán</string>
     <string name="deposit">Tiền gửi</string>
     <string name="unlimited">Không kỳ hạn</string>
