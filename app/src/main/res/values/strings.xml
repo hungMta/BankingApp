@@ -5,6 +5,7 @@
     <string name="place">Vị trí</string>
     <string name="setting">Cài đặt</string>
     <string name="interest_rate">Lãi suất</string>
+    <string name="interest_rate_caps">LÃI SUẤT</string>
     <string name="exchange_rate">Ngoại tệ</string>
     <string name="coin">Coin</string>
     <string name="gold">Vàng</string>
@@ -45,5 +46,5 @@
     <string name="month">Tháng</string>
     <string name="year">Năm</string>
     <string name="type_with_draw">Rút lãi định kì</string>
-    <string name="type_with_draw_end">Rút lãi cuối kì</string>
+    <string name="type_with_draw_end">Lãi gộp</string>
 </resources>

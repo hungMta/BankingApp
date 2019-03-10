@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingLeft="20dp"
     android:paddingRight="20dp">
 
@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/txtInitialMoney"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:text="0 đ"
@@ -59,6 +60,7 @@
                 />
 
             <TextView
+                android:id="@+id/txtTotalReceivingInterestMoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -88,6 +90,7 @@
                 />
 
             <TextView
+                android:id="@+id/txtTotalReceivingMoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -99,14 +102,21 @@
         </LinearLayout>
 
 
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_white_border_primary"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_height="wrap_content">
+
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:background="@drawable/bg_white_border_primary"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:gravity="center_vertical"
-            android:layout_weight="4"
+            android:layout_weight="10"
             android:layout_height="50dp">
 
             <TextView
@@ -120,7 +130,7 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:text="@string/sending_initial_money"
@@ -129,7 +139,7 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:text="@string/recive_interest_money"
@@ -138,7 +148,7 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:text="@string/total_recieve"
@@ -147,7 +157,16 @@
 
         </LinearLayout>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/reyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_calculate_money_recyclerview" />
 
     </LinearLayout>
 
-</ScrollView>
+
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

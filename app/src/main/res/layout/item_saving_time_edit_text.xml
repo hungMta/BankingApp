@@ -13,6 +13,7 @@
         android:maxLines="1"
         android:lines="1"
         android:hint="@string/time_saving"
+        android:imeOptions="actionDone"
         android:inputType="number"
         android:paddingRight="50dp"
         android:paddingLeft="50dp"

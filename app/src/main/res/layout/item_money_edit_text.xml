@@ -6,13 +6,15 @@
 
 
     <EditText
-        android:id="@+id/edtSavingMoney"
+        android:id="@+id/edtInitialSavingMoney"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="16sp"
         android:hint="@string/total_saving_money"
         android:maxLines="1"
+        android:maxLength="20"
         android:lines="1"
+        android:imeOptions="actionDone"
         android:inputType="number"
         android:paddingRight="50dp"
         android:paddingLeft="50dp"
