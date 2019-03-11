@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
+import com.hungtran.bankingassistant.model.InterestRateByBank;
 
 import java.security.PublicKey;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +23,11 @@ import butterknife.ButterKnife;
 
 public class InterestRateRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private List<InterestRateByBank> interesRateByBanks;
 
+    public InterestRateRecyclerViewAdapter (List<InterestRateByBank> list) {
+        this.interesRateByBanks = list;
+    }
 
     @NonNull
     @Override
@@ -31,18 +38,61 @@ public class InterestRateRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        
+        ((InterestRateItem) viewHolder).mTxtBankName.setText(interesRateByBanks.get(i).getName());
+        try {
+            ((InterestRateItem) viewHolder).mTxtFirstRate.setText(interesRateByBanks.get(i).getSendingOffline().getInterestRateVnd().getMonth3());
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ((InterestRateItem) viewHolder).mTxtSecondRate.setText(interesRateByBanks.get(i).getSendingOffline().getInterestRateVnd().getMonth6());
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ((InterestRateItem) viewHolder).mTxtThirdRate.setText(interesRateByBanks.get(i).getSendingOffline().getInterestRateVnd().getMonth9());
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ((InterestRateItem) viewHolder).mTxtFourthRate.setText(interesRateByBanks.get(i).getSendingOffline().getInterestRateVnd().getMonth12());
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return interesRateByBanks  == null ? 0 : interesRateByBanks.size();
+    }
+
+    public void updateApdater(List<InterestRateByBank> list) {
+        this.interesRateByBanks = list;
+        notifyDataSetChanged();
     }
 
     public class InterestRateItem extends RecyclerView.ViewHolder {
 
         @BindView(R.id.layoutItem)
         LinearLayout layout;
+
+        @BindView(R.id.txtBankName)
+        TextView mTxtBankName;
+
+        @BindView(R.id.txtFirstRate)
+        TextView mTxtFirstRate;
+
+        @BindView(R.id.txtSecondRate)
+        TextView mTxtSecondRate;
+
+        @BindView(R.id.txtThirdRate)
+        TextView mTxtThirdRate;
+
+        @BindView(R.id.txtFourthRate)
+        TextView mTxtFourthRate;
 
         public InterestRateItem(@NonNull View itemView) {
             super(itemView);

@@ -16,6 +16,7 @@ import com.hungtran.bankingassistant.adapters.InterestRateRecyclerViewAdapter;
 import com.hungtran.bankingassistant.adapters.TimeDepositRecyclerViewAdapter;
 import com.hungtran.bankingassistant.model.Bank;
 import com.hungtran.bankingassistant.model.ExchangeRate;
+import com.hungtran.bankingassistant.model.InterestRateResponse;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
 
 import java.lang.reflect.Array;
@@ -26,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PersonalInterestRateFragment extends BaseFragment implements View.OnClickListener, TimeDepositRecyclerViewAdapter.OnItemClick{
+public class PersonalInterestRateFragment extends BaseFragment implements PersonalInterestRateContract.View, View.OnClickListener, TimeDepositRecyclerViewAdapter.OnItemClick{
     private static final String TAG = "HUNGTD";
 
     private static PersonalInterestRateFragment instance;
@@ -51,6 +52,7 @@ public class PersonalInterestRateFragment extends BaseFragment implements View.O
 
     private InterestRateRecyclerViewAdapter mAdapter;
     private PopupWindow mTimeDepositPopup;
+    private PersonalInterestRatePresenter mPresenter;
 
     public static PersonalInterestRateFragment getInstance(){
         if (instance == null) {
@@ -70,7 +72,8 @@ public class PersonalInterestRateFragment extends BaseFragment implements View.O
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         setupRecyclerView();
-
+        mPresenter = new PersonalInterestRatePresenter(this);
+        mPresenter.getPersonalInterestRate();
         mLayoutFirstColumn.setOnClickListener(this);
         mLayoutSecondColumn.setOnClickListener(this);
         mLayoutThirdColumn.setOnClickListener(this);
@@ -80,7 +83,7 @@ public class PersonalInterestRateFragment extends BaseFragment implements View.O
 
 
     private void setupRecyclerView() {
-        mAdapter = new InterestRateRecyclerViewAdapter();
+        mAdapter = new InterestRateRecyclerViewAdapter(null);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -129,5 +132,15 @@ public class PersonalInterestRateFragment extends BaseFragment implements View.O
     public void timeDepositItemClicked() {
         Log.d(TAG, "timeDepositItemClicked: ");
         mTimeDepositPopup.dismiss();
+    }
+
+    @Override
+    public void setPresenter(PersonalInterestRateContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void onGetPersonalInterestRateSuccess(InterestRateResponse interestRateResponse) {
+        mAdapter.updateApdater(interestRateResponse.getInterestRateByBankList());
     }
 }

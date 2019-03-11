@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity implements  TabLayout.OnTabSelect
         mTabLayout.getTabAt(1).setIcon(R.drawable.tab_rate_selector).setText(getResources().getString(R.string.market));
         mTabLayout.getTabAt(2).setIcon(R.drawable.tab_place_selector).setText(getResources().getString(R.string.place));
         mTabLayout.getTabAt(3).setIcon(R.drawable.tab_coin_selector).setText(getResources().getString(R.string.coin));
-        mTabLayout.getTabAt(4).setIcon(R.drawable.tab_setting_selector).setText(getResources().getString(R.string.setting));
+        mTabLayout.getTabAt(4).setIcon(R.drawable.tab_calculator_selector).setText(getResources().getString(R.string.calculator));
         mTabLayout.addOnTabSelectedListener(this);
         mViewPager.addOnPageChangeListener(this);
     }
