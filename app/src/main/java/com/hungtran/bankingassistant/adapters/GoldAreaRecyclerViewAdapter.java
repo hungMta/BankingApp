@@ -1,6 +1,8 @@
 package com.hungtran.bankingassistant.adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +20,11 @@ import butterknife.ButterKnife;
 public class GoldAreaRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     List<GoldArea> goldAreas;
+    Context mContext;
 
-    public GoldAreaRecyclerViewAdapter(List<GoldArea> list) {
+    public GoldAreaRecyclerViewAdapter(Context context, List<GoldArea> list) {
         this.goldAreas = list;
+        this.mContext = context;
     }
 
     @NonNull
@@ -34,6 +38,10 @@ public class GoldAreaRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         ((GoldAreaItem) viewHolder).mTxtArea.setText(goldAreas.get(i).getArea());
+        GoldPriceRecyclerViewAdapter adapter = new GoldPriceRecyclerViewAdapter(goldAreas.get(i).getGoldList());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        ((GoldAreaItem) viewHolder).mRecyclerViewGoldInArea.setLayoutManager(linearLayoutManager);
+        ((GoldAreaItem) viewHolder).mRecyclerViewGoldInArea.setAdapter(adapter);
     }
 
     @Override

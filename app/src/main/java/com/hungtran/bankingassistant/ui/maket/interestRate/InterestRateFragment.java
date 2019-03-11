@@ -36,7 +36,7 @@ public class InterestRateFragment extends BaseFragment implements SegmentedGroup
     private FragmentTransaction mFragmentTransaction;
 
 
-    public static InterestRateFragment getInstance(){
+    public static InterestRateFragment getInstance() {
         if (instance == null) {
             instance = new InterestRateFragment();
         }
@@ -53,7 +53,7 @@ public class InterestRateFragment extends BaseFragment implements SegmentedGroup
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
 
-   }
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -67,40 +67,26 @@ public class InterestRateFragment extends BaseFragment implements SegmentedGroup
 
     private void setupFrameLayout() {
         mFragmentTransaction = getFragmentManager().beginTransaction();
-        if (mPersonalInterestRateFragment == null) {
-            mPersonalInterestRateFragment = PersonalInterestRateFragment.getInstance();
-        }
-        if (!mPersonalInterestRateFragment.isAdded()) {
-            mFragmentTransaction.add(R.id.rateFrameLayout, mPersonalInterestRateFragment);
-        }
+        mPersonalInterestRateFragment = PersonalInterestRateFragment.getInstance();
+        mFragmentTransaction.replace(R.id.rateFrameLayout, mPersonalInterestRateFragment);
         mFragmentTransaction.commit();
     }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-//        switch (checkedId) {
-//            case R.id.btnRatePersonalRate:
-//                mFragmentTransaction = getFragmentManager().beginTransaction();
-//                if (mPersonalInterestRateFragment == null) {
-//                    mPersonalInterestRateFragment = PersonalInterestRateFragment.getInstance();
-//                }
-//                if (!mPersonalInterestRateFragment.isAdded()) {
-//                    mFragmentTransaction.add(R.id.rateFrameLayout, mPersonalInterestRateFragment, PersonalInterestRateFragment.class.getName());
-//                }
-//                mFragmentTransaction.commit();
-//                break;
-//            case R.id.btnRateEnterpriseRate:
-//                mFragmentTransaction = getFragmentManager().beginTransaction();
-//                if (mEnterpriseInterestRateFragment == null) {
-//                    mEnterpriseInterestRateFragment = EnterpriseInterestRateFragment.getInstance();
-//                }
-//                if (!mEnterpriseInterestRateFragment.isAdded()) {
-//                    mFragmentTransaction.add(R.id.rateFrameLayout, mEnterpriseInterestRateFragment, EnterpriseInterestRateFragment.class.getName());
-//                }
-//                mFragmentTransaction.commit();
-//                break;
-//            default:
-//                break;
-//        }
+        switch (checkedId) {
+            case R.id.btnRatePersonalRate:
+                mFragmentTransaction = getFragmentManager().beginTransaction();
+                mPersonalInterestRateFragment = PersonalInterestRateFragment.getInstance();
+                mFragmentTransaction.replace(R.id.rateFrameLayout, mPersonalInterestRateFragment);
+                mFragmentTransaction.commit();
+                break;
+            case R.id.btnRateEnterpriseRate:
+                mFragmentTransaction = getFragmentManager().beginTransaction();
+                mEnterpriseInterestRateFragment = EnterpriseInterestRateFragment.getInstance();
+                mFragmentTransaction.replace(R.id.rateFrameLayout, mEnterpriseInterestRateFragment, EnterpriseInterestRateFragment.class.getName());
+                mFragmentTransaction.commit();
+                break;
+        }
     }
 }

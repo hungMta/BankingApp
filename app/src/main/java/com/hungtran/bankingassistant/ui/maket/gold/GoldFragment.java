@@ -50,7 +50,7 @@ public class GoldFragment extends BaseFragment implements GoldContract.View {
     }
 
     private void setupRecylerView(){
-        mGoldAreaRecyclerViewAdapter = new GoldAreaRecyclerViewAdapter(null);
+        mGoldAreaRecyclerViewAdapter = new GoldAreaRecyclerViewAdapter(getContext(),null);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mGoldAreaRecyclerViewAdapter);

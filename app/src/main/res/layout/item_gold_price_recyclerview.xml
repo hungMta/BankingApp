@@ -7,42 +7,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="@color/colorBlueDark"
+        android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:orientation="horizontal"
         android:weightSum="10">
 
         <TextView
-            android:id="@+id/txtArea"
+            android:id="@+id/txtGoldName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:layout_weight="4"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorBlack" />
 
         <TextView
+            android:id="@+id/txtGoldBuy"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:background="@drawable/bg_blue_dark_with_border_left_right"
+            android:background="@drawable/border_left_right_white"
             android:gravity="center"
             android:text="@string/buy"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorBlack" />
 
         <TextView
+            android:id="@+id/txtGoldSell"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="center"
             android:text="@string/sell"
-            android:textColor="@color/colorWhite" />
-
+            android:textColor="@color/colorBlack" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewGoldInArea"
+    <View
+        android:background="@color/colorLight2Gray"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="1dp"/>
 
 </LinearLayout>
