@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.adapters.BankPopupRecylerViewAdapter;
@@ -17,6 +18,7 @@ import com.hungtran.bankingassistant.adapters.TimeDepositRecyclerViewAdapter;
 import com.hungtran.bankingassistant.model.Bank;
 import com.hungtran.bankingassistant.model.ExchangeRate;
 import com.hungtran.bankingassistant.model.InterestRateResponse;
+import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
 
 import java.lang.reflect.Array;
@@ -50,9 +52,17 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
     @BindView(R.id.layoutFifthColumn)
     LinearLayout mLayoutFifthColumn;
 
+    @BindView(R.id.txtTimeUpdate)
+    TextView mTxtTimeUpdate;
+
     private InterestRateRecyclerViewAdapter mAdapter;
     private PopupWindow mTimeDepositPopup;
     private PersonalInterestRatePresenter mPresenter;
+    private int firstRateType = Constant.TYPE_MONTH_3_RATE;
+    private int secondRateType = Constant.TYPE_MONTH_6_RATE;
+    private int thirdRateType = Constant.TYPE_MONTH_9_RATE;
+    private int fourthRateType = Constant.TYPE_MONTH_12_RATE;
+
 
     public static PersonalInterestRateFragment getInstance(){
         if (instance == null) {
@@ -141,6 +151,11 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
 
     @Override
     public void onGetPersonalInterestRateSuccess(InterestRateResponse interestRateResponse) {
-        mAdapter.updateApdater(interestRateResponse.getInterestRateByBankList());
+        mAdapter.updateApdater(interestRateResponse.getInterestRateByBankList(),0,0,0,0);
+        try {
+            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " +interestRateResponse.getInterestRateByBankList().get(0).getTimeCrawling());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 }

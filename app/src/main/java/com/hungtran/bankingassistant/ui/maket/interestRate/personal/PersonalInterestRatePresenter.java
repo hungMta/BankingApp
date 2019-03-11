@@ -21,6 +21,7 @@ public class PersonalInterestRatePresenter implements PersonalInterestRateContra
     private static String TAG = "HUNGTD";
     private PersonalInterestRateContract.View mView;
 
+
     public PersonalInterestRatePresenter(PersonalInterestRateContract.View view) {
         this.mView = view;
     }

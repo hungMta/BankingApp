@@ -45,6 +45,8 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
     @BindView(R.id.txtCurrentBankName)
     TextView mTxtCurrentBankName;
 
+    @BindView(R.id.txtTimeUpdate)
+    TextView mTxtTimeUpdate;
 
     private ExchangeRate currentExchangeRate;
     private ExchangeRateRecylerViewAdapter mViewAdapter;
@@ -84,6 +86,11 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
         this.exchangeRates = list;
         this.currentExchangeRate = list.get(0);
         mTxtCurrentBankName.setText(currentExchangeRate.getName());
+        try {
+            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " +list.get(0).getTimeCrawling());
+        }catch (NullPointerException e) {
+
+        }
     }
 
     @Override

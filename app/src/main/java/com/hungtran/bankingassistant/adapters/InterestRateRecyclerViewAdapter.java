@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.InterestRateByBank;
+import com.hungtran.bankingassistant.util.Constant;
 
 import java.security.PublicKey;
 import java.util.List;
@@ -24,6 +25,10 @@ import butterknife.ButterKnife;
 public class InterestRateRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<InterestRateByBank> interesRateByBanks;
+    private int firstRateType = Constant.TYPE_MONTH_3_RATE;
+    private int secondRateType = Constant.TYPE_MONTH_6_RATE;
+    private int thirdRateType = Constant.TYPE_MONTH_9_RATE;
+    private int fourthRateType = Constant.TYPE_MONTH_12_RATE;
 
     public InterestRateRecyclerViewAdapter (List<InterestRateByBank> list) {
         this.interesRateByBanks = list;
@@ -69,8 +74,12 @@ public class InterestRateRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         return interesRateByBanks  == null ? 0 : interesRateByBanks.size();
     }
 
-    public void updateApdater(List<InterestRateByBank> list) {
+    public void updateApdater(List<InterestRateByBank> list, int typeFirst, int typeSecond, int typeThird, int typeFourth) {
         this.interesRateByBanks = list;
+        this.firstRateType = typeFirst;
+        this.secondRateType = typeSecond;
+        this.thirdRateType = typeThird;
+        this.fourthRateType = typeFourth;
         notifyDataSetChanged();
     }
 
