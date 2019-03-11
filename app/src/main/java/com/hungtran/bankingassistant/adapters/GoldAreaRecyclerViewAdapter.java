@@ -62,7 +62,6 @@ public class GoldAreaRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         @BindView(R.id.recyclerViewGoldInArea)
         RecyclerView mRecyclerViewGoldInArea;
 
-
         public GoldAreaItem(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

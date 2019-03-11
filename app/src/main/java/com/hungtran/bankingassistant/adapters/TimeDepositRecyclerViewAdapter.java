@@ -25,11 +25,12 @@ import butterknife.ButterKnife;
 public class TimeDepositRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private OnItemClick mItemClick;
+    private List<String> list = new ArrayList<>();
+    private View parrentView;
 
-    List<String> list = new ArrayList<>();
-
-    public TimeDepositRecyclerViewAdapter(List<String> list) {
+    public TimeDepositRecyclerViewAdapter(View view, List<String> list) {
         this.list = list;
+        this.parrentView = view;
     }
 
     @NonNull
@@ -41,13 +42,13 @@ public class TimeDepositRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         ((TimeDepositItem) viewHolder).timeDeposit.setText(list.get(i));
         ((TimeDepositItem) viewHolder).layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mItemClick != null) {
-                    mItemClick.timeDepositItemClicked();
+                    mItemClick.timeDepositItemClicked(parrentView, list.get(i));
                 }
             }
         });
@@ -74,10 +75,10 @@ public class TimeDepositRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
     }
 
     public interface OnItemClick {
-        void timeDepositItemClicked();
+        void timeDepositItemClicked(View parrentView,String timeDeposit);
     }
 
-    public void setOnItemClick(OnItemClick itemClick){
+    public void setOnItemClick(OnItemClick itemClick) {
         this.mItemClick = itemClick;
     }
 }

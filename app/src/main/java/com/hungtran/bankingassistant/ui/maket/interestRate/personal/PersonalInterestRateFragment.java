@@ -17,6 +17,7 @@ import com.hungtran.bankingassistant.adapters.InterestRateRecyclerViewAdapter;
 import com.hungtran.bankingassistant.adapters.TimeDepositRecyclerViewAdapter;
 import com.hungtran.bankingassistant.model.Bank;
 import com.hungtran.bankingassistant.model.ExchangeRate;
+import com.hungtran.bankingassistant.model.InterestRateByBank;
 import com.hungtran.bankingassistant.model.InterestRateResponse;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
@@ -29,7 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PersonalInterestRateFragment extends BaseFragment implements PersonalInterestRateContract.View, View.OnClickListener, TimeDepositRecyclerViewAdapter.OnItemClick{
+public class PersonalInterestRateFragment extends BaseFragment implements PersonalInterestRateContract.View, View.OnClickListener, TimeDepositRecyclerViewAdapter.OnItemClick {
     private static final String TAG = "HUNGTD";
 
     private static PersonalInterestRateFragment instance;
@@ -43,14 +44,26 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
     @BindView(R.id.layoutSecondColumn)
     LinearLayout mLayoutSecondColumn;
 
+    @BindView(R.id.txtSecondColumn)
+    TextView mTxtSecondColumn;
+
     @BindView(R.id.layoutThirdColumn)
     LinearLayout mLayoutThirdColumn;
+
+    @BindView(R.id.txtThirdColumn)
+    TextView mTxtThirdColumn;
 
     @BindView(R.id.layoutFourthColumn)
     LinearLayout mLayoutFourthColumn;
 
+    @BindView(R.id.txtFourthColumn)
+    TextView mTxtFourthColumn;
+
     @BindView(R.id.layoutFifthColumn)
     LinearLayout mLayoutFifthColumn;
+
+    @BindView(R.id.txtFifthColumn)
+    TextView mTxtFifthColumn;
 
     @BindView(R.id.txtTimeUpdate)
     TextView mTxtTimeUpdate;
@@ -62,9 +75,10 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
     private int secondRateType = Constant.TYPE_MONTH_6_RATE;
     private int thirdRateType = Constant.TYPE_MONTH_9_RATE;
     private int fourthRateType = Constant.TYPE_MONTH_12_RATE;
+    private List<InterestRateByBank> interestRateByBankList;
 
 
-    public static PersonalInterestRateFragment getInstance(){
+    public static PersonalInterestRateFragment getInstance() {
         if (instance == null) {
             instance = new PersonalInterestRateFragment();
         }
@@ -101,30 +115,30 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
 
     @Override
     public void onClick(View v) {
-        mTimeDepositPopup  = getBankListPopup();
+        mTimeDepositPopup = getBankListPopup(v);
         switch (v.getId()) {
             case R.id.layoutFirstColumn:
                 break;
             case R.id.layoutSecondColumn:
-                mTimeDepositPopup.showAsDropDown(v, 0 , -10);
+                mTimeDepositPopup.showAsDropDown(v, 0, -10);
                 break;
             case R.id.layoutThirdColumn:
-                mTimeDepositPopup.showAsDropDown(v, 0 , -10);
+                mTimeDepositPopup.showAsDropDown(v, 0, -10);
                 break;
             case R.id.layoutFourthColumn:
-                mTimeDepositPopup.showAsDropDown(v, 0 , -10);
+                mTimeDepositPopup.showAsDropDown(v, 0, -10);
                 break;
             case R.id.layoutFifthColumn:
-                mTimeDepositPopup.showAsDropDown(v, 0 , -10);
+                mTimeDepositPopup.showAsDropDown(v, 0, -10);
                 break;
         }
     }
 
-    private PopupWindow getBankListPopup() {
+    private PopupWindow getBankListPopup(View view) {
         PopupWindow popupWindow = new PopupWindow(getContext());
         String[] array = getResources().getStringArray(R.array.deposit_period);
         List<String> list = Arrays.asList(array);
-        TimeDepositRecyclerViewAdapter adapter = new TimeDepositRecyclerViewAdapter(list);
+        TimeDepositRecyclerViewAdapter adapter = new TimeDepositRecyclerViewAdapter(view, list);
         adapter.setOnItemClick(this);
         RecyclerView recyclerView = new RecyclerView(getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -139,8 +153,9 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
     }
 
     @Override
-    public void timeDepositItemClicked() {
+    public void timeDepositItemClicked(View parrentView, String timeDeposit) {
         Log.d(TAG, "timeDepositItemClicked: ");
+        mPresenter.getRateTypeFromString(getContext(), parrentView.getId(), timeDeposit);
         mTimeDepositPopup.dismiss();
     }
 
@@ -150,12 +165,43 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
     public void onGetPersonalInterestRateSuccess(InterestRateResponse interestRateResponse) {
-        mAdapter.updateApdater(interestRateResponse.getInterestRateByBankList(),0,0,0,0);
+        this.interestRateByBankList = interestRateResponse.getInterestRateByBankList();
+        mAdapter.updateApdater(interestRateResponse.getInterestRateByBankList(), firstRateType, secondRateType, thirdRateType, fourthRateType);
         try {
-            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " +interestRateResponse.getInterestRateByBankList().get(0).getTimeCrawling());
+            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " + interestRateResponse.getInterestRateByBankList().get(0).getTimeCrawling());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onGetRateType(int id, int rateType) {
+        switch (id) {
+            case R.id.layoutFirstColumn:
+                break;
+            case R.id.layoutSecondColumn:
+                firstRateType = rateType;
+                mTxtSecondColumn.setText(mPresenter.getStringFromRateType(getContext(), rateType));
+                break;
+            case R.id.layoutThirdColumn:
+                secondRateType = rateType;
+                mTxtThirdColumn.setText(mPresenter.getStringFromRateType(getContext(), rateType));
+                break;
+            case R.id.layoutFourthColumn:
+                thirdRateType = rateType;
+                mTxtFourthColumn.setText(mPresenter.getStringFromRateType(getContext(), rateType));
+                break;
+            case R.id.layoutFifthColumn:
+                fourthRateType = rateType;
+                mTxtFifthColumn.setText(mPresenter.getStringFromRateType(getContext(), rateType));
+                break;
+        }
+        mAdapter.updateApdater(interestRateByBankList, firstRateType, secondRateType, thirdRateType, fourthRateType);
     }
 }

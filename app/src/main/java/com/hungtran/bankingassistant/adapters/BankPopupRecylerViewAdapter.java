@@ -55,7 +55,7 @@ public class BankPopupRecylerViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public int getItemCount() {
-        return mBanks.size();
+        return mBanks == null ? 0 : mBanks.size();
     }
 
     public class BankListItem extends RecyclerView.ViewHolder {

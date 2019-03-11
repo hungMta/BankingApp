@@ -44,29 +44,33 @@ public class InterestRateRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         ((InterestRateItem) viewHolder).mTxtBankName.setText(interesRateByBanks.get(i).getName());
-        try {
-            ((InterestRateItem) viewHolder).mTxtFirstRate.setText(interesRateByBanks.get(i).getSendingOffline().getInterestRateVnd().getMonth3());
-        }catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            ((InterestRateItem) viewHolder).mTxtSecondRate.setText(interesRateByBanks.get(i).getSendingOffline().getInterestRateVnd().getMonth6());
-        }catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            ((InterestRateItem) viewHolder).mTxtThirdRate.setText(interesRateByBanks.get(i).getSendingOffline().getInterestRateVnd().getMonth9());
-        }catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            ((InterestRateItem) viewHolder).mTxtFourthRate.setText(interesRateByBanks.get(i).getSendingOffline().getInterestRateVnd().getMonth12());
-        }catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        ((InterestRateItem) viewHolder).mTxtFirstRate.setText(getValueInterestRate(firstRateType, interesRateByBanks.get(i)));
+        ((InterestRateItem) viewHolder).mTxtSecondRate.setText(getValueInterestRate(secondRateType, interesRateByBanks.get(i)));
+        ((InterestRateItem) viewHolder).mTxtThirdRate.setText(getValueInterestRate(thirdRateType, interesRateByBanks.get(i)));
+        ((InterestRateItem) viewHolder).mTxtFourthRate.setText(getValueInterestRate(fourthRateType, interesRateByBanks.get(i)));
+//        try {
+//            ((InterestRateItem) viewHolder).mTxtFirstRate.setText(getValueInterestRate(firstRateType, interesRateByBanks.get(i)));
+//        }catch (NullPointerException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            ((InterestRateItem) viewHolder).mTxtSecondRate.setText(interesRateByBanks.get(i).getSendingOffline().getInterestRateVnd().getMonth6());
+//        }catch (NullPointerException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            ((InterestRateItem) viewHolder).mTxtThirdRate.setText(interesRateByBanks.get(i).getSendingOffline().getInterestRateVnd().getMonth9());
+//        }catch (NullPointerException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            ((InterestRateItem) viewHolder).mTxtFourthRate.setText(interesRateByBanks.get(i).getSendingOffline().getInterestRateVnd().getMonth12());
+//        }catch (NullPointerException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -81,6 +85,36 @@ public class InterestRateRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         this.thirdRateType = typeThird;
         this.fourthRateType = typeFourth;
         notifyDataSetChanged();
+    }
+
+    private String getValueInterestRate(int rateType, InterestRateByBank interestRateByBank) {
+        try {
+            switch (rateType) {
+                case 0:
+                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getUnlimited();
+                case 1:
+                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth1();
+                case 2:
+                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth2();
+                case 3:
+                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth3();
+                case 6:
+                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth6();
+                case 9:
+                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth9();
+                case 12:
+                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth12();
+                case 24:
+                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth24();
+                case 36:
+                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth36();
+                default:
+                    return null;
+            }
+        } catch (NumberFormatException | NullPointerException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public class InterestRateItem extends RecyclerView.ViewHolder {

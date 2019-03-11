@@ -18,7 +18,7 @@ public class Constant {
     public static final Integer TYPE_LOAN = 1;
     public static final Integer TYPE_MONTH_0_RATE = 0;
     public static final Integer TYPE_MONTH_1_RATE = 1;
-    public static final Integer TYPE_MONTH_2_RATE = 1;
+    public static final Integer TYPE_MONTH_2_RATE = 2;
     public static final Integer TYPE_MONTH_3_RATE = 3;
     public static final Integer TYPE_MONTH_6_RATE = 6;
     public static final Integer TYPE_MONTH_9_RATE = 9;

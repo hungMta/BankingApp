@@ -59,7 +59,7 @@ public class InterestRateFragment extends BaseFragment implements SegmentedGroup
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        setupFrameLayout();
+//        setupFrameLayout();
         mSegmentedGroup.setTintColor(Color.parseColor("#008577"));
         mSegmentedGroup.setOnCheckedChangeListener(this);
         mSegmentedGroup.check(R.id.btnRatePersonalRate);
@@ -78,7 +78,7 @@ public class InterestRateFragment extends BaseFragment implements SegmentedGroup
             case R.id.btnRatePersonalRate:
                 mFragmentTransaction = getFragmentManager().beginTransaction();
                 mPersonalInterestRateFragment = PersonalInterestRateFragment.getInstance();
-                mFragmentTransaction.replace(R.id.rateFrameLayout, mPersonalInterestRateFragment);
+                mFragmentTransaction.replace(R.id.rateFrameLayout, mPersonalInterestRateFragment, PersonalInterestRateFragment.class.getName());
                 mFragmentTransaction.commit();
                 break;
             case R.id.btnRateEnterpriseRate:

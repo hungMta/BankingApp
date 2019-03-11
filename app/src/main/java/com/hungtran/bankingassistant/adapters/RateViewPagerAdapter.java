@@ -23,7 +23,7 @@ public class RateViewPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = mFragmentManager.findFragmentByTag(name);
         if(fragment == null)
         switch (i) {
-            case 0: fragment = InterestRateFragment.getInstance(); break;
+            case 0: fragment = new InterestRateFragment(); break;
             case 1: fragment = ExchangeRateFragment.getInstance(); break;
             case 2: fragment = GoldFragment.getInstance(); break;
         }
