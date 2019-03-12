@@ -27,7 +27,7 @@ public class GoldFragment extends BaseFragment implements GoldContract.View {
         if (instance == null) {
             instance = new GoldFragment();
         }
-        return instance;
+        return new GoldFragment();
     }
 
     @Override

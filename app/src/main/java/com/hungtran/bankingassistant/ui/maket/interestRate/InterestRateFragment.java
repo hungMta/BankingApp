@@ -40,7 +40,7 @@ public class InterestRateFragment extends BaseFragment implements SegmentedGroup
         if (instance == null) {
             instance = new InterestRateFragment();
         }
-        return instance;
+        return new InterestRateFragment();
     }
 
     @Override
@@ -88,5 +88,10 @@ public class InterestRateFragment extends BaseFragment implements SegmentedGroup
                 mFragmentTransaction.commit();
                 break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

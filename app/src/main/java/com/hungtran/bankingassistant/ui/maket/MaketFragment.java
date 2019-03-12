@@ -29,12 +29,13 @@ public class MaketFragment extends BaseFragment implements SegmentedGroup.OnChec
     RadioButton btnInterestRate;
 
     private static MaketFragment instance;
+    RateViewPagerAdapter rateViewPagerAdapter;
 
     public static MaketFragment getInstance() {
         if (instance == null) {
             instance = new MaketFragment();
         }
-        return instance;
+        return new MaketFragment();
     }
 
     @Override
@@ -43,9 +44,15 @@ public class MaketFragment extends BaseFragment implements SegmentedGroup.OnChec
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        mViewPager.setOffscreenPageLimit(3);
         setupViewPager();
         mSegmentedGroup.setTintColor(Color.parseColor("#008577"));
         mSegmentedGroup.setOnCheckedChangeListener(this);
@@ -53,7 +60,7 @@ public class MaketFragment extends BaseFragment implements SegmentedGroup.OnChec
     }
 
     private void setupViewPager() {
-        RateViewPagerAdapter rateViewPagerAdapter = new RateViewPagerAdapter(getFragmentManager());
+        rateViewPagerAdapter = new RateViewPagerAdapter(getFragmentManager());
         mViewPager.setAdapter(rateViewPagerAdapter);
         mViewPager.addOnPageChangeListener(this);
     }
@@ -90,5 +97,10 @@ public class MaketFragment extends BaseFragment implements SegmentedGroup.OnChec
     @Override
     public void onPageScrollStateChanged(int i) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

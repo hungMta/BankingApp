@@ -10,7 +10,7 @@ public class EnterpriseInterestRateFragment extends BaseFragment {
         if (instance == null) {
             instance = new EnterpriseInterestRateFragment();
         }
-        return instance;
+        return new EnterpriseInterestRateFragment();
     }
     @Override
     public int getLayoutId() {

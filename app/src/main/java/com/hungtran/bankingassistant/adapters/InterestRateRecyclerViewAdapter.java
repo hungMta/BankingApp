@@ -30,7 +30,7 @@ public class InterestRateRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
     private int thirdRateType = Constant.TYPE_MONTH_9_RATE;
     private int fourthRateType = Constant.TYPE_MONTH_12_RATE;
 
-    public InterestRateRecyclerViewAdapter (List<InterestRateByBank> list) {
+    public InterestRateRecyclerViewAdapter(List<InterestRateByBank> list) {
         this.interesRateByBanks = list;
     }
 
@@ -38,7 +38,7 @@ public class InterestRateRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_interest_rate_reyclerview, viewGroup, false);
-        return  new InterestRateItem(view);
+        return new InterestRateItem(view);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class InterestRateRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemCount() {
-        return interesRateByBanks  == null ? 0 : interesRateByBanks.size();
+        return interesRateByBanks == null ? 0 : interesRateByBanks.size();
     }
 
     public void updateApdater(List<InterestRateByBank> list, int typeFirst, int typeSecond, int typeThird, int typeFourth) {
@@ -91,23 +91,68 @@ public class InterestRateRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         try {
             switch (rateType) {
                 case 0:
-                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getUnlimited();
+                    try {
+                        return interestRateByBank.getSendingOffline().getInterestRateVnd().getUnlimited();
+                    } catch (NumberFormatException | NullPointerException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 case 1:
-                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth1();
+                    try {
+                        return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth1();
+                    } catch (NumberFormatException | NullPointerException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 case 2:
-                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth2();
+                    try {
+                        return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth2();
+                    } catch (NumberFormatException | NullPointerException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 case 3:
-                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth3();
+                    try {
+                        return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth3();
+                    } catch (NumberFormatException | NullPointerException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 case 6:
-                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth6();
+                    try {
+                        return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth6();
+                    } catch (NumberFormatException | NullPointerException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 case 9:
-                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth9();
+                    try {
+                        return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth9();
+                    } catch (NumberFormatException | NullPointerException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 case 12:
-                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth12();
+                    try {
+                        return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth12();
+                    } catch (NumberFormatException | NullPointerException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 case 24:
-                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth24();
+                    try {
+                        return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth24();
+                    } catch (NumberFormatException | NullPointerException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 case 36:
-                    return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth36();
+                    try {
+                        return interestRateByBank.getSendingOffline().getInterestRateVnd().getMonth36();
+                    } catch (NumberFormatException | NullPointerException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 default:
                     return null;
             }
