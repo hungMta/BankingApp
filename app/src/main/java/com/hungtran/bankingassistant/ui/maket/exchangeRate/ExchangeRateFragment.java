@@ -61,7 +61,7 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
         if (instance == null) {
             instance = new ExchangeRateFragment();
         }
-        return instance;
+        return new ExchangeRateFragment();
     }
 
     @Override

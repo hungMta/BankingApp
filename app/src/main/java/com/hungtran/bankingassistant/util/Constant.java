@@ -26,4 +26,5 @@ public class Constant {
     public static final Integer TYPE_MONTH_18_RATE = 18;
     public static final Integer TYPE_MONTH_24_RATE = 24;
     public static final Integer TYPE_MONTH_36_RATE = 36;
+    public static final String PRIMARY_COLOR = "#187139";
 }

@@ -19,11 +19,12 @@ public class RateViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        String name = FragmentUtils.makeFragmentName(R.id.rateViewPager,  i);
-        Fragment fragment = mFragmentManager.findFragmentByTag(name);
-        if(fragment == null)
+//        String name = FragmentUtils.makeFragmentName(R.id.rateViewPager,  i);
+//        Fragment fragment = mFragmentManager.findFragmentByTag(name);
+//        if(fragment == null)
+        Fragment fragment = null;
         switch (i) {
-            case 0: fragment = new InterestRateFragment(); break;
+            case 0: fragment = InterestRateFragment.getInstance(); break;
             case 1: fragment = ExchangeRateFragment.getInstance(); break;
             case 2: fragment = GoldFragment.getInstance(); break;
         }

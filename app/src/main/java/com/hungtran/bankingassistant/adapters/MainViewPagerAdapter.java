@@ -1,6 +1,7 @@
 package com.hungtran.bankingassistant.adapters;
 
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -24,24 +25,10 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        String name = FragmentUtils.makeFragmentName(R.id.viewPager,  i);
-        Fragment fragment = mFragmentManager.findFragmentByTag(name);
-        if(fragment == null) {
-            switch (i) {
-                case 0:
-                    fragment = NewsFragment.getInstance(); break;
-                case 1:
-                    fragment = MaketFragment.getInstance();  break;
-                case 2:
-                    fragment = MapFragment.getInstance(); break;
-                case 3:
-                    fragment = CoinFragment.getInstance(); break;
-                case 4:
-                    fragment = CalculatorFragment.getInstance(); break;
-            }
-        }
-        return fragment;
+
+        return null;
     }
+
 
     @Override
     public int getCount() {
