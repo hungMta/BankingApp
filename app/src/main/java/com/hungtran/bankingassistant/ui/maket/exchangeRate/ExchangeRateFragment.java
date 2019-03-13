@@ -1,6 +1,5 @@
 package com.hungtran.bankingassistant.ui.maket.exchangeRate;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,10 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,7 +15,6 @@ import android.widget.TextView;
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.adapters.BankPopupRecylerViewAdapter;
 import com.hungtran.bankingassistant.adapters.ExchangeRateRecylerViewAdapter;
-import com.hungtran.bankingassistant.model.Bank;
 import com.hungtran.bankingassistant.model.Currency;
 import com.hungtran.bankingassistant.model.ExchangeRate;
 import com.hungtran.bankingassistant.util.base.BaseFragment;

@@ -12,18 +12,13 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.adapters.BankPopupRecylerViewAdapter;
 import com.hungtran.bankingassistant.adapters.InterestRateRecyclerViewAdapter;
 import com.hungtran.bankingassistant.adapters.TimeDepositRecyclerViewAdapter;
-import com.hungtran.bankingassistant.model.Bank;
-import com.hungtran.bankingassistant.model.ExchangeRate;
 import com.hungtran.bankingassistant.model.InterestRateByBank;
 import com.hungtran.bankingassistant.model.InterestRateResponse;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        card_view:cardUseCompatPadding="true"
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="4dp">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:orientation="vertical"
+          android:padding="5dp"
+          android:layout_height="match_parent">
+
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="20dp"
+              >
+
+              <ImageView
+                  android:id="@+id/icon"
+                  android:layout_width="20dp"
+                  android:layout_height="match_parent"
+                  android:src="@drawable/ic_credit_card"
+                  />
+
+              <TextView
+                  android:layout_toRightOf="@+id/icon"
+                  android:layout_toLeftOf="@+id/txtDistant"
+                  android:layout_marginLeft="5dp"
+                  android:layout_marginRight="5dp"
+                  android:text="Chi nhanh Ba Dinh"
+                  android:textColor="@color/colorLightPrimary"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent" />
+
+              <TextView
+                  android:id="@+id/txtDistant"
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:textSize="14sp"
+                  android:text="5222.73m"
+                  android:textColor="@color/colorLightPrimary"
+                  android:layout_alignParentRight="true"
+                  android:layout_centerInParent="true"
+                  />
+
+
+          </RelativeLayout>
+
+          <TextView
+              android:layout_width="match_parent"
+              android:textColor="@color/colorLightPrimary"
+              android:textSize="14sp"
+              android:text="VCBC - Bên ngoài Trụ sở Chi nhánh Thăng Long	3	148 Hoàng Quốc Việt - Cầu Giấy - Hà Nội"
+              android:layout_height="match_parent" />
+
+      </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
