@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.adapters.RateViewPagerAdapter;
+import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
 
 import butterknife.BindView;
@@ -54,7 +55,7 @@ public class MaketFragment extends BaseFragment implements SegmentedGroup.OnChec
         ButterKnife.bind(this, view);
         mViewPager.setOffscreenPageLimit(3);
         setupViewPager();
-        mSegmentedGroup.setTintColor(Color.parseColor("#008577"));
+        mSegmentedGroup.setTintColor(Color.parseColor(Constant.PRIMARY_COLOR));
         mSegmentedGroup.setOnCheckedChangeListener(this);
         mSegmentedGroup.check(R.id.btnInterestRate);
     }

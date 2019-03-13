@@ -109,7 +109,6 @@ public class MainActivity extends BaseActivity implements  TabLayout.OnTabSelect
                 break;
         }
         mFragmentTransaction.replace(R.id.frameLayout, fragment, String.valueOf(tab.getPosition()));
-//        mFragmentTransaction.addToBackStack(null);
         mFragmentTransaction.commit();
     }
 

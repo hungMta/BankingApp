@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.ui.maket.interestRate.enterprise.EnterpriseInterestRateFragment;
 import com.hungtran.bankingassistant.ui.maket.interestRate.personal.PersonalInterestRateFragment;
+import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
 
 import butterknife.BindView;
@@ -60,7 +61,7 @@ public class InterestRateFragment extends BaseFragment implements SegmentedGroup
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 //        setupFrameLayout();
-        mSegmentedGroup.setTintColor(Color.parseColor("#008577"));
+        mSegmentedGroup.setTintColor(Color.parseColor(Constant.PRIMARY_COLOR));
         mSegmentedGroup.setOnCheckedChangeListener(this);
         mSegmentedGroup.check(R.id.btnRatePersonalRate);
     }
