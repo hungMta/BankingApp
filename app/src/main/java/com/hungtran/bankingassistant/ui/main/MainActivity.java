@@ -94,10 +94,10 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
                     fragment = mMaketFragment;
                     break;
                 case 2: // open map activity
-                    if (mMapFragment == null) {
-                        mMapFragment = MapFragment.getInstance();
-                    }
-                    fragment = mMapFragment;
+//                    if (mMapFragment == null) {
+//                        mMapFragment = MapFragment.getInstance();
+//                    }
+//                    fragment = mMapFragment;
                     break;
                 case 3:
                     if (mCoinFragment == null) {

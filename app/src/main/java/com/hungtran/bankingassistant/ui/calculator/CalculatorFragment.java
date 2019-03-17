@@ -77,12 +77,12 @@ public class CalculatorFragment extends BaseFragment implements View.OnClickList
         switch (checkedId) {
             case R.id.btnSavingMoney:
                 mFragmentTransaction = getFragmentManager().beginTransaction();
-                mFragmentTransaction.replace(R.id.frameLayout, new CalculateSavingMoneyFragment());
+                mFragmentTransaction.replace(R.id.calculatorFrameLayout, new CalculateSavingMoneyFragment());
                 mFragmentTransaction.commit();
                 break;
             case R.id.btnLoadMoney:
                 mFragmentTransaction = getFragmentManager().beginTransaction();
-                mFragmentTransaction.replace(R.id.frameLayout, new CalculateLoanMoneyFragment());
+                mFragmentTransaction.replace(R.id.calculatorFrameLayout, new CalculateLoanMoneyFragment());
                 mFragmentTransaction.commit();
                 break;
         }
