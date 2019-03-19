@@ -9,8 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.model.Bank;
-import com.hungtran.bankingassistant.model.ExchangeRate;
+import com.hungtran.bankingassistant.model.exchangeRate.ExchangeRate;
 
 import java.util.ArrayList;
 import java.util.List;

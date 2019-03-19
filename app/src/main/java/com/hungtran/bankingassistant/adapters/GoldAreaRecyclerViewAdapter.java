@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.model.GoldArea;
+import com.hungtran.bankingassistant.model.gold.GoldArea;
 
 import java.util.List;
 

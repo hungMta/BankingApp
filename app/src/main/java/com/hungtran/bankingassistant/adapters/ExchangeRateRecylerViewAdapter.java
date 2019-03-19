@@ -13,8 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.model.Currency;
-import com.hungtran.bankingassistant.model.ExchangeRate;
+import com.hungtran.bankingassistant.model.exchangeRate.Currency;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +43,23 @@ public class ExchangeRateRecylerViewAdapter extends RecyclerView.Adapter<Recycle
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        if (i % 2 == 0) {
-            ((CurrencyItem) viewHolder).mLayout
-                    .setBackgroundColor(mContext.getColor(R.color.colorLight2Gray));
-        } else {
-            ((CurrencyItem) viewHolder).mLayout.setBackgroundColor(Color.WHITE);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (i % 2 == 0) {
+                ((CurrencyItem) viewHolder).mLayout
+                        .setBackgroundColor(mContext.getColor(R.color.colorLight2Gray));
+            } else {
+                ((CurrencyItem) viewHolder).mLayout.setBackgroundColor(Color.WHITE);
+            }
+        } else{
+            if (i % 2 == 0) {
+                ((CurrencyItem) viewHolder).mLayout
+                        .setBackgroundColor(mContext.getResources().getColor(R.color.colorLight2Gray));
+            } else {
+                ((CurrencyItem) viewHolder).mLayout.setBackgroundColor(Color.WHITE);
+            }
         }
+
 
         ((CurrencyItem) viewHolder).mCurrencyName.setText(currencies.get(i).getCodeName());
         ((CurrencyItem) viewHolder).mTxtBuyCash.setText(currencies.get(i).getBuyCashString());

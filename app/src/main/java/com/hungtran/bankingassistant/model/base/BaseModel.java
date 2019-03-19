@@ -1,19 +1,11 @@
-package com.hungtran.bankingassistant.model;
+package com.hungtran.bankingassistant.model.base;
 
-/**
- * Created by hungtd on 3/5/19.
- */
-
-public class Bank {
+public class BaseModel {
 
     private int id;
     private String name;
 
-
-    public Bank() {
-    }
-
-    public Bank(int id, String name) {
+    public BaseModel(int id, String name) {
         this.id = id;
         this.name = name;
     }

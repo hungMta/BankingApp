@@ -2,10 +2,9 @@ package com.hungtran.bankingassistant.ui.maket.gold;
 
 import android.util.Log;
 
-import com.hungtran.bankingassistant.model.ExchangeRateResponse;
-import com.hungtran.bankingassistant.model.Gold;
-import com.hungtran.bankingassistant.model.GoldArea;
-import com.hungtran.bankingassistant.model.GoldAreaResponse;
+import com.hungtran.bankingassistant.model.gold.Gold;
+import com.hungtran.bankingassistant.model.gold.GoldArea;
+import com.hungtran.bankingassistant.model.gold.GoldAreaResponse;
 import com.hungtran.bankingassistant.network.ServiceGenerator;
 import com.hungtran.bankingassistant.util.Constant;
 

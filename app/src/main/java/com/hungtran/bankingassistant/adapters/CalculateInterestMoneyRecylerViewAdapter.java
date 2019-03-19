@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.model.CalculateInterestMoneyModel;
+import com.hungtran.bankingassistant.model.interestRate.CalculateInterestMoneyModel;
 import com.hungtran.bankingassistant.util.Constant;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.hungtran.bankingassistant.model;
+package com.hungtran.bankingassistant.model.interestRate;
 
 public class CalculateInterestMoneyModel {
     private int timeCount;

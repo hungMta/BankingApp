@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.adapters.BankPopupRecylerViewAdapter;
 import com.hungtran.bankingassistant.adapters.ExchangeRateRecylerViewAdapter;
-import com.hungtran.bankingassistant.model.Currency;
-import com.hungtran.bankingassistant.model.ExchangeRate;
+import com.hungtran.bankingassistant.model.exchangeRate.Currency;
+import com.hungtran.bankingassistant.model.exchangeRate.ExchangeRate;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
 
 import java.util.ArrayList;

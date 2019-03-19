@@ -1,6 +1,6 @@
 package com.hungtran.bankingassistant.ui.maket.exchangeRate;
 
-import com.hungtran.bankingassistant.model.ExchangeRate;
+import com.hungtran.bankingassistant.model.exchangeRate.ExchangeRate;
 import com.hungtran.bankingassistant.util.BasePresenter;
 import com.hungtran.bankingassistant.util.BaseView;
 

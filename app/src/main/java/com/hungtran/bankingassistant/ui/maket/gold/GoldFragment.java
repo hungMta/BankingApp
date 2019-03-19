@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.adapters.GoldAreaRecyclerViewAdapter;
-import com.hungtran.bankingassistant.model.GoldAreaResponse;
+import com.hungtran.bankingassistant.model.gold.GoldAreaResponse;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
 
 import butterknife.BindView;

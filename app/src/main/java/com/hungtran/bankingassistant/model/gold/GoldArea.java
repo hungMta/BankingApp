@@ -1,4 +1,4 @@
-package com.hungtran.bankingassistant.model;
+package com.hungtran.bankingassistant.model.gold;
 
 import com.google.gson.annotations.SerializedName;
 

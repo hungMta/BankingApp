@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.model.BaseModel;
+import com.hungtran.bankingassistant.model.base.BaseModel;
 
 import java.util.List;
 

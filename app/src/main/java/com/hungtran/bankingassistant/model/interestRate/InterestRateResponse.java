@@ -1,6 +1,7 @@
-package com.hungtran.bankingassistant.model;
+package com.hungtran.bankingassistant.model.interestRate;
 
 import com.google.gson.annotations.SerializedName;
+import com.hungtran.bankingassistant.model.base.BaseResponse;
 
 import java.util.List;
 

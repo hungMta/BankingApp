@@ -32,6 +32,7 @@
                   />
 
               <TextView
+                  android:id="@+id/txtName"
                   android:layout_toRightOf="@+id/icon"
                   android:layout_toLeftOf="@+id/txtDistant"
                   android:layout_marginLeft="5dp"
@@ -56,6 +57,7 @@
           </RelativeLayout>
 
           <TextView
+              android:id="@+id/addressDetail"
               android:layout_width="match_parent"
               android:textColor="@color/colorLightPrimary"
               android:textSize="14sp"

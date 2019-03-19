@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.model.Gold;
+import com.hungtran.bankingassistant.model.gold.Gold;
 
 import java.util.List;
 

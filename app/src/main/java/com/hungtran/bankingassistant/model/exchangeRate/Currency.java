@@ -1,4 +1,4 @@
-package com.hungtran.bankingassistant.model;
+package com.hungtran.bankingassistant.model.exchangeRate;
 
 import com.google.gson.annotations.SerializedName;
 import com.hungtran.bankingassistant.util.DataHelper;
