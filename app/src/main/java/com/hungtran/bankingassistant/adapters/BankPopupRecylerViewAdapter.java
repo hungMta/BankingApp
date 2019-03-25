@@ -5,11 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.exchangeRate.ExchangeRate;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ import butterknife.ButterKnife;
 public class BankPopupRecylerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ExchangeRate> mBanks = new ArrayList<>();
-    private  OnItemClick mOnItemClick;
+    private OnItemClick mOnItemClick;
 
     public BankPopupRecylerViewAdapter(List<ExchangeRate> list) {
         this.mBanks = list;
@@ -50,6 +52,7 @@ public class BankPopupRecylerViewAdapter extends RecyclerView.Adapter<RecyclerVi
             }
         });
         ((BankListItem) viewHolder).mBankName.setText(mBanks.get(i).getCodeName());
+        Picasso.get().load(mBanks.get(i).getImg()).into(((BankListItem) viewHolder).mImgBank);
     }
 
     @Override
@@ -65,6 +68,9 @@ public class BankPopupRecylerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         @BindView(R.id.txtBankName)
         TextView mBankName;
 
+        @BindView(R.id.imgBank)
+        ImageView mImgBank;
+
         public BankListItem(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -75,7 +81,7 @@ public class BankPopupRecylerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         void itemBankPopupClick(ExchangeRate exchangeRate);
     }
 
-    public  void setOnItemClick(OnItemClick itemClick) {
+    public void setOnItemClick(OnItemClick itemClick) {
         mOnItemClick = itemClick;
     }
 }

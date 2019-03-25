@@ -21,15 +21,19 @@ public class ExchangeRate {
     @SerializedName("interest_rate")
     private List<Currency> currencies;
 
+    @SerializedName("image_banking")
+    private String img;
+
     public ExchangeRate() {
     }
 
-    public ExchangeRate(int id, String name, String codeName, String timeCrawling, List<Currency> currencies) {
+    public ExchangeRate(int id, String name, String codeName, String timeCrawling, List<Currency> currencies, String img) {
         this.id = id;
         this.name = name;
         this.codeName = codeName;
         this.timeCrawling = timeCrawling;
         this.currencies = currencies;
+        this.img = img;
     }
 
     public int getId() {
@@ -70,5 +74,13 @@ public class ExchangeRate {
 
     public void setCurrencies(List<Currency> currencies) {
         this.currencies = currencies;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

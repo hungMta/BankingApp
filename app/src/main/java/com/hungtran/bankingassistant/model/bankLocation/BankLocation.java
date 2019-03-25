@@ -11,16 +11,29 @@ public class BankLocation  {
     @SerializedName("full_name")
     private String fullName;
 
+    @SerializedName("name")
+    private String name;
+
+
     @SerializedName("position")
     private List<BranchLocation> branchLocations;
 
     public BankLocation() {
     }
 
-    public BankLocation(int id, String fullName, List<BranchLocation> branchLocations) {
+    public BankLocation(int id, String fullName, String name, List<BranchLocation> branchLocations) {
         this.id = id;
         this.fullName = fullName;
+        this.name = name;
         this.branchLocations = branchLocations;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {

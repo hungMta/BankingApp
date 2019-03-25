@@ -6,16 +6,20 @@ public class Gold {
     @SerializedName("name")
     private String name;
 
-    @SerializedName("buy")
-    private String buy;
+   @SerializedName("current_price")
+   private GoldPrice currentPrice;
 
-    @SerializedName("sell")
-    private String sell;
+    @SerializedName("old_price_1")
+    private GoldPrice oldPrice1;
 
-    public Gold(String name, String buy, String sell) {
+    @SerializedName("old_price_2")
+    private GoldPrice oldPrice2;
+
+    public Gold(String name, GoldPrice currentPrice, GoldPrice oldPrice1, GoldPrice oldPrice2) {
         this.name = name;
-        this.buy = buy;
-        this.sell = sell;
+        this.currentPrice = currentPrice;
+        this.oldPrice1 = oldPrice1;
+        this.oldPrice2 = oldPrice2;
     }
 
     public String getName() {
@@ -26,19 +30,27 @@ public class Gold {
         this.name = name;
     }
 
-    public String getBuy() {
-        return buy;
+    public GoldPrice getCurrentPrice() {
+        return currentPrice;
     }
 
-    public void setBuy(String buy) {
-        this.buy = buy;
+    public void setCurrentPrice(GoldPrice currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
-    public String getSell() {
-        return sell;
+    public GoldPrice getOldPrice1() {
+        return oldPrice1;
     }
 
-    public void setSell(String sell) {
-        this.sell = sell;
+    public void setOldPrice1(GoldPrice oldPrice1) {
+        this.oldPrice1 = oldPrice1;
+    }
+
+    public GoldPrice getOldPrice2() {
+        return oldPrice2;
+    }
+
+    public void setOldPrice2(GoldPrice oldPrice2) {
+        this.oldPrice2 = oldPrice2;
     }
 }

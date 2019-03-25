@@ -1,5 +1,6 @@
 package com.hungtran.bankingassistant.network;
 
+import com.hungtran.bankingassistant.model.area.AreaResponse;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequest;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequestBody;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationResponse;
@@ -12,6 +13,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface BankingApi {
     @GET("/api/getAllExchangeRate")
@@ -25,4 +28,7 @@ public interface BankingApi {
 
     @POST("/api/search/position")
     Observable<BankLocationResponse> searchBankLocation(@Header("Authorization") String authHeader, @Body BankLocationRequest bankLocationRequest);
+
+    @GET("/api/district/getAllDistrict")
+    Observable<AreaResponse> getArea(@Header("Authorization")  String authHeader, @Query("idArea") int idArea);
 }

@@ -26,7 +26,7 @@ public class Currency {
     @SerializedName("sell_card")
     private double sellCard;
 
-    @SerializedName("image")
+    @SerializedName("image_currency")
     private String imageURL;
 
     private String buyCashString;

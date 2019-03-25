@@ -20,6 +20,7 @@ import com.hungtran.bankingassistant.ui.news.NewsFragment;
 import com.hungtran.bankingassistant.util.DataHelper;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
+import java.util.Date;
 import java.util.zip.Inflater;
 
 import butterknife.BindView;

@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocation;
 import com.hungtran.bankingassistant.model.bankLocation.BranchLocation;
+import com.hungtran.bankingassistant.model.base.Bank;
 
 import org.w3c.dom.Text;
 
@@ -27,10 +29,12 @@ import butterknife.ButterKnife;
 public class BranchSearchRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<BranchLocation> branchLocations;
+    private List<BankLocation> bankLocations;
     public OnBranchRecyclerViewApdapterListener mOnBranchRecyclerViewApdapterListener;
 
-    public BranchSearchRecyclerViewAdapter(List<BranchLocation> branchLocations) {
+    public BranchSearchRecyclerViewAdapter(List<BranchLocation> branchLocations, List<BankLocation> bankLocations) {
         this.branchLocations = branchLocations;
+        this.bankLocations = bankLocations;
     }
 
 
@@ -44,17 +48,18 @@ public class BranchSearchRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        ((BranchSearchItem)viewHolder).mTxtName.setText(branchLocations.get(i).getName());
-        ((BranchSearchItem)viewHolder).mTxtAddressDetail.setText(branchLocations.get(i).getAddress());
-        ((BranchSearchItem)viewHolder).mTxtDistant.setText(String.valueOf(branchLocations.get(i).getDistance()));
-        ((BranchSearchItem)viewHolder).mCardView.setOnClickListener(new View.OnClickListener() {
+        ((BranchSearchItem) viewHolder).mTxtName.setText(getBankName(branchLocations.get(i).getIdBank()) + " - " + branchLocations.get(i).getName());
+        ((BranchSearchItem) viewHolder).mTxtAddressDetail.setText(branchLocations.get(i).getAddress());
+        ((BranchSearchItem) viewHolder).mTxtDistant.setText(String.valueOf(branchLocations.get(i).getDistance()));
+        ((BranchSearchItem) viewHolder).mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mOnBranchRecyclerViewApdapterListener != null){
+                if (mOnBranchRecyclerViewApdapterListener != null) {
                     mOnBranchRecyclerViewApdapterListener.onItemBranchReyclerViewAdapterClicked(branchLocations.get(i));
                 }
             }
         });
+        ((BranchSearchItem) viewHolder).mTxtDistant.setText("");
     }
 
     @Override
@@ -62,9 +67,19 @@ public class BranchSearchRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         return branchLocations == null ? 0 : branchLocations.size();
     }
 
-    public void updateAdapter(List<BranchLocation> list) {
+    public void updateAdapter(List<BranchLocation> list, List<BankLocation> bankLocations) {
         this.branchLocations = list;
+        this.bankLocations = bankLocations;
         notifyDataSetChanged();
+    }
+
+    private String getBankName(int id) {
+        for (BankLocation bankLocation : bankLocations) {
+            if (bankLocation.getId() == id) {
+                return bankLocation.getName();
+            }
+        }
+        return "";
     }
 
     public class BranchSearchItem extends RecyclerView.ViewHolder {
@@ -91,7 +106,7 @@ public class BranchSearchRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         void onItemBranchReyclerViewAdapterClicked(BranchLocation branchLocation);
     }
 
-    public void setOnBranchRecyclerViewApdapterListener(OnBranchRecyclerViewApdapterListener listener){
+    public void setOnBranchRecyclerViewApdapterListener(OnBranchRecyclerViewApdapterListener listener) {
         mOnBranchRecyclerViewApdapterListener = listener;
     }
 }

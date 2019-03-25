@@ -16,33 +16,93 @@
             android:id="@+id/txtGoldName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
             android:layout_weight="4"
+            android:gravity="center_vertical"
             android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/txtGoldBuy"
+
+        <RelativeLayout
+            android:id="@+id/layoutGoldBuy"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:background="@drawable/border_left_right_white"
-            android:gravity="center"
-            android:text="@string/buy"
-            android:textColor="@color/colorBlack" />
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/txtGoldSell"
+            <TextView
+                android:id="@+id/txtGoldBuy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_toLeftOf="@+id/imgBuyStatus"
+                android:text="@string/buy"
+                android:textColor="@color/colorBlack" />
+
+
+            <ImageView
+                android:id="@+id/imgBuyStatus"
+                android:layout_width="15dp"
+                android:layout_height="10dp"
+                android:layout_toLeftOf="@id/txtBuyChange"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_icon_up" />
+
+            <TextView
+                android:id="@+id/txtBuyChange"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="-20"
+                android:minWidth="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                android:layout_alignParentEnd="true"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutGoldSell"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:gravity="center"
-            android:text="@string/sell"
-            android:textColor="@color/colorBlack" />
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txtGoldSell"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_toLeftOf="@+id/imgSellStatus"
+                android:text="@string/sell"
+                android:textColor="@color/colorBlack" />
+
+
+            <ImageView
+                android:id="@+id/imgSellStatus"
+                android:layout_width="15dp"
+                android:layout_height="10dp"
+                android:layout_toLeftOf="@+id/txtSellChange"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_icon_up" />
+
+            <TextView
+                android:id="@+id/txtSellChange"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="-20"
+                android:minWidth="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                android:layout_alignParentEnd="true"
+                />
+
+        </RelativeLayout>
+
     </LinearLayout>
 
     <View
-        android:background="@color/colorLight2Gray"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:background="@color/colorLight2Gray" />
 
 </LinearLayout>

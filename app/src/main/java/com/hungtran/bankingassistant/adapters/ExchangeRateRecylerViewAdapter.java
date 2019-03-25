@@ -9,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.exchangeRate.Currency;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,8 @@ public class ExchangeRateRecylerViewAdapter extends RecyclerView.Adapter<Recycle
         ((CurrencyItem) viewHolder).mTxtBuyCash.setText(currencies.get(i).getBuyCashString());
         ((CurrencyItem) viewHolder).mTxtBuyCard.setText(currencies.get(i).getBuyCardString());
         ((CurrencyItem) viewHolder).mTxtSellCash.setText(currencies.get(i).getSellCashString());
+        String imgUrl = currencies.get(i).getImageURL();
+        Picasso.get().load(imgUrl).into(((CurrencyItem)viewHolder).mImgCurrency);
     }
 
 
@@ -95,6 +99,9 @@ public class ExchangeRateRecylerViewAdapter extends RecyclerView.Adapter<Recycle
 
         @BindView(R.id.txtSellCash)
         TextView mTxtSellCash;
+
+        @BindView(R.id.imgCurrency)
+        ImageView mImgCurrency;
 
         public CurrencyItem(@NonNull View itemView) {
             super(itemView);

@@ -60,5 +60,7 @@
     <string name="principal_balance">DƯ NỢ GỐC</string>
     <string name="principal_balance_decreased">DƯ NỢ GIẢM DẦN</string>
     <string name="time_update">Thời gian cập nhật</string>
+    <string name="choose_area">Chọn khu vực</string>
+    <string name="nearest_area">Địa điểm gần đây</string>
 
 </resources>

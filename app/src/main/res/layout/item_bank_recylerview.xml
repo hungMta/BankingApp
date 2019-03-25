@@ -16,7 +16,7 @@
 
 
         <ImageView
-            android:background="@color/colorLightGray"
+            android:id="@+id/imgBank"
             android:layout_width="20dp"
             android:layout_height="20dp" />
 

@@ -42,9 +42,12 @@
             android:src="@drawable/ic_search" />
 
         <EditText
+            android:id="@+id/edtSearch"
             android:layout_width="0dp"
+            android:imeOptions="actionDone"
             android:layout_height="match_parent"
             android:layout_weight="4"
+            android:inputType="text"
             android:background="@color/colorTransparent"
             android:hint="Tìm kiếm"
             android:textSize="14sp" />
@@ -65,13 +68,14 @@
                 android:src="@drawable/ic_thin_arrow_down" />
 
             <TextView
+                android:id="@+id/txtArea"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:ellipsize="end"
                 android:gravity="center|left"
                 android:maxLines="1"
-                android:text="ABC 123 asdf "
+                android:text="Địa điểm gần đây"
                 android:textColor="@color/colorLightPrimary" />
 
         </LinearLayout>
@@ -118,6 +122,7 @@
                 android:text="Lọc địa điểm" />
 
             <LinearLayout
+                android:id="@+id/layoutSearchBranch"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorWhite"
@@ -141,6 +146,7 @@
 
 
                 <ImageView
+                    android:id="@+id/imgSearchBranchCheck"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="16dp"
@@ -157,6 +163,7 @@
                 android:background="@color/colorLightGray" />
 
             <LinearLayout
+                android:id="@+id/layoutSearchATM"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorWhite"
@@ -180,6 +187,7 @@
 
 
                 <ImageView
+                    android:id="@+id/imgSearchATMCheck"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="16dp"
@@ -193,5 +201,19 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/layoutProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_centerInParent="true"
+            android:layout_width="50dp"
+            android:indeterminate="true"
+            android:layout_height="50dp" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

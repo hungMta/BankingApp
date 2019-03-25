@@ -77,7 +77,7 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
         if (instance == null) {
             instance = new PersonalInterestRateFragment();
         }
-        return  new PersonalInterestRateFragment();
+        return new PersonalInterestRateFragment();
     }
 
     @Override
@@ -170,7 +170,11 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
         mAdapter.updateApdater(interestRateResponse.getInterestRateByBankList(), firstRateType, secondRateType, thirdRateType, fourthRateType);
         try {
             if (getActivity() == null && !isAdded()) return;
-            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " + interestRateResponse.getInterestRateByBankList().get(0).getTimeCrawling());
+            String timeUpdate = "";
+            if (interestRateResponse.getInterestRateByBankList().size() > 0) {
+                timeUpdate = interestRateResponse.getInterestRateByBankList().get(0).getTimeCrawling();
+            }
+            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " + timeUpdate);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }

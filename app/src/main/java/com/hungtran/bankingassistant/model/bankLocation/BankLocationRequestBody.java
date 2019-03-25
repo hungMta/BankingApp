@@ -3,6 +3,10 @@ package com.hungtran.bankingassistant.model.bankLocation;
 import com.google.gson.annotations.SerializedName;
 
 public class BankLocationRequestBody {
+
+    @SerializedName("type")
+    private int type;
+
     @SerializedName("id_bank")
     private int id;
 
@@ -24,10 +28,14 @@ public class BankLocationRequestBody {
     @SerializedName("city")
     private String city;
 
+    @SerializedName("address")
+    private String address;
+
     public BankLocationRequestBody() {
     }
 
-    public BankLocationRequestBody(int id, double longitude, double latitude, int atm, int branch, String district, String city) {
+    public BankLocationRequestBody(int type, int id, double longitude, double latitude, int atm, int branch, String district, String city, String address) {
+        this.type = type;
         this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -35,6 +43,15 @@ public class BankLocationRequestBody {
         this.branch = branch;
         this.district = district;
         this.city = city;
+        this.address = address;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public int getId() {
@@ -91,5 +108,13 @@ public class BankLocationRequestBody {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

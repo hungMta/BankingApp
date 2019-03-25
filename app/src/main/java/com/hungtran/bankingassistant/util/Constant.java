@@ -27,4 +27,11 @@ public class Constant {
     public static final Integer TYPE_MONTH_24_RATE = 24;
     public static final Integer TYPE_MONTH_36_RATE = 36;
     public static final String PRIMARY_COLOR = "#187139";
+    public static final String COLOR_UP = "#187139";
+    public static final String COLOR_DOWN = "#bf1414";
+    public static final String COLOR_UNCHANGE = "#000000";
+    public static final int TYPE_SEARCH_LOCATION = 1;
+    public static final int TYPE_SEARCH_AREA = 2;
+    public static final int TYPE_SEARCH_KEY = 3;
+
 }

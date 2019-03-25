@@ -2,22 +2,31 @@ package com.hungtran.bankingassistant.ui.map;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,10 +43,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.hungtran.bankingassistant.R;
+import com.hungtran.bankingassistant.adapters.AreaRecylerViewAdapter;
 import com.hungtran.bankingassistant.adapters.BranchSearchRecyclerViewAdapter;
+import com.hungtran.bankingassistant.dialog.AreaDialog;
+import com.hungtran.bankingassistant.model.area.Area;
+import com.hungtran.bankingassistant.model.area.AreaResponse;
+import com.hungtran.bankingassistant.model.bankLocation.BankLocation;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequestBody;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationResponse;
 import com.hungtran.bankingassistant.model.bankLocation.BranchLocation;
+import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
 import org.w3c.dom.Text;
@@ -54,7 +69,7 @@ import io.reactivex.ObservableOnSubscribe;
  * Created by hungtd on 2/18/19.
  */
 
-public class MapActivity extends BaseActivity implements MapConstract.View, OnMapReadyCallback, BranchSearchRecyclerViewAdapter.OnBranchRecyclerViewApdapterListener{
+public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogListener, AreaRecylerViewAdapter.AreaOnItemClick, View.OnClickListener, MapConstract.View, OnMapReadyCallback, BranchSearchRecyclerViewAdapter.OnBranchRecyclerViewApdapterListener {
     private static final Integer FINE_LOCATION_CODE = 10101;
     @BindView(R.id.my_toolbar)
     Toolbar mToolbar;
@@ -68,9 +83,30 @@ public class MapActivity extends BaseActivity implements MapConstract.View, OnMa
     @BindView(R.id.layoutFilter)
     LinearLayout mLayoutFilter;
 
+    @BindView(R.id.layoutSearchBranch)
+    LinearLayout mLayoutSearchBranch;
+
+    @BindView(R.id.layoutSearchATM)
+    LinearLayout mLayoutSearchAtm;
+
+    @BindView(R.id.imgSearchATMCheck)
+    ImageView mImgSearchATMCheck;
+
+    @BindView(R.id.imgSearchBranchCheck)
+    ImageView mImgSearchBranchCheck;
+
+    @BindView(R.id.layoutProgressBar)
+    RelativeLayout mLayoutProgressBar;
+
+    @BindView(R.id.edtSearch)
+    EditText mEdtSearch;
+
+    @BindView(R.id.txtArea)
+    TextView mTxtArea;
+
+    LatLng myLocation;
     SupportMapFragment mMapFragment;
     private GoogleMap mMap;
-
     private BranchSearchRecyclerViewAdapter mBranchSearchRecyclerViewAdapter;
     private static OnMapActivityListener mOnMapActivityListener;
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -80,6 +116,13 @@ public class MapActivity extends BaseActivity implements MapConstract.View, OnMa
     private MapPresenter mPresenter;
     private BankLocationResponse mBankLocationResponse;
     private List<Marker> markerList = new ArrayList<>();
+    private int isAtm = 1;
+    private int isBranch = 1;
+    private int typeSearch = Constant.TYPE_SEARCH_LOCATION;
+    private String addressEdtSearchText;
+    private String address;
+    private AreaResponse areaResponse;
+    private Area currentArea = new Area();
 
     @Override
     public int getLayoutId() {
@@ -92,6 +135,7 @@ public class MapActivity extends BaseActivity implements MapConstract.View, OnMa
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         mPresenter = new MapPresenter(this);
+        mPresenter.getArea();
         mToolbar.setTitle(null);
         mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -116,6 +160,14 @@ public class MapActivity extends BaseActivity implements MapConstract.View, OnMa
             mapFragment.getMapAsync(this);
         }
         mapFragment.getMapAsync(this);
+
+
+        mLayoutSearchAtm.setOnClickListener(this);
+        mLayoutSearchBranch.setOnClickListener(this);
+        mLayoutFilter.setVisibility(View.GONE);
+        setupEditTextSearch();
+        mTxtArea.setOnClickListener(this);
+        AreaRecylerViewAdapter.setAreaOnItemClick(this);
     }
 
     @Override
@@ -137,9 +189,11 @@ public class MapActivity extends BaseActivity implements MapConstract.View, OnMa
             if (isShowedLayoutFilter) {
                 isShowedLayoutFilter = false;
                 mLayoutFilter.setVisibility(View.GONE);
+                showProgress(true);
+                searchBank();
             } else {
-                isShowedLayoutFilter = true;
                 mLayoutFilter.setVisibility(View.VISIBLE);
+                isShowedLayoutFilter = true;
             }
             return true;
         }
@@ -182,11 +236,74 @@ public class MapActivity extends BaseActivity implements MapConstract.View, OnMa
     public void onItemBranchReyclerViewAdapterClicked(BranchLocation branchLocation) {
         LatLng latLng = new LatLng(branchLocation.getLatitude(), branchLocation.getLongtitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, (float) 13.0));
-        for (int i = 0; i < markerList.size(); i ++) {
-            if (markerList.get(i).getSnippet().equals(branchLocation.getAddress()) && markerList.get(i).getTitle().equals(branchLocation.getName())) {
+        for (int i = 0; i < markerList.size(); i++) {
+            if (markerList.get(i).getSnippet().equals(branchLocation.getAddress())) {
                 markerList.get(i).showInfoWindow();
                 break;
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.layoutSearchATM:
+                if (isAtm == 1) {
+                    isAtm = 0;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mImgSearchATMCheck.setImageDrawable(getDrawable(R.drawable.ic_check_circle_gray));
+                    } else {
+                        mImgSearchATMCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_circle_gray));
+                    }
+                } else {
+                    isAtm = 1;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mImgSearchATMCheck.setImageDrawable(getDrawable(R.drawable.ic_check_circle));
+                    } else {
+                        mImgSearchATMCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_circle));
+                    }
+                }
+                break;
+            case R.id.layoutSearchBranch:
+                if (isBranch == 1) {
+                    isBranch = 0;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mImgSearchBranchCheck.setImageDrawable(getDrawable(R.drawable.ic_check_circle_gray));
+                    } else {
+                        mImgSearchBranchCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_circle_gray));
+                    }
+                } else {
+                    isBranch = 1;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mImgSearchBranchCheck.setImageDrawable(getDrawable(R.drawable.ic_check_circle));
+                    } else {
+                        mImgSearchBranchCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_circle));
+                    }
+                }
+                break;
+            case R.id.txtArea:
+                showAreaDialog();
+                break;
+        }
+    }
+
+    @Override
+    public void areaOnItemClick(Area area) {
+        currentArea = area;
+    }
+
+    @Override
+    public void onAreaDialogDestroy(Area area) {
+        currentArea = area;
+        if (currentArea != null) {
+            if (currentArea.getId() == 0 && currentArea.getIdArea() == 0) {
+                typeSearch = Constant.TYPE_SEARCH_LOCATION;
+            } else {
+                typeSearch = Constant.TYPE_SEARCH_AREA;
+            }
+            showProgress(true);
+            searchBank();
+            mTxtArea.setText(currentArea.getName());
         }
     }
 
@@ -200,7 +317,7 @@ public class MapActivity extends BaseActivity implements MapConstract.View, OnMa
     }
 
     private void setupRecyclerView() {
-        mBranchSearchRecyclerViewAdapter = new BranchSearchRecyclerViewAdapter(new ArrayList<>());
+        mBranchSearchRecyclerViewAdapter = new BranchSearchRecyclerViewAdapter(new ArrayList<>(), null);
         mBranchSearchRecyclerViewAdapter.setOnBranchRecyclerViewApdapterListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerViewBranch.setLayoutManager(linearLayoutManager);
@@ -210,41 +327,115 @@ public class MapActivity extends BaseActivity implements MapConstract.View, OnMa
 
     private void redirectToCurrentLocation(Location location) {
         LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
-//        markerOptions.icon(BitmapDescriptorFactory.defaultMarker());
-        markerOptions.position(myLocation);
-        markerOptions.title("My location haha hahah ahah hahah ha hah 213 21123 1  sdf asdf sadf asdf saf df");
-        markerOptions.snippet("123123 12312 12312312 123");
-        mMap.addMarker(markerOptions);
+        this.myLocation = myLocation;
+        markMyLocation();
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, (float) 13.0));
+        searchBank();
+    }
 
+    private void searchBank() {
         BankLocationRequestBody bankLocationRequestBody = new BankLocationRequestBody();
         bankLocationRequestBody.setId(0);
+        bankLocationRequestBody.setType(typeSearch);
+        bankLocationRequestBody.setAtm(isBranch);
+        bankLocationRequestBody.setBranch(isAtm);
         bankLocationRequestBody.setLatitude(myLocation.latitude);
         bankLocationRequestBody.setLongitude(myLocation.longitude);
+        bankLocationRequestBody.setDistrict(currentArea.getName());
         bankLocationRequestBody.setCity("Hà Nội");
+        bankLocationRequestBody.setAddress(addressEdtSearchText);
         mPresenter.searchBankPosition(bankLocationRequestBody);
     }
 
     @Override
     public void searchBankPositionResult(BankLocationResponse bankLocationResponse) {
+        showProgress(false);
+        mMap.clear();
+        markMyLocation();
+        List<BranchLocation> branchLocationList = new ArrayList<>();
+        Toast.makeText(this, "success + " + bankLocationResponse.getBankLocations().size(), Toast.LENGTH_SHORT).show();
+        if (bankLocationResponse.getBankLocations().size() == 0) {
+            mBranchSearchRecyclerViewAdapter.updateAdapter(null, null);
+            return;
+        }
         try {
-            List<BranchLocation> branchLocationList = bankLocationResponse.getBankLocations().get(0).getBranchLocations();
-            mBranchSearchRecyclerViewAdapter.updateAdapter(branchLocationList);
             markerList = new ArrayList<>();
-            for (BranchLocation location: branchLocationList) {
-                LatLng loc = new LatLng(location.getLatitude(), location.getLongtitude());
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                markerOptions.position(loc);
-                markerOptions.title(location.getName());
-                markerOptions.snippet(location.getAddress());
-                markerList.add(mMap.addMarker(markerOptions));
+            for (BankLocation bankLocation : bankLocationResponse.getBankLocations()) {
+                List<BranchLocation> list = bankLocation.getBranchLocations();
+                branchLocationList.addAll(list);
+                String bankName = bankLocation.getName();
+                for (BranchLocation location : list) {
+                    LatLng loc = new LatLng(location.getLatitude(), location.getLongtitude());
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    markerOptions.position(loc);
+                    markerOptions.title(bankName + " - " + location.getName());
+                    markerOptions.snippet(location.getAddress());
+                    markerList.add(mMap.addMarker(markerOptions));
+                }
             }
-        }catch (NullPointerException e){
+            mBranchSearchRecyclerViewAdapter.updateAdapter(branchLocationList, bankLocationResponse.getBankLocations());
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void getAreaSuccess(AreaResponse areaResponse) {
+        this.areaResponse = areaResponse;
+    }
+
+    @Override
+    public void hideProgress() {
+        showProgress(false);
+    }
+
+    private void markMyLocation() {
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
+        markerOptions.position(myLocation);
+        mMap.addMarker(markerOptions);
+    }
+
+    private void setupEditTextSearch() {
+        mEdtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    addressEdtSearchText = v.getText().toString();
+                    typeSearch = Constant.TYPE_SEARCH_KEY;
+                    showProgress(true);
+                    searchBank();
+                    handled = true;
+                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(mEdtSearch.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return handled;
+            }
+        });
+    }
+
+    private void showProgress(boolean isShow) {
+        if (isShow) {
+            mLayoutProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            mLayoutProgressBar.setVisibility(View.GONE);
+        }
+    }
+
+    private void showAreaDialog() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            fragmentTransaction.remove(prev);
+        }
+        fragmentTransaction.addToBackStack(null);
+
+        // Create and show the dialog.
+        AreaDialog areaDialog = AreaDialog.newInstance(areaResponse);
+        areaDialog.show(fragmentTransaction, "dialog");
+        AreaDialog.setAreaDialogListener(this);
     }
 }
