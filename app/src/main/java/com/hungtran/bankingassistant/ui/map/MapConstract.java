@@ -1,6 +1,7 @@
 package com.hungtran.bankingassistant.ui.map;
 
 import com.hungtran.bankingassistant.model.area.AreaResponse;
+import com.hungtran.bankingassistant.model.bankLocation.AvaiableBankLocationResponse;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequestBody;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationResponse;
 
@@ -15,6 +16,8 @@ public interface MapConstract {
 
         void getAreaSuccess(AreaResponse areaResponse);
 
+        void getAvaiableBankLocationSuccess(AvaiableBankLocationResponse avaiableBankLocationResponse);
+
         void hideProgress();
     }
 
@@ -22,5 +25,7 @@ public interface MapConstract {
         void searchBankPosition(BankLocationRequestBody bankLocationRequestBody);
 
         void getArea();
+
+        void getAvaibleBankLocation();
     }
 }

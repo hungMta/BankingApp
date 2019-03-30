@@ -29,11 +29,14 @@ public class BranchLocation {
     @Expose
     private double distance;
 
+    @Expose
+    private int type;
+
 
     public BranchLocation() {
     }
 
-    public BranchLocation(int id, int idBank, String name, String address, double latitude, double longtitude, int status, double distance) {
+    public BranchLocation(int id, int idBank, String name, String address, double latitude, double longtitude, int status, double distance, int type) {
         this.id = id;
         this.idBank = idBank;
         this.name = name;
@@ -42,6 +45,7 @@ public class BranchLocation {
         this.longtitude = longtitude;
         this.status = status;
         this.distance = distance;
+        this.type = type;
     }
 
     public int getId() {
@@ -50,6 +54,14 @@ public class BranchLocation {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public int getIdBank() {

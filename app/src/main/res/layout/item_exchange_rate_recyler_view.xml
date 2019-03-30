@@ -7,82 +7,128 @@
     <LinearLayout
         android:id="@+id/layoutItem"
         android:layout_width="match_parent"
-        android:weightSum="4"
-        android:layout_height="20dp">
+        android:layout_height="20dp"
+        android:weightSum="4">
 
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1.3"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp"
+            android:layout_weight="1"
             android:background="@drawable/border_left_right_white"
             android:gravity="center_vertical"
-            android:paddingRight="5dp"
-            >
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
 
             <ImageView
                 android:id="@+id/imgCurrency"
                 android:layout_width="25dp"
                 android:layout_height="15dp"
-                android:background="@color/colorLightGray"
-                />
+                android:background="@color/colorLightGray" />
 
             <TextView
                 android:id="@+id/txtCurrencyName"
                 android:layout_width="match_parent"
-                android:textColor="@color/colorBlack"
-                android:gravity="center|left"
-                android:layout_marginLeft="5dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:gravity="center|left"
                 android:text="@string/exchange_rate"
-                />
+                android:textColor="@color/colorBlack" />
 
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/txtBuyCash"
+        <RelativeLayout
+            android:id="@+id/layoutBuyCash"
             android:layout_width="0dp"
-            android:layout_weight="0.9"
-            android:textColor="@color/colorBlack"
-            android:gravity="center|right"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/border_right_white"
-            android:text="@string/buy_cash"
-            />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/txtBuyCard"
+            <TextView
+                android:id="@+id/txtBuyCash"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/imgBuyCashStatus"
+                android:gravity="center|right"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/buy_cash"
+                android:textColor="@color/colorBlack" />
+
+            <ImageView
+                android:id="@+id/imgBuyCashStatus"
+                android:layout_width="15dp"
+                android:layout_height="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_icon_up" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/layoutBuyCard"
             android:layout_width="0dp"
-            android:layout_weight="0.9"
-            android:textColor="@color/colorBlack"
-            android:gravity="center|right"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:layout_height="match_parent"
-            android:text="@string/buy_card"
-            />
-        <TextView
-            android:id="@+id/txtSellCash"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/txtBuyCard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/imgBuyCardStatus"
+                android:gravity="center|right"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/buy_card"
+                android:textColor="@color/colorBlack" />
+
+            <ImageView
+                android:id="@+id/imgBuyCardStatus"
+                android:layout_width="15dp"
+                android:layout_height="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_icon_up" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutSellCash"
             android:layout_width="0dp"
-            android:layout_weight="0.9"
-            android:textColor="@color/colorBlack"
-            android:gravity="center|right"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:layout_height="match_parent"
-            android:text="@string/sell"
+            android:layout_weight="1"
             android:background="@drawable/border_left_right_white"
-            />
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/txtSellCash"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/imgSellCashStatus"
+                android:gravity="center|right"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/sell"
+                android:textColor="@color/colorBlack" />
+
+            <ImageView
+                android:id="@+id/imgSellCashStatus"
+                android:layout_width="15dp"
+                android:layout_height="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_icon_up" />
+        </RelativeLayout>
+
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorLightGray"
-        />
+        android:background="@color/colorLightGray" />
 </LinearLayout>

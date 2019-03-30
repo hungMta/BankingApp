@@ -3,6 +3,7 @@ package com.hungtran.bankingassistant.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -87,6 +88,7 @@ public class DataHelper {
     }
 
     public static Date getDateFromString(String string) {
+        if (string == null) return null;
         try {
             String[] subArr = string.split("\\.");
             if (subArr.length > 0) {
@@ -100,5 +102,21 @@ public class DataHelper {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String getTime(String time, int type) {
+        Date date = DataHelper.getDateFromString(time);
+        if (date == null) return "";
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        if (type == 0) {
+            int hour = calendar.get(Calendar.HOUR);
+            int min = calendar.get(Calendar.MINUTE);
+            return "" + hour + ":" + min;
+        } else {
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DATE);
+            return "" + day + "/" + month;
+        }
     }
 }

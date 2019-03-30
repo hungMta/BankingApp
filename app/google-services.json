@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "143389158878",
+    "firebase_url": "https://linking-bank.firebaseio.com",
+    "project_id": "linking-bank",
+    "storage_bucket": "linking-bank.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143389158878:android:cc0caa50f01a8657",
+        "android_client_info": {
+          "package_name": "com.hungtran.bankingassistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "143389158878-3bv967e1i3716n96s3k5f7da0cmiqs8p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hungtran.bankingassistant",
+            "certificate_hash": "0024c6e07b70fdbf3775272e8a56578d5d3c0ec3"
+          }
+        },
+        {
+          "client_id": "143389158878-7jj6436jtlvu08nchrnbqdiknk8g3rjs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-u9lXDBRcs0rAInyhxVHbO3rj_HHPTnk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "143389158878-7jj6436jtlvu08nchrnbqdiknk8g3rjs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

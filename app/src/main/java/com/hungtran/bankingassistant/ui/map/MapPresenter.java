@@ -3,6 +3,8 @@ package com.hungtran.bankingassistant.ui.map;
 import android.util.Log;
 
 import com.hungtran.bankingassistant.model.area.AreaResponse;
+import com.hungtran.bankingassistant.model.bankLocation.AvaiableBankLocationResponse;
+import com.hungtran.bankingassistant.model.bankLocation.Bank;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequest;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequestBody;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationResponse;
@@ -37,6 +39,11 @@ public class MapPresenter implements MapConstract.Presenter {
     @Override
     public void getArea() {
         getAreaObservabable().subscribeWith(getAreaObserver());
+    }
+
+    @Override
+    public void getAvaibleBankLocation() {
+        getAvaiableBankLocationObserverable().subscribeWith(getAvaiableBankLocationObserver());
     }
 
 
@@ -75,7 +82,7 @@ public class MapPresenter implements MapConstract.Presenter {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private DisposableObserver<AreaResponse> getAreaObserver(){
+    private DisposableObserver<AreaResponse> getAreaObserver() {
         return new DisposableObserver<AreaResponse>() {
             @Override
             public void onNext(AreaResponse areaResponse) {
@@ -92,6 +99,37 @@ public class MapPresenter implements MapConstract.Presenter {
             public void onComplete() {
                 mView.hideProgress();
                 Log.d(TAG, "onComplete: ");
+            }
+        };
+    }
+
+
+    private Observable<AvaiableBankLocationResponse> getAvaiableBankLocationObserverable() {
+        return ServiceGenerator.resquest().getAllBankPosition(Constant.TOKEN)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private DisposableObserver<AvaiableBankLocationResponse> getAvaiableBankLocationObserver() {
+        return new DisposableObserver<AvaiableBankLocationResponse>() {
+            @Override
+            public void onNext(AvaiableBankLocationResponse avaiableBankLocationResponse) {
+                if (avaiableBankLocationResponse.getBanks() != null) {
+                    Bank bank = new Bank(0, 0, null, null, "Tất cả", null);
+                    bank.setChecked(true);
+                    avaiableBankLocationResponse.getBanks().add(0, bank);
+                }
+                mView.getAvaiableBankLocationSuccess(avaiableBankLocationResponse);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         };
     }

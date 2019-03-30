@@ -29,6 +29,21 @@ public class Currency {
     @SerializedName("image_currency")
     private String imageURL;
 
+    @SerializedName("buy_cash_change")
+    private double buyCashChange;
+
+    @SerializedName("sell_cash_change")
+    private double sellCashChange;
+
+    @SerializedName("buy_card_change")
+    private double buyCardChange;
+
+    @SerializedName("sell_card_change")
+    private double sellCardChange;
+
+    @SerializedName("time_crawling")
+    private String timeCrawling;
+
     private String buyCashString;
     private String buyCardString;
     private String sellCashString;
@@ -143,6 +158,46 @@ public class Currency {
 
     public void setSellCardString(String sellCardString) {
         this.sellCardString = sellCardString;
+    }
+
+    public String getTimeCrawling() {
+        return timeCrawling;
+    }
+
+    public void setTimeCrawling(String timeCrawling) {
+        this.timeCrawling = timeCrawling;
+    }
+
+    public double getBuyCashChange() {
+        return buyCashChange;
+    }
+
+    public void setBuyCashChange(double buyCashChange) {
+        this.buyCashChange = buyCashChange;
+    }
+
+    public double getSellCashChange() {
+        return sellCashChange;
+    }
+
+    public void setSellCashChange(double sellCashChange) {
+        this.sellCashChange = sellCashChange;
+    }
+
+    public double getBuyCardChange() {
+        return buyCardChange;
+    }
+
+    public void setBuyCardChange(double buyCardChange) {
+        this.buyCardChange = buyCardChange;
+    }
+
+    public double getSellCardChange() {
+        return sellCardChange;
+    }
+
+    public void setSellCardChange(double sellCardChange) {
+        this.sellCardChange = sellCardChange;
     }
 
     public void formatMoney(){

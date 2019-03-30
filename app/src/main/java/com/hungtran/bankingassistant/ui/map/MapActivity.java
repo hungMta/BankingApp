@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -45,14 +47,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.adapters.AreaRecylerViewAdapter;
 import com.hungtran.bankingassistant.adapters.BranchSearchRecyclerViewAdapter;
+import com.hungtran.bankingassistant.adapters.FilterBankRecyclerViewAdapter;
 import com.hungtran.bankingassistant.dialog.AreaDialog;
 import com.hungtran.bankingassistant.model.area.Area;
 import com.hungtran.bankingassistant.model.area.AreaResponse;
+import com.hungtran.bankingassistant.model.bankLocation.AvaiableBankLocationResponse;
+import com.hungtran.bankingassistant.model.bankLocation.Bank;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocation;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequestBody;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationResponse;
 import com.hungtran.bankingassistant.model.bankLocation.BranchLocation;
 import com.hungtran.bankingassistant.util.Constant;
+import com.hungtran.bankingassistant.util.ImageHelper;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
 import org.w3c.dom.Text;
@@ -69,7 +75,13 @@ import io.reactivex.ObservableOnSubscribe;
  * Created by hungtd on 2/18/19.
  */
 
-public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogListener, AreaRecylerViewAdapter.AreaOnItemClick, View.OnClickListener, MapConstract.View, OnMapReadyCallback, BranchSearchRecyclerViewAdapter.OnBranchRecyclerViewApdapterListener {
+public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogListener,
+        AreaRecylerViewAdapter.AreaOnItemClick,
+        View.OnClickListener,
+        MapConstract.View,
+        OnMapReadyCallback,
+        BranchSearchRecyclerViewAdapter.OnBranchRecyclerViewApdapterListener,
+        FilterBankRecyclerViewAdapter.FilterBankListener {
     private static final Integer FINE_LOCATION_CODE = 10101;
     @BindView(R.id.my_toolbar)
     Toolbar mToolbar;
@@ -104,6 +116,9 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     @BindView(R.id.txtArea)
     TextView mTxtArea;
 
+    @BindView(R.id.recyclerBankList)
+    RecyclerView mRecylerBankList;
+
     LatLng myLocation;
     SupportMapFragment mMapFragment;
     private GoogleMap mMap;
@@ -118,11 +133,14 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     private List<Marker> markerList = new ArrayList<>();
     private int isAtm = 1;
     private int isBranch = 1;
+    private int idBank = 0;
     private int typeSearch = Constant.TYPE_SEARCH_LOCATION;
     private String addressEdtSearchText;
     private String address;
     private AreaResponse areaResponse;
     private Area currentArea = new Area();
+    private List<Bank> avaiableBankList;
+    private FilterBankRecyclerViewAdapter filterBankRecyclerViewAdapter;
 
     @Override
     public int getLayoutId() {
@@ -136,6 +154,7 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         setSupportActionBar(mToolbar);
         mPresenter = new MapPresenter(this);
         mPresenter.getArea();
+        mPresenter.getAvaibleBankLocation();
         mToolbar.setTitle(null);
         mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -168,6 +187,7 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         setupEditTextSearch();
         mTxtArea.setOnClickListener(this);
         AreaRecylerViewAdapter.setAreaOnItemClick(this);
+        setupAvaibleBankLocationRecyclerView();
     }
 
     @Override
@@ -307,6 +327,19 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         }
     }
 
+    @Override
+    public void onChooseBank(Bank bank) {
+        idBank = bank.getId();
+        for (int i = 0; i < avaiableBankList.size(); i++) {
+            if (idBank == avaiableBankList.get(i).getId()) {
+                avaiableBankList.get(i).setChecked(true);
+            } else {
+                avaiableBankList.get(i).setChecked(false);
+            }
+        }
+        filterBankRecyclerViewAdapter.updateAdapter(avaiableBankList);
+    }
+
 
     public interface OnMapActivityListener {
         void onMapActivtyDestroy();
@@ -335,10 +368,10 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
 
     private void searchBank() {
         BankLocationRequestBody bankLocationRequestBody = new BankLocationRequestBody();
-        bankLocationRequestBody.setId(0);
+        bankLocationRequestBody.setId(idBank);
         bankLocationRequestBody.setType(typeSearch);
-        bankLocationRequestBody.setAtm(isBranch);
-        bankLocationRequestBody.setBranch(isAtm);
+        bankLocationRequestBody.setAtm(isAtm);
+        bankLocationRequestBody.setBranch(isBranch);
         bankLocationRequestBody.setLatitude(myLocation.latitude);
         bankLocationRequestBody.setLongitude(myLocation.longitude);
         bankLocationRequestBody.setDistrict(currentArea.getName());
@@ -360,20 +393,31 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         }
         try {
             markerList = new ArrayList<>();
+            BitmapDescriptor bmBranchPlace = ImageHelper.getBranchPlaceIcon(this);
+            BitmapDescriptor bmAtmPlace = ImageHelper.getAtmPlaceIcon(this);
             for (BankLocation bankLocation : bankLocationResponse.getBankLocations()) {
                 List<BranchLocation> list = bankLocation.getBranchLocations();
                 branchLocationList.addAll(list);
                 String bankName = bankLocation.getName();
-                for (BranchLocation location : list) {
-                    LatLng loc = new LatLng(location.getLatitude(), location.getLongtitude());
+                for (int i = 0; i < list.size(); i++) {
+                    BranchLocation branchLocation = list.get(i);
+                    LatLng loc = new LatLng(branchLocation.getLatitude(), branchLocation.getLongtitude());
                     MarkerOptions markerOptions = new MarkerOptions();
-                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    if (branchLocation.getType() == 1) { // atm
+                        markerOptions.icon(bmAtmPlace);
+                    } else { // branch
+                        markerOptions.icon(bmBranchPlace);
+                    }
                     markerOptions.position(loc);
-                    markerOptions.title(bankName + " - " + location.getName());
-                    markerOptions.snippet(location.getAddress());
+                    markerOptions.title(bankName + " - " + branchLocation.getName());
+                    markerOptions.snippet(branchLocation.getAddress());
                     markerList.add(mMap.addMarker(markerOptions));
+                    if (i == 0) {
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, (float) 13.0));
+                    }
                 }
             }
+
             mBranchSearchRecyclerViewAdapter.updateAdapter(branchLocationList, bankLocationResponse.getBankLocations());
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -387,16 +431,31 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     }
 
     @Override
+    public void getAvaiableBankLocationSuccess(AvaiableBankLocationResponse avaiableBankLocationResponse) {
+        avaiableBankList = avaiableBankLocationResponse.getBanks();
+        filterBankRecyclerViewAdapter.updateAdapter(avaiableBankList);
+    }
+
+    private void setupAvaibleBankLocationRecyclerView() {
+        filterBankRecyclerViewAdapter = new FilterBankRecyclerViewAdapter(this, avaiableBankList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecylerBankList.setLayoutManager(layoutManager);
+        mRecylerBankList.setAdapter(filterBankRecyclerViewAdapter);
+        FilterBankRecyclerViewAdapter.setFilterBankListener(this);
+    }
+
+    @Override
     public void hideProgress() {
         showProgress(false);
     }
 
     private void markMyLocation() {
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
+        markerOptions.icon(ImageHelper.getMyPlaceIcon(this));
         markerOptions.position(myLocation);
         mMap.addMarker(markerOptions);
     }
+
 
     private void setupEditTextSearch() {
         mEdtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {

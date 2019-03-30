@@ -77,13 +77,13 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
 
     @Override
     public void showExchangeRates(List<ExchangeRate> list) {
-        mViewAdapter.updateAdapter(list.get(0).getCurrencies());
+        mViewAdapter.updateAdapter(list.get(0));
         this.exchangeRates = list;
         this.currentExchangeRate = list.get(0);
         mTxtCurrentBankName.setText(currentExchangeRate.getName());
         try {
-            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " +list.get(0).getTimeCrawling());
-        }catch (NullPointerException e) {
+            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " + list.get(0).getTimeCrawling());
+        } catch (NullPointerException e) {
 
         }
     }
@@ -99,7 +99,7 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
     }
 
     private void setupRecyclerView() {
-        mViewAdapter = new ExchangeRateRecylerViewAdapter(getContext(), new ArrayList<Currency>());
+        mViewAdapter = new ExchangeRateRecylerViewAdapter(getContext(), new ExchangeRate());
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mViewAdapter);
@@ -107,7 +107,7 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.layoutChooseBank:
                 PopupWindow popUp = showBankListPopup();
                 popUp.showAsDropDown(v, 0, -10);
@@ -137,7 +137,7 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
     public void itemBankPopupClick(ExchangeRate exchangeRate) {
         this.currentExchangeRate = exchangeRate;
         mTxtCurrentBankName.setText(currentExchangeRate.getName());
-        mViewAdapter.updateAdapter(exchangeRate.getCurrencies());
+        mViewAdapter.updateAdapter(exchangeRate);
         Log.d(TAG, "itemBankPopupClick: ");
         mBanksPopup.dismiss();
     }

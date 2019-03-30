@@ -24,8 +24,8 @@ public class ExchangeRateResponse extends BaseResponse {
 
     public void formatMoney(){
         for (int i = 0; i < exchangeRates.size(); i ++) {
-            for (int j = 0; j < exchangeRates.get(i).getCurrencies().size(); j ++) {
-                exchangeRates.get(i).getCurrencies().get(j).formatMoney();
+            for (int j = 0; j < exchangeRates.get(i).getCurrentExchangerate().size(); j ++) {
+                exchangeRates.get(i).getCurrentExchangerate().get(j).formatMoney();
             }
         }
     }

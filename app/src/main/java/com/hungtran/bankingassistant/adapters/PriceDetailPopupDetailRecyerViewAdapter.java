@@ -107,7 +107,7 @@ public class PriceDetailPopupDetailRecyerViewAdapter extends RecyclerView.Adapte
         }
 
 
-        ((PriceDetailItem) viewHolder).mTxtTime.setText(getTime(time,type));
+        ((PriceDetailItem) viewHolder).mTxtTime.setText(DataHelper.getTime(time,type));
         ((PriceDetailItem) viewHolder).mTxtPrice.setText(DataHelper.formatMoney(Double.parseDouble(price)));
         ((PriceDetailItem) viewHolder).mTxtDifference.setText(difference);
 
@@ -142,39 +142,19 @@ public class PriceDetailPopupDetailRecyerViewAdapter extends RecyclerView.Adapte
         return 3;
     }
 
-    private String getTime(String time, int type) {
-        Date date = DataHelper.getDateFromString(time);
-        if (date == null) return  "";
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        if (type == 0) {
-            int hour = calendar.get(Calendar.HOUR);
-            int min = calendar.get(Calendar.MINUTE);
-            return "" + hour + ":" + min;
-        } else {
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DATE);
-            return "" + day + "/" + month;
-        }
-    }
-
-    public class PriceDetailItem extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.txtTime)
-        TextView mTxtTime;
-
-        @BindView(R.id.txtPrice)
-        TextView mTxtPrice;
-
-        @BindView(R.id.txtDifference)
-        TextView mTxtDifference;
-
-        @BindView(R.id.imgStatus)
-        ImageView mImgStatus;
-
-        public PriceDetailItem(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
+//    private String getTime(String time, int type) {
+//        Date date = DataHelper.getDateFromString(time);
+//        if (date == null) return  "";
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(date);
+//        if (type == 0) {
+//            int hour = calendar.get(Calendar.HOUR);
+//            int min = calendar.get(Calendar.MINUTE);
+//            return "" + hour + ":" + min;
+//        } else {
+//            int month = calendar.get(Calendar.MONTH);
+//            int day = calendar.get(Calendar.DATE);
+//            return "" + day + "/" + month;
+//        }
+//    }
 }
