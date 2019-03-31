@@ -12,18 +12,13 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.adapters.BankPopupRecylerViewAdapter;
 import com.hungtran.bankingassistant.adapters.InterestRateRecyclerViewAdapter;
 import com.hungtran.bankingassistant.adapters.TimeDepositRecyclerViewAdapter;
-import com.hungtran.bankingassistant.model.Bank;
-import com.hungtran.bankingassistant.model.ExchangeRate;
-import com.hungtran.bankingassistant.model.InterestRateByBank;
-import com.hungtran.bankingassistant.model.InterestRateResponse;
+import com.hungtran.bankingassistant.model.interestRate.InterestRateByBank;
+import com.hungtran.bankingassistant.model.interestRate.InterestRateResponse;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -82,7 +77,7 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
         if (instance == null) {
             instance = new PersonalInterestRateFragment();
         }
-        return  new PersonalInterestRateFragment();
+        return new PersonalInterestRateFragment();
     }
 
     @Override
@@ -175,7 +170,11 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
         mAdapter.updateApdater(interestRateResponse.getInterestRateByBankList(), firstRateType, secondRateType, thirdRateType, fourthRateType);
         try {
             if (getActivity() == null && !isAdded()) return;
-            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " + interestRateResponse.getInterestRateByBankList().get(0).getTimeCrawling());
+            String timeUpdate = "";
+            if (interestRateResponse.getInterestRateByBankList().size() > 0) {
+                timeUpdate = interestRateResponse.getInterestRateByBankList().get(0).getTimeCrawling();
+            }
+            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " + timeUpdate);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }

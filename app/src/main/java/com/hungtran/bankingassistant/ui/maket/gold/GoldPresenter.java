@@ -2,12 +2,12 @@ package com.hungtran.bankingassistant.ui.maket.gold;
 
 import android.util.Log;
 
-import com.hungtran.bankingassistant.model.ExchangeRateResponse;
-import com.hungtran.bankingassistant.model.Gold;
-import com.hungtran.bankingassistant.model.GoldArea;
-import com.hungtran.bankingassistant.model.GoldAreaResponse;
+import com.hungtran.bankingassistant.model.gold.Gold;
+import com.hungtran.bankingassistant.model.gold.GoldArea;
+import com.hungtran.bankingassistant.model.gold.GoldAreaResponse;
 import com.hungtran.bankingassistant.network.ServiceGenerator;
 import com.hungtran.bankingassistant.util.Constant;
+import com.hungtran.bankingassistant.util.base.SharePreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class GoldPresenter implements GoldContract.Presenter{
 
     private Observable<GoldAreaResponse> getGoldAreaObservable() {
         return ServiceGenerator.resquest()
-                .getGoldArea(Constant.TOKEN)
+                .getGoldArea(SharePreference.getStringVal(Constant.TOKEN_KEY))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -63,31 +63,5 @@ public class GoldPresenter implements GoldContract.Presenter{
     @Override
     public void start() {
 
-    }
-
-    private GoldAreaResponse fakeData() {
-        Gold gold = new Gold("SJC", "123.45", "123.45");
-        Gold gold2 = new Gold("PNG", "111.45", "111.45");
-        List<Gold> golds = new ArrayList<>();
-        golds.add(gold);
-        golds.add(gold2);
-        GoldArea goldArea1 = new GoldArea("HCM", "12312312",golds);
-
-
-        GoldArea goldArea2 = new GoldArea("HN", "12312312",golds);
-
-
-        GoldArea goldArea3 = new GoldArea("DN", "12312312",golds);
-
-
-        GoldArea goldArea4 = new GoldArea("ABC", "12312312",golds);
-
-        List<GoldArea> list = new ArrayList<>();
-        list.add(goldArea1);
-        list.add(goldArea2);
-        list.add(goldArea3);
-        list.add(goldArea4);
-        GoldAreaResponse goldAreaResponse = new GoldAreaResponse(list);
-        return  goldAreaResponse;
     }
 }

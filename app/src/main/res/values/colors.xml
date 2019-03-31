@@ -3,14 +3,17 @@
     <color name="colorLightPrimary">#A0C97E</color>
     <color name="colorPrimary">#187139</color>
     <color name="colorPrimaryDark">#146137</color>
-    <color name="colorAccent">#A0C97E</color>
+    <color name="colorAccent">#187139</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorTabUnselect">#999999</color>
     <color name="colorTransparent">@android:color/transparent</color>
+    <color name="colorGrayTransparent">#ac383838</color>
     <color name="tab_backgroud_selected">#ffffff</color>
     <color name="tab_backgroud_unselected">#146137</color>
     <color name="colorLightGray">#b4b4b4</color>
     <color name="colorLight2Gray">#e2e2e2</color>
     <color name="colorBlueDark">#2e3679</color>
+    <color name="colorRed">#ff0026</color>
+    <color name="colorBackground">#F5F6F8</color>
 </resources>

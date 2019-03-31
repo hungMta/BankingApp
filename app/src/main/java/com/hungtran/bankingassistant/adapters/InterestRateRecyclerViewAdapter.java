@@ -9,10 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.model.InterestRateByBank;
+import com.hungtran.bankingassistant.model.interestRate.InterestRateByBank;
 import com.hungtran.bankingassistant.util.Constant;
 
-import java.security.PublicKey;
 import java.util.List;
 
 import butterknife.BindView;

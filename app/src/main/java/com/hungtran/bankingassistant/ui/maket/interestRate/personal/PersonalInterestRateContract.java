@@ -2,7 +2,7 @@ package com.hungtran.bankingassistant.ui.maket.interestRate.personal;
 
 import android.content.Context;
 
-import com.hungtran.bankingassistant.model.InterestRateResponse;
+import com.hungtran.bankingassistant.model.interestRate.InterestRateResponse;
 import com.hungtran.bankingassistant.util.BasePresenter;
 import com.hungtran.bankingassistant.util.BaseView;
 

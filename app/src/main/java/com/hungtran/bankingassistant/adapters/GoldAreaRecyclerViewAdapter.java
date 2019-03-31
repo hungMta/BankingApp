@@ -7,10 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.model.GoldArea;
+import com.hungtran.bankingassistant.model.gold.GoldArea;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class GoldAreaRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
     List<GoldArea> goldAreas;
     Context mContext;
+    private PopupWindow mPopup;
 
     public GoldAreaRecyclerViewAdapter(Context context, List<GoldArea> list) {
         this.goldAreas = list;
@@ -38,7 +40,7 @@ public class GoldAreaRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         ((GoldAreaItem) viewHolder).mTxtArea.setText(goldAreas.get(i).getArea());
-        GoldPriceRecyclerViewAdapter adapter = new GoldPriceRecyclerViewAdapter(goldAreas.get(i).getGoldList());
+        GoldPriceRecyclerViewAdapter adapter = new GoldPriceRecyclerViewAdapter(mContext,goldAreas.get(i).getGoldList());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         ((GoldAreaItem) viewHolder).mRecyclerViewGoldInArea.setLayoutManager(linearLayoutManager);
         ((GoldAreaItem) viewHolder).mRecyclerViewGoldInArea.setAdapter(adapter);
@@ -53,6 +55,8 @@ public class GoldAreaRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         this.goldAreas = list;
         notifyDataSetChanged();
     }
+
+
 
     public class GoldAreaItem extends RecyclerView.ViewHolder {
 

@@ -4,13 +4,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.model.ExchangeRateResponse;
-import com.hungtran.bankingassistant.model.InterestRateResponse;
+import com.hungtran.bankingassistant.model.interestRate.InterestRateResponse;
 import com.hungtran.bankingassistant.network.ServiceGenerator;
 import com.hungtran.bankingassistant.util.Constant;
-
-import java.util.Arrays;
-import java.util.List;
+import com.hungtran.bankingassistant.util.base.SharePreference;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -96,7 +93,7 @@ public class PersonalInterestRatePresenter implements PersonalInterestRateContra
 
     private Observable<InterestRateResponse> getInterestRateObserverable() {
         return ServiceGenerator.resquest()
-                .getInterestRate(Constant.TOKEN)
+                .getInterestRate(SharePreference.getStringVal(Constant.TOKEN_KEY))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -1,8 +1,6 @@
 package com.hungtran.bankingassistant.ui.calculator;
 
-import android.graphics.Paint;
-
-import com.hungtran.bankingassistant.model.CalculateInterestMoneyModel;
+import com.hungtran.bankingassistant.model.interestRate.CalculateInterestMoneyModel;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.DataHelper;
 

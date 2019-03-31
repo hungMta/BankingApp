@@ -1,8 +1,6 @@
 package com.hungtran.bankingassistant.ui.calculator;
 
-import com.hungtran.bankingassistant.model.CalculateInterestMoneyModel;
-import com.hungtran.bankingassistant.model.ExchangeRate;
-import com.hungtran.bankingassistant.ui.maket.exchangeRate.ExchangeRateContract;
+import com.hungtran.bankingassistant.model.interestRate.CalculateInterestMoneyModel;
 import com.hungtran.bankingassistant.util.BasePresenter;
 import com.hungtran.bankingassistant.util.BaseView;
 

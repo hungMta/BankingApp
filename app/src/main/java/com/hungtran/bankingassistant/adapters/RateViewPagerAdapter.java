@@ -8,6 +8,7 @@ import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.ui.maket.exchangeRate.ExchangeRateFragment;
 import com.hungtran.bankingassistant.ui.maket.gold.GoldFragment;
 import com.hungtran.bankingassistant.ui.maket.interestRate.InterestRateFragment;
+import com.hungtran.bankingassistant.ui.maket.interestRate.personal.PersonalInterestRateFragment;
 import com.hungtran.bankingassistant.util.FragmentUtils;
 
 public class RateViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -24,7 +25,7 @@ public class RateViewPagerAdapter extends FragmentStatePagerAdapter {
 //        if(fragment == null)
         Fragment fragment = null;
         switch (i) {
-            case 0: fragment = InterestRateFragment.getInstance(); break;
+            case 0: fragment = PersonalInterestRateFragment.getInstance(); break;
             case 1: fragment = ExchangeRateFragment.getInstance(); break;
             case 2: fragment = GoldFragment.getInstance(); break;
         }

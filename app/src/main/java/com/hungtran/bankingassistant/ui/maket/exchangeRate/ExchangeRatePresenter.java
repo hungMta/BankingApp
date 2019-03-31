@@ -2,12 +2,12 @@ package com.hungtran.bankingassistant.ui.maket.exchangeRate;
 
 import android.util.Log;
 
-import com.hungtran.bankingassistant.model.ExchangeRateResponse;
+import com.hungtran.bankingassistant.model.exchangeRate.ExchangeRateResponse;
 import com.hungtran.bankingassistant.network.ServiceGenerator;
 import com.hungtran.bankingassistant.util.Constant;
+import com.hungtran.bankingassistant.util.base.SharePreference;
 
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -35,7 +35,7 @@ public class ExchangeRatePresenter implements ExchangeRateContract.Presenter {
 
     private Observable<ExchangeRateResponse> getExchangeRateObservable() {
         return ServiceGenerator.resquest()
-                .getExchangeRates(Constant.TOKEN)
+                .getExchangeRates(SharePreference.getStringVal(Constant.TOKEN_KEY))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

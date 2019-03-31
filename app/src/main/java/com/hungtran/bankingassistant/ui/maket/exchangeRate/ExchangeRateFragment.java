@@ -1,6 +1,5 @@
 package com.hungtran.bankingassistant.ui.maket.exchangeRate;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,10 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,9 +15,8 @@ import android.widget.TextView;
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.adapters.BankPopupRecylerViewAdapter;
 import com.hungtran.bankingassistant.adapters.ExchangeRateRecylerViewAdapter;
-import com.hungtran.bankingassistant.model.Bank;
-import com.hungtran.bankingassistant.model.Currency;
-import com.hungtran.bankingassistant.model.ExchangeRate;
+import com.hungtran.bankingassistant.model.exchangeRate.Currency;
+import com.hungtran.bankingassistant.model.exchangeRate.ExchangeRate;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -82,13 +77,14 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
 
     @Override
     public void showExchangeRates(List<ExchangeRate> list) {
-        mViewAdapter.updateAdapter(list.get(0).getCurrencies());
+        if (list.size() == 0) { return; }
+        mViewAdapter.updateAdapter(list.get(0));
         this.exchangeRates = list;
         this.currentExchangeRate = list.get(0);
         mTxtCurrentBankName.setText(currentExchangeRate.getName());
         try {
-            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " +list.get(0).getTimeCrawling());
-        }catch (NullPointerException e) {
+            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " + list.get(0).getTimeCrawling());
+        } catch (NullPointerException e) {
 
         }
     }
@@ -104,7 +100,7 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
     }
 
     private void setupRecyclerView() {
-        mViewAdapter = new ExchangeRateRecylerViewAdapter(getContext(), new ArrayList<Currency>());
+        mViewAdapter = new ExchangeRateRecylerViewAdapter(getContext(), new ExchangeRate());
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mViewAdapter);
@@ -112,7 +108,7 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.layoutChooseBank:
                 PopupWindow popUp = showBankListPopup();
                 popUp.showAsDropDown(v, 0, -10);
@@ -142,7 +138,7 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
     public void itemBankPopupClick(ExchangeRate exchangeRate) {
         this.currentExchangeRate = exchangeRate;
         mTxtCurrentBankName.setText(currentExchangeRate.getName());
-        mViewAdapter.updateAdapter(exchangeRate.getCurrencies());
+        mViewAdapter.updateAdapter(exchangeRate);
         Log.d(TAG, "itemBankPopupClick: ");
         mBanksPopup.dismiss();
     }

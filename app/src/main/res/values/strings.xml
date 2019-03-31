@@ -1,14 +1,17 @@
 <resources>
     <string name="app_name">BankingAssistant</string>
+    <string name="google_map_api_key">AIzaSyDd7iNuIulKY_fwWFqF9U9EBocSAcBdqHg</string>
     <string name="news">Tin tức</string>
     <string name="market">Thị trường</string>
     <string name="place">Vị trí</string>
     <string name="setting">Cài đặt</string>
     <string name="calculator">Máy tính</string>
+    <string name="profile">Cá nhân</string>
     <string name="interest_rate">Lãi suất</string>
     <string name="interest_rate_caps">LÃI SUẤT</string>
     <string name="exchange_rate">Ngoại tệ</string>
     <string name="coin">Coin</string>
+    <string name="account">Tài khoản</string>
     <string name="gold">Vàng</string>
     <string name="personal">Cá nhân</string>
     <string name="Enterprise">Doanh nghiệp</string>
@@ -59,5 +62,9 @@
     <string name="principal_balance">DƯ NỢ GỐC</string>
     <string name="principal_balance_decreased">DƯ NỢ GIẢM DẦN</string>
     <string name="time_update">Thời gian cập nhật</string>
+    <string name="choose_area">Chọn khu vực</string>
+    <string name="nearest_area">Địa điểm gần đây</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="error_login">Sai tài khoản hoặc mật khẩu</string>
 
 </resources>

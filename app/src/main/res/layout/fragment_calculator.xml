@@ -38,7 +38,7 @@
     </info.hoang8f.android.segmented.SegmentedGroup>
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/calculatorFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
