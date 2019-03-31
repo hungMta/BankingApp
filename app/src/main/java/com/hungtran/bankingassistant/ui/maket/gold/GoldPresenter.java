@@ -7,6 +7,7 @@ import com.hungtran.bankingassistant.model.gold.GoldArea;
 import com.hungtran.bankingassistant.model.gold.GoldAreaResponse;
 import com.hungtran.bankingassistant.network.ServiceGenerator;
 import com.hungtran.bankingassistant.util.Constant;
+import com.hungtran.bankingassistant.util.base.SharePreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class GoldPresenter implements GoldContract.Presenter{
 
     private Observable<GoldAreaResponse> getGoldAreaObservable() {
         return ServiceGenerator.resquest()
-                .getGoldArea(Constant.TOKEN)
+                .getGoldArea(SharePreference.getStringVal(Constant.TOKEN_KEY))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -5,7 +5,9 @@ import com.hungtran.bankingassistant.model.bankLocation.AvaiableBankLocationResp
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequest;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequestBody;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationResponse;
+import com.hungtran.bankingassistant.model.base.BaseResponse;
 import com.hungtran.bankingassistant.model.exchangeRate.ExchangeRateResponse;
+import com.hungtran.bankingassistant.model.firebase.FCMTokenRequest;
 import com.hungtran.bankingassistant.model.gold.GoldAreaResponse;
 import com.hungtran.bankingassistant.model.interestRate.InterestRateResponse;
 import com.hungtran.bankingassistant.model.user.AccountRequest;
@@ -40,4 +42,7 @@ public interface BankingApi {
 
     @POST("/api/authentication")
     Observable<retrofit2.Response<Void>> login(@Body AccountRequest accountRequest);
+
+    @POST("/api/user/addfirebase")
+    Observable<BaseResponse> postFCMToken(@Header("Authorization") String authHeader, @Body FCMTokenRequest fcmTokenRequest);
 }

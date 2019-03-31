@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.RadioGroup;
 
 import com.hungtran.bankingassistant.R;
+import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseFragment;
 
 import butterknife.BindView;
@@ -41,7 +42,7 @@ public class CalculatorFragment extends BaseFragment implements View.OnClickList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mSegmentedGroup.setTintColor(Color.parseColor("#008577"));
+        mSegmentedGroup.setTintColor(Color.parseColor(Constant.PRIMARY_COLOR));
         mSegmentedGroup.setOnCheckedChangeListener(this);
         mSegmentedGroup.check(R.id.btnSavingMoney);
     }

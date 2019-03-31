@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.ui.login.LoginActivty;
 import com.hungtran.bankingassistant.ui.main.MainActivity;
+import com.hungtran.bankingassistant.ui.main.MainActivityNew;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
 public class SplashActivity extends BaseActivity {
@@ -28,9 +29,18 @@ public class SplashActivity extends BaseActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//        Intent intent = new Intent(this, LoginActivty.class);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+
+        if (isLogined()) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, LoginActivty.class);
+            startActivity(intent);
+        }
         finish();
+    }
+
+    private boolean isLogined() {
+        return false;
     }
 }

@@ -3,12 +3,16 @@ package com.hungtran.bankingassistant.ui.login;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.hungtran.bankingassistant.R;
+import com.hungtran.bankingassistant.model.respone.MyError;
 import com.hungtran.bankingassistant.model.user.Account;
 import com.hungtran.bankingassistant.model.user.AccountRequest;
 import com.hungtran.bankingassistant.network.ServiceGenerator;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.SharePreference;
 
+import java.io.IOException;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -25,7 +29,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     private LoginContract.View mView;
     private Context mContext;
 
-    public LoginPresenter(Context context,LoginContract.View view) {
+    public LoginPresenter(Context context, LoginContract.View view) {
         this.mContext = context;
         this.mView = view;
     }
@@ -47,10 +51,22 @@ public class LoginPresenter implements LoginContract.Presenter {
             @Override
             public void onNext(retrofit2.Response<Void> response) {
                 Headers headers = response.headers();
-                String token = headers.get("authentication ");
-                SharePreference.initHelper(mContext).setVal(Constant.TOKEN_KEY, token);
-                Log.d(TAG, "onNext: header : " + headers);
-                mView.loginSuccess();
+                if (response.code() == 200) {
+                    String token = headers.get("authentication");
+                    SharePreference.setVal(Constant.TOKEN_KEY, token);
+                    Log.d(TAG, "onNext: header : " + headers);
+                    mView.loginSuccess();
+                } else if (response.code() == 401) {
+                    String responseError = null;
+                    try {
+                        responseError = response.errorBody().string();
+                        Gson gson = new Gson();
+                        MyError error = gson.fromJson(responseError, MyError.class);
+                        mView.loginError(mContext.getResources().getString(R.string.error_login));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override

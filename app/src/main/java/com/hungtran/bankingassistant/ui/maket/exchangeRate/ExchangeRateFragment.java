@@ -77,6 +77,7 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
 
     @Override
     public void showExchangeRates(List<ExchangeRate> list) {
+        if (list.size() == 0) { return; }
         mViewAdapter.updateAdapter(list.get(0));
         this.exchangeRates = list;
         this.currentExchangeRate = list.get(0);

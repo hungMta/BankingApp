@@ -7,6 +7,8 @@ public class LoginContract {
     interface View {
         void loginSuccess();
 
+        void loginError(String message);
+
         void hideProgressBar();
     }
 

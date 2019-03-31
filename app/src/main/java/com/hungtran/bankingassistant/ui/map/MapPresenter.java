@@ -10,6 +10,7 @@ import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequestBody;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationResponse;
 import com.hungtran.bankingassistant.network.ServiceGenerator;
 import com.hungtran.bankingassistant.util.Constant;
+import com.hungtran.bankingassistant.util.base.SharePreference;
 
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
@@ -50,7 +51,7 @@ public class MapPresenter implements MapConstract.Presenter {
     private Observable<BankLocationResponse> getBankLocationObservabable(BankLocationRequestBody bankLocationRequestBody) {
         BankLocationRequest bankLocationRequest = new BankLocationRequest(bankLocationRequestBody);
         return ServiceGenerator.resquest()
-                .searchBankLocation(Constant.TOKEN, bankLocationRequest)
+                .searchBankLocation(SharePreference.getStringVal(Constant.TOKEN_KEY), bankLocationRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -77,7 +78,7 @@ public class MapPresenter implements MapConstract.Presenter {
     }
 
     private Observable<AreaResponse> getAreaObservabable() {
-        return ServiceGenerator.resquest().getArea(Constant.TOKEN, 2)
+        return ServiceGenerator.resquest().getArea(SharePreference.getStringVal(Constant.TOKEN_KEY), 2)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -105,7 +106,7 @@ public class MapPresenter implements MapConstract.Presenter {
 
 
     private Observable<AvaiableBankLocationResponse> getAvaiableBankLocationObserverable() {
-        return ServiceGenerator.resquest().getAllBankPosition(Constant.TOKEN)
+        return ServiceGenerator.resquest().getAllBankPosition(SharePreference.getStringVal(Constant.TOKEN_KEY))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
