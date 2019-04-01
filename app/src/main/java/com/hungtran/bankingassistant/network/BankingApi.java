@@ -10,6 +10,7 @@ import com.hungtran.bankingassistant.model.exchangeRate.ExchangeRateResponse;
 import com.hungtran.bankingassistant.model.firebase.FCMTokenRequest;
 import com.hungtran.bankingassistant.model.gold.GoldAreaResponse;
 import com.hungtran.bankingassistant.model.interestRate.InterestRateResponse;
+import com.hungtran.bankingassistant.model.linkingBank.LinkBankRequest;
 import com.hungtran.bankingassistant.model.user.AccountRequest;
 
 import io.reactivex.Observable;
@@ -40,9 +41,12 @@ public interface BankingApi {
     @GET("/api/bank/getAllBankPosition")
     Observable<AvaiableBankLocationResponse> getAllBankPosition(@Header("Authorization") String authHeader);
 
-    @POST("/api/authentication")
+    @POST("/api/authentication/")
     Observable<retrofit2.Response<Void>> login(@Body AccountRequest accountRequest);
 
     @POST("/api/user/addfirebase")
     Observable<BaseResponse> postFCMToken(@Header("Authorization") String authHeader, @Body FCMTokenRequest fcmTokenRequest);
+
+    @POST("/login/vietcombank")
+    Observable<BaseResponse> linkVCB(@Body LinkBankRequest linkBankRequest);
 }

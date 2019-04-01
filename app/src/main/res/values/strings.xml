@@ -66,5 +66,8 @@
     <string name="nearest_area">Địa điểm gần đây</string>
     <string name="search">Tìm kiếm</string>
     <string name="error_login">Sai tài khoản hoặc mật khẩu</string>
+    <string name="error_atm">Vui lòng nhập số thẻ ATM</string>
+    <string name="error_password">Vui lòng nhập password</string>
+    <string name="error_policy">Chưa đồng ý điều khoản</string>
 
 </resources>

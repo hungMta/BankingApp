@@ -4,7 +4,6 @@ import com.hungtran.bankingassistant.util.Constant;
 
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -12,9 +11,10 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ServiceGenerator {
+public class LinkingBankServiceGenerator {
+
     public static final int TIMEOUT_SHORT = 30;
-    private static final String BASE_URL = "http://34.73.58.250:8080";
+    private static final String BASE_URL = "http://34.73.58.250:5000";
     private static BankingApi bankingApi;
     private static OkHttpClient.Builder httpClient;
     private static RxJava2CallAdapterFactory rxAdapter;
