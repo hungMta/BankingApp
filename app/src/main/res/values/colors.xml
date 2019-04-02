@@ -16,4 +16,8 @@
     <color name="colorBlueDark">#2e3679</color>
     <color name="colorRed">#ff0026</color>
     <color name="colorBackground">#F5F6F8</color>
+    <color name="colorVCB">#00C05E</color>
+    <color name="colorBIDV">#3079ED</color>
+    <color name="colorAGRI">#be4353</color>
+    <color name="colorViettin">#8FCFEF</color>
 </resources>

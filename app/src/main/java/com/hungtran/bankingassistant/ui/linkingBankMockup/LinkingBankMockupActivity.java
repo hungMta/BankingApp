@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hungtran.bankingassistant.R;
+import com.hungtran.bankingassistant.dialog.LinkingBankSuccessDialog;
 import com.hungtran.bankingassistant.model.linkingBank.LinkingBank;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
@@ -73,6 +74,8 @@ public class LinkingBankMockupActivity extends BaseActivity implements View.OnCl
         });
         mLayoutCheckPolicy.setOnClickListener(this);
         mBtnLinking.setOnClickListener(this);
+        LinkingBankSuccessDialog dialog = LinkingBankSuccessDialog.newInstance();
+        dialog.show(getSupportFragmentManager(), "dialog");
     }
 
     @Override
@@ -117,7 +120,8 @@ public class LinkingBankMockupActivity extends BaseActivity implements View.OnCl
     @Override
     public void linkingBankSuccess() {
         Toast.makeText(this, "Liên kết thành công", Toast.LENGTH_SHORT).show();
-        finish();
+        LinkingBankSuccessDialog dialog = LinkingBankSuccessDialog.newInstance();
+        dialog.show(getSupportFragmentManager(), "dialog");
     }
 
     @Override
