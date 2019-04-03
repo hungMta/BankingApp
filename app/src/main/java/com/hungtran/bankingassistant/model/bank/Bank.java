@@ -1,10 +1,12 @@
 package com.hungtran.bankingassistant.model.bank;
 
+import java.io.Serializable;
+
 /**
  * Created by hungtd on 3/5/19.
  */
 
-public class Bank {
+public class Bank implements Serializable {
 
     private int id;
     private String name;
@@ -12,6 +14,10 @@ public class Bank {
     private String code;
     private String fullname;
     private String image;
+
+    private int id_bank;
+    private String full_name;
+    private String url_linking;
 
     public Bank() {
     }
@@ -67,5 +73,29 @@ public class Bank {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getId_bank() {
+        return id_bank;
+    }
+
+    public void setId_bank(int id_bank) {
+        this.id_bank = id_bank;
+    }
+
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
+    }
+
+    public String getUrl_linking() {
+        return url_linking;
+    }
+
+    public void setUrl_linking(String url_linking) {
+        this.url_linking = url_linking;
     }
 }

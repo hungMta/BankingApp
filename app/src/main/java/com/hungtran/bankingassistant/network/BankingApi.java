@@ -1,6 +1,7 @@
 package com.hungtran.bankingassistant.network;
 
 import com.hungtran.bankingassistant.model.area.AreaResponse;
+import com.hungtran.bankingassistant.model.bank.BankLinkingResponse;
 import com.hungtran.bankingassistant.model.bank.BankResponse;
 import com.hungtran.bankingassistant.model.bankLocation.AvaiableBankLocationResponse;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequest;
@@ -51,6 +52,18 @@ public interface BankingApi {
     @POST("/login/vietcombank")
     Observable<BaseResponse> linkVCB(@Body LinkBankRequest linkBankRequest);
 
+    @POST("/login/bidv")
+    Observable<BaseResponse> linkBIDV(@Body LinkBankRequest linkBankRequest);
+
+    @POST("/login/agribank")
+    Observable<BaseResponse> linkAGRI(@Body LinkBankRequest linkBankRequest);
+
+    @POST("/login/vietinbank")
+    Observable<BaseResponse> linkVIETTIN(@Body LinkBankRequest linkBankRequest);
+
     @GET("/api/bank/getAllBankLinked")
     Observable<BankResponse> getAllBankLinked(@Header("Authorization") String authHeader);
+
+    @GET("/api/bank/getAllBankLinking")
+    Observable<BankLinkingResponse> getAllBankLinking(@Header("Authorization") String authHeader);
 }

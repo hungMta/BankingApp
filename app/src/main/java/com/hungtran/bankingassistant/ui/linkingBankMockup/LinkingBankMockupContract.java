@@ -1,5 +1,6 @@
 package com.hungtran.bankingassistant.ui.linkingBankMockup;
 
+import com.hungtran.bankingassistant.model.bank.Bank;
 import com.hungtran.bankingassistant.model.linkingBank.LinkingBank;
 
 public interface LinkingBankMockupContract {
@@ -13,6 +14,6 @@ public interface LinkingBankMockupContract {
     }
 
     interface Presenter {
-        void linkingBank(LinkingBank linkingBank);
+        void linkingBank(Bank targetBank, LinkingBank linkingBank);
     }
 }

@@ -35,6 +35,8 @@
         <activity android:name=".ui.main.MainActivityNew"/>
         <activity android:name=".ui.wallet.WalletActivity"/>
         <activity android:name=".ui.linkingBankMockup.LinkingBankMockupActivity"/>
+        <activity android:name=".ui.AvaibleBankLinkingAcitivity.AvaiableBankLinkingActivity"/>
+        <activity android:name=".ui.myAccountCardList.MyAccountCardListActivity"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_api_key" />

@@ -21,6 +21,8 @@ public class LinkingBankSuccessDialog extends DialogFragment {
     @BindView(R.id.txtOk)
     TextView mTxtOk;
 
+    LinkingBankSuccessDialogListener mLinkingBankSuccessDialogListener;
+
     public static LinkingBankSuccessDialog newInstance(){
         LinkingBankSuccessDialog dialog = new LinkingBankSuccessDialog();
         return dialog;
@@ -36,9 +38,20 @@ public class LinkingBankSuccessDialog extends DialogFragment {
         mTxtOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mLinkingBankSuccessDialogListener != null) {
+                    mLinkingBankSuccessDialogListener.onLinkingBankSuccessDialogOkClicked();
+                }
                 dismiss();
             }
         });
         return view;
+    }
+
+    public interface LinkingBankSuccessDialogListener {
+        void onLinkingBankSuccessDialogOkClicked();
+    }
+
+    public void setLinkingBankSuccessDialogListener(LinkingBankSuccessDialogListener listener){
+        mLinkingBankSuccessDialogListener = listener;
     }
 }

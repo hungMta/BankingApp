@@ -9,13 +9,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.dialog.LinkingBankSuccessDialog;
+import com.hungtran.bankingassistant.model.bank.Bank;
 import com.hungtran.bankingassistant.model.linkingBank.LinkingBank;
+import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
 import butterknife.BindView;
@@ -53,7 +56,17 @@ public class LinkingBankMockupActivity extends BaseActivity implements View.OnCl
     @BindView(R.id.layoutProgressBar)
     LinearLayout mLayoutProgressBar;
 
+    @BindView(R.id.txtTitle)
+    TextView mTxtTitle;
+
+    @BindView(R.id.imgBankBg)
+    ImageView mImgBankBg;
+
+
     private LinkingBankMockupPresenter mPresenter;
+    private static LinkingBankMockupListener mLinkingBankMockupListener;
+
+    private Bank mBank;
 
     @Override
     public int getLayoutId() {
@@ -74,8 +87,8 @@ public class LinkingBankMockupActivity extends BaseActivity implements View.OnCl
         });
         mLayoutCheckPolicy.setOnClickListener(this);
         mBtnLinking.setOnClickListener(this);
-        LinkingBankSuccessDialog dialog = LinkingBankSuccessDialog.newInstance();
-        dialog.show(getSupportFragmentManager(), "dialog");
+        mBank = (Bank) getIntent().getSerializableExtra(Constant.BANK);
+        checkBankTheme();
     }
 
     @Override
@@ -90,7 +103,7 @@ public class LinkingBankMockupActivity extends BaseActivity implements View.OnCl
                 mTxtErrorATM.setText("");
                 if (validField()) {
                     mLayoutProgressBar.setVisibility(View.VISIBLE);
-                    mPresenter.linkingBank(new LinkingBank(mEdtAtmNumber.getText().toString(),
+                    mPresenter.linkingBank(mBank, new LinkingBank(mEdtAtmNumber.getText().toString(),
                             mEdtPassword.getText().toString()));
                 }
         }
@@ -120,8 +133,10 @@ public class LinkingBankMockupActivity extends BaseActivity implements View.OnCl
     @Override
     public void linkingBankSuccess() {
         Toast.makeText(this, "Liên kết thành công", Toast.LENGTH_SHORT).show();
-        LinkingBankSuccessDialog dialog = LinkingBankSuccessDialog.newInstance();
-        dialog.show(getSupportFragmentManager(), "dialog");
+        if (mLinkingBankMockupListener != null) {
+            mLinkingBankMockupListener.onLinkingBankSuccess();
+        }
+        finish();
     }
 
     @Override
@@ -132,5 +147,38 @@ public class LinkingBankMockupActivity extends BaseActivity implements View.OnCl
     @Override
     public void hideProgressBar() {
         mLayoutProgressBar.setVisibility(View.GONE);
+    }
+
+    private void checkBankTheme() {
+        switch (mBank.getId_bank()) {
+            case 1:
+                mTxtTitle.setBackgroundColor(getResources().getColor(R.color.colorVCB));
+                mBtnLinking.setBackgroundColor(getResources().getColor(R.color.colorVCB));
+                mImgBankBg.setImageDrawable(getResources().getDrawable(R.drawable.banner_vcb_two));
+                break;
+            case 2:
+                mTxtTitle.setBackgroundColor(getResources().getColor(R.color.colorBIDV));
+                mBtnLinking.setBackgroundColor(getResources().getColor(R.color.colorBIDV));
+                mImgBankBg.setImageDrawable(getResources().getDrawable(R.drawable.bidv_banner_two));
+                break;
+            case 4:
+                mTxtTitle.setBackgroundColor(getResources().getColor(R.color.colorAGRI));
+                mBtnLinking.setBackgroundColor(getResources().getColor(R.color.colorAGRI));
+                mImgBankBg.setImageDrawable(getResources().getDrawable(R.drawable.agribank_two));
+                break;
+            case 15:
+                mTxtTitle.setBackgroundColor(getResources().getColor(R.color.colorViettin));
+                mBtnLinking.setBackgroundColor(getResources().getColor(R.color.colorViettin));
+                mImgBankBg.setImageDrawable(getResources().getDrawable(R.drawable.banner_viettin));
+                break;
+        }
+    }
+
+    public interface LinkingBankMockupListener {
+        void onLinkingBankSuccess();
+    }
+
+    public static void setLinkingBankMockupListener(LinkingBankMockupListener listener) {
+        mLinkingBankMockupListener = listener;
     }
 }

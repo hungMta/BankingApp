@@ -23,6 +23,7 @@ public class LinkingBankRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
 
     private Context mContext;
     private List<Bank> mList;
+    private LinkingBankListener mLinkingBankListener;
 
 
     public LinkingBankRecyclerViewAdapter(Context context, List<Bank> list) {
@@ -59,7 +60,16 @@ public class LinkingBankRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
                 ((LinkingBankItem) viewHolder).mLayout.setBackgroundColor(mContext.getResources().getColor(R.color.colorViettin));
                 break;
             default:
+                break;
         }
+        ((LinkingBankItem) viewHolder).mLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mLinkingBankListener != null){
+                    mLinkingBankListener.onLinkingBankItemClick(mList.get(i));
+                }
+            }
+        });
     }
 
     @Override
@@ -87,5 +97,13 @@ public class LinkingBankRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface LinkingBankListener{
+        void onLinkingBankItemClick(Bank bank);
+    }
+
+    public void setLinkingBankListener(LinkingBankListener listener){
+        mLinkingBankListener = listener;
     }
 }

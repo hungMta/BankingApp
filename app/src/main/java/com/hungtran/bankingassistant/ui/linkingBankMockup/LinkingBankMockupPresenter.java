@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hungtran.bankingassistant.model.bank.Bank;
 import com.hungtran.bankingassistant.model.base.BaseResponse;
 import com.hungtran.bankingassistant.model.firebase.FCMTokenRequest;
 import com.hungtran.bankingassistant.model.linkingBank.LinkBankRequest;
@@ -30,12 +31,30 @@ public class LinkingBankMockupPresenter implements LinkingBankMockupContract.Pre
 
 
     @Override
-    public void linkingBank(LinkingBank linkingBank) {
+    public void linkingBank(Bank targetBank, LinkingBank linkingBank) {
         LinkBankRequest linkBankRequest = new LinkBankRequest(linkingBank);
-        linkingBankObservable(linkBankRequest).subscribeWith(linkingBankObserver());
+        linkingBankObservable(targetBank, linkBankRequest).subscribeWith(linkingBankObserver());
     }
 
-    private Observable<BaseResponse> linkingBankObservable(LinkBankRequest linkBankRequest) {
+    private Observable<BaseResponse> linkingBankObservable(Bank targetBank, LinkBankRequest linkBankRequest) {
+        switch (targetBank.getId_bank()) {
+            case Constant.ID_VCB:
+                return LinkingBankServiceGenerator.resquest().linkVCB(linkBankRequest)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+            case Constant.ID_BIDV:
+                return LinkingBankServiceGenerator.resquest().linkBIDV(linkBankRequest)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+            case Constant.ID_AGRI:
+                return LinkingBankServiceGenerator.resquest().linkAGRI(linkBankRequest)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+            case Constant.ID_VIETTIN:
+                return LinkingBankServiceGenerator.resquest().linkVIETTIN(linkBankRequest)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+        }
         return LinkingBankServiceGenerator.resquest().linkVCB(linkBankRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

@@ -13,16 +13,19 @@ import android.widget.ProgressBar;
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.adapters.LinkingBankRecyclerViewAdapter;
 import com.hungtran.bankingassistant.model.bank.Bank;
-import com.hungtran.bankingassistant.ui.linkingBankMockup.LinkingBankMockupActivity;
+import com.hungtran.bankingassistant.ui.AvaibleBankLinkingAcitivity.AvaiableBankLinkingActivity;
+import com.hungtran.bankingassistant.ui.myAccountCardList.MyAccountCardListActivity;
+import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WalletActivity extends BaseActivity implements View.OnClickListener, WalletContract.View {
+public class WalletActivity extends BaseActivity implements LinkingBankRecyclerViewAdapter.LinkingBankListener, View.OnClickListener, WalletContract.View, AvaiableBankLinkingActivity.AvaiableBankLinkingActivityListener {
 
     @BindView(R.id.my_toolbar)
     Toolbar mToolbar;
@@ -41,6 +44,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     private LinkingBankRecyclerViewAdapter mAdapter;
 
     private static OnWalletActivityListener mOnWalletActivityListener;
+    private List<Bank> myBanks;
 
     @Override
     public int getLayoutId() {
@@ -77,7 +81,10 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layoutAddBank:
-                Intent intent = new Intent(this, LinkingBankMockupActivity.class);
+//                Intent intent = new Intent(this, LinkingBankMockupActivity.class);
+                Intent intent = new Intent(this, AvaiableBankLinkingActivity.class);
+                intent.putExtra(Constant.MY_BANK, (Serializable) myBanks);
+                AvaiableBankLinkingActivity.setAvaiableBankLinkingActivityListener(this);
                 startActivity(intent);
                 break;
         }
@@ -86,6 +93,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     private void setupRecyclerView() {
         mAdapter = new LinkingBankRecyclerViewAdapter(this, new ArrayList<>());
+        mAdapter.setLinkingBankListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -99,11 +107,24 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void loadLinkingBankListSuccess(List<Bank> list) {
         mAdapter.update(list);
+        myBanks = list;
     }
 
     @Override
     public void loadLinkingBankListFail() {
 
+    }
+
+    @Override
+    public void needToRefresBankList() {
+        mPresenter.loadLinkingBankList();
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onLinkingBankItemClick(Bank bank) {
+        Intent intent = new Intent(this, MyAccountCardListActivity.class);
+        startActivity(intent);
     }
 
     public interface OnWalletActivityListener {

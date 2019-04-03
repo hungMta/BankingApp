@@ -22,10 +22,12 @@ public class ExchangeRateResponse extends BaseResponse {
     }
 
 
-    public void formatMoney(){
-        for (int i = 0; i < exchangeRates.size(); i ++) {
-            for (int j = 0; j < exchangeRates.get(i).getCurrentExchangerate().size(); j ++) {
-                exchangeRates.get(i).getCurrentExchangerate().get(j).formatMoney();
+    public void formatMoney() {
+        for (int i = 0; i < exchangeRates.size(); i++) {
+            if (exchangeRates.get(i).getCurrentExchangerate() != null) {
+                for (int j = 0; j < exchangeRates.get(i).getCurrentExchangerate().size(); j++) {
+                    exchangeRates.get(i).getCurrentExchangerate().get(j).formatMoney();
+                }
             }
         }
     }

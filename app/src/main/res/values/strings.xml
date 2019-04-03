@@ -69,5 +69,9 @@
     <string name="error_atm">Vui lòng nhập số thẻ ATM</string>
     <string name="error_password">Vui lòng nhập password</string>
     <string name="error_policy">Chưa đồng ý điều khoản</string>
+    <string name="register">Đăng kí tài khoản</string>
+    <string name="paymen_account">Tài khoản thanh toán</string>
+    <string name="nummber_account">Số tài khoản</string>
+    <string name="available_balances">Số dư khả dụng</string>
 
 </resources>
