@@ -37,6 +37,7 @@ public class Constant {
     public static final int TYPE_SEARCH_KEY = 3;
     public static final String MY_BANK = "MY_BANK";
     public static final  String BANK = "BANK";
+    public static final  String ID_BANK = "ID_BANK";
     public static final int ID_VCB = 1;
     public static final int ID_BIDV = 2;
     public static final int ID_AGRI = 4;

@@ -73,5 +73,7 @@
     <string name="paymen_account">Tài khoản thanh toán</string>
     <string name="nummber_account">Số tài khoản</string>
     <string name="available_balances">Số dư khả dụng</string>
+    <string name="saving_money_book">Tài khoản tiết kiệm</string>
+    <string name="money_number">Số tiền gửi</string>
 
 </resources>

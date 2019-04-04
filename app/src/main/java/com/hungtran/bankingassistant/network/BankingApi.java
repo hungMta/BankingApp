@@ -13,6 +13,7 @@ import com.hungtran.bankingassistant.model.firebase.FCMTokenRequest;
 import com.hungtran.bankingassistant.model.gold.GoldAreaResponse;
 import com.hungtran.bankingassistant.model.interestRate.InterestRateResponse;
 import com.hungtran.bankingassistant.model.linkingBank.LinkBankRequest;
+import com.hungtran.bankingassistant.model.respone.DataAccount.DataAccountRespone;
 import com.hungtran.bankingassistant.model.user.AccountRequest;
 
 import io.reactivex.Observable;
@@ -66,4 +67,8 @@ public interface BankingApi {
 
     @GET("/api/bank/getAllBankLinking")
     Observable<BankLinkingResponse> getAllBankLinking(@Header("Authorization") String authHeader);
+
+    @GET("/api/bank/getDataAccount")
+    Observable<DataAccountRespone> getDataAccount(@Header("Authorization") String authHeader, @Query("id_bank") int idBank);
+
 }
