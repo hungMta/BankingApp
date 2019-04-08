@@ -42,6 +42,7 @@
 
 
                 <ImageView
+                    android:id="@+id/imgBankLogo"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentRight="true"
@@ -54,6 +55,7 @@
 
 
             <TextView
+                android:id="@+id/txtNumberAcount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -82,6 +84,7 @@
                         android:text="Lãi suất : " />
 
                     <TextView
+                        android:id="@+id/txtInterestrate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorBlack"
@@ -101,6 +104,7 @@
                         android:text="Kì hạn : " />
 
                     <TextView
+                        android:id="@+id/txtTerm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorBlack"
@@ -121,6 +125,7 @@
 
 
             <TextView
+                android:id="@+id/txtMoney"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

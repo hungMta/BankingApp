@@ -2,9 +2,10 @@ package com.hungtran.bankingassistant.model.respone.DataAccount;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class DataAcount {
+public class DataAcount implements Serializable {
 
     @SerializedName("number_account")
     private String numberAccount;
@@ -29,6 +30,9 @@ public class DataAcount {
 
     @SerializedName("list_saving")
     private List<SavingAccount> savingAccountList;
+
+    public DataAcount() {
+    }
 
     public DataAcount(String numberAccount, String indentity, String atmMoney, String phone, String address, String name, String email, List<SavingAccount> savingAccountList) {
         this.numberAccount = numberAccount;

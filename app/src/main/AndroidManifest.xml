@@ -37,6 +37,10 @@
         <activity android:name=".ui.linkingBankMockup.LinkingBankMockupActivity"/>
         <activity android:name=".ui.AvaibleBankLinkingAcitivity.AvaiableBankLinkingActivity"/>
         <activity android:name=".ui.myAccountCardList.MyAccountCardListActivity"/>
+        <activity android:name=".ui.detailAccount.DetailATMAccountActivity"/>
+        <activity android:name=".ui.createSavingAccount.CreateSavingAccountActivity"/>
+        <activity android:name=".ui.pressOTP.OTPAcvitiy"/>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_api_key" />

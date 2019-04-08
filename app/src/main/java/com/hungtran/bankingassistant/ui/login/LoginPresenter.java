@@ -72,6 +72,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             @Override
             public void onError(Throwable e) {
                 Log.e(TAG, "onError: " + e.getMessage());
+                mView.hideProgressBar();
             }
 
             @Override

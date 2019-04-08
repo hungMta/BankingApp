@@ -1,8 +1,10 @@
 package com.hungtran.bankingassistant.ui.myAccountCardList;
 
+import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
+
 public interface MyAccountCardListContract {
     interface View {
-        void getDataAccountSuccess();
+        void getDataAccountSuccess(DataAcount dataAcount);
         void getDataAccountFail();
         void hideProgressBar();
     }

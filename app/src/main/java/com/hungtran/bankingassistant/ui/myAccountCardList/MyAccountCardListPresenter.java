@@ -43,6 +43,7 @@ public class MyAccountCardListPresenter implements MyAccountCardListContract.Pre
             @Override
             public void onNext(DataAccountRespone response) {
                 Log.d("hungtd", "onNext:  successs");
+                mView.getDataAccountSuccess(response.getDataAcount());
             }
 
             @Override

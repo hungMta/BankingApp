@@ -36,11 +36,30 @@ public class Constant {
     public static final int TYPE_SEARCH_AREA = 2;
     public static final int TYPE_SEARCH_KEY = 3;
     public static final String MY_BANK = "MY_BANK";
-    public static final  String BANK = "BANK";
-    public static final  String ID_BANK = "ID_BANK";
+    public static final String BANK = "BANK";
+    public static final String ID_BANK = "ID_BANK";
+    public static final String DATA_ACCOUNT = "DATA_ACCOUNT";
     public static final int ID_VCB = 1;
     public static final int ID_BIDV = 2;
     public static final int ID_AGRI = 4;
     public static final int ID_VIETTIN = 15;
 
+    public static final String MESSAGE = "MESSAGE";
+    public static final String TRANSACTION_ID = "TRANSACTION_ID";
+
+    /**
+     * 1: atm - amt
+     * 2 atm - saving
+     * 3 saving - atm
+     * 4 saving - saving
+     * 5 linking
+     */
+    public static final int TRANSFER_ATM_ATM = 1;
+    public static final int TRANSFER_ATM_SAVING = 2;
+    public static final int TRANSFER_SAVING_ATM = 3;
+    public static final int TRANSFER_SAVING_SAVING = 4;
+    public static final int TRANSFER_LINKING = 5;
+
+    public static final String ERROR_OTP = "Mã OTP không hợp lệ hoặc đã hết hạn!";
+    public static final String DIALOG = "DIALOG";
 }

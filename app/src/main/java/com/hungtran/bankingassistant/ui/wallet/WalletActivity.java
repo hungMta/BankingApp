@@ -124,6 +124,7 @@ public class WalletActivity extends BaseActivity implements LinkingBankRecyclerV
     @Override
     public void onLinkingBankItemClick(Bank bank) {
         Intent intent = new Intent(this, MyAccountCardListActivity.class);
+        intent.putExtra(Constant.ID_BANK, bank.getId());
         startActivity(intent);
     }
 

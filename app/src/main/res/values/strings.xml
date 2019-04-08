@@ -75,5 +75,13 @@
     <string name="available_balances">Số dư khả dụng</string>
     <string name="saving_money_book">Tài khoản tiết kiệm</string>
     <string name="money_number">Số tiền gửi</string>
-
+    <string name="interest_rate_per_year">%/Năm</string>
+    <string name="branch_open">Chi nhánh mở</string>
+    <string name="account_holder">Chủ tài khoản</string>
+    <string name="history">Lịch sử giao dịch</string>
+    <string name="tranfer">Chuyển tiền</string>
+    <string name="open_saving_account">Mở tài khoản tiết kiệm</string>
+    <string name="from_account">Tài khoản nguồn</string>
+    <string name="create_saving_money_success">Tạo tài khoản tiết kiệm thành công!</string>
+    <string name="next">Tiếp tục</string>
 </resources>

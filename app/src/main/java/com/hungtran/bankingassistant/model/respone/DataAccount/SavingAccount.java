@@ -2,7 +2,9 @@ package com.hungtran.bankingassistant.model.respone.DataAccount;
 
 import com.google.gson.annotations.SerializedName;
 
-public class SavingAccount {
+import java.io.Serializable;
+
+public class SavingAccount implements Serializable {
 
     @SerializedName("number_saving")
     private String numberSaving;

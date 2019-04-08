@@ -2,11 +2,13 @@ package com.hungtran.bankingassistant.model.interestRate;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by hungtd on 3/11/19.
  */
 
-public class InterestRate {
+public class InterestRate implements Serializable {
 
     @SerializedName("unlimited")
     private String unlimited;

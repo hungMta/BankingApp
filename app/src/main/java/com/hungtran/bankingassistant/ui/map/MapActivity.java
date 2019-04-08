@@ -142,6 +142,7 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     private List<Bank> avaiableBankList;
     private FilterBankRecyclerViewAdapter filterBankRecyclerViewAdapter;
 
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_map;
