@@ -15,7 +15,7 @@
     <string name="gold">Vàng</string>
     <string name="personal">Cá nhân</string>
     <string name="Enterprise">Doanh nghiệp</string>
-    <string name="bank">Ngân hàng</string>
+    <string name="bankLc">Ngân hàng</string>
     <string name="buy_cash">Mua TM</string>
     <string name="buy_card">Mua CK</string>
     <string name="buy">Mua</string>
@@ -83,5 +83,6 @@
     <string name="open_saving_account">Mở tài khoản tiết kiệm</string>
     <string name="from_account">Tài khoản nguồn</string>
     <string name="create_saving_money_success">Tạo tài khoản tiết kiệm thành công!</string>
+    <string name="transfer_money_atm_success">Gửi tiền thành công!</string>
     <string name="next">Tiếp tục</string>
 </resources>

@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
 
 public class OTPAcvitiy extends BaseActivity implements OTPContract.View, SuccessDialog.SuccessDialogListener {
 
-
     @BindView(R.id.my_toolbar)
     Toolbar mToolbar;
 
@@ -39,6 +38,7 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
     private OTPPresenter mPresenter;
     private int transactionId;
     private static OTPActivityListener otpActivityListener;
+    private int typeTranserMoney;
 
     @Override
     public int getLayoutId() {
@@ -69,6 +69,7 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
                 mPresenter.submitOTP(transactionId, otp);
             }
         });
+        typeTranserMoney = getIntent().getIntExtra(Constant.TYPE_TRANSFER_MONEY, 0);
     }
 
     @Override
@@ -89,7 +90,18 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
 
 
     private void showSuccessDialog() {
-        SuccessDialog dialog = SuccessDialog.newInstance(getResources().getString(R.string.create_saving_money_success));
+        String message = "";
+        switch (typeTranserMoney) {
+            case Constant.TRANSFER_ATM_SAVING:
+                message = getResources().getString(R.string.create_saving_money_success);
+                break;
+            case Constant.TRANSFER_ATM_ATM:
+                message = getResources().getString(R.string.transfer_money_atm_success);
+                break;
+            default:
+                break;
+        }
+        SuccessDialog dialog = SuccessDialog.newInstance(message);
         dialog.seSuccessDialogListener(this);
         dialog.show(getSupportFragmentManager(), "dialog");
     }
@@ -106,7 +118,7 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
         void OPTActivitySucess();
     }
 
-    public static void setOTPActivityListener(OTPActivityListener listener){
+    public static void setOTPActivityListener(OTPActivityListener listener) {
         otpActivityListener = listener;
     }
 }

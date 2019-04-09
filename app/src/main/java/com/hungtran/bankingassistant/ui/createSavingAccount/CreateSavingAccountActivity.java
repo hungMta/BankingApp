@@ -58,6 +58,9 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
     @BindView(R.id.imgLogo)
     ImageView mLogo;
 
+    @BindView(R.id.edtNumberAccount)
+    EditText mEdtNumberAccount;
+
     private DataAcount mDataAcount;
     private int mIdBank;
     private CreateSavingAccountPresenter mPresenter;
@@ -94,8 +97,9 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
         mLayoutProgressBarGray.setVisibility(View.GONE);
         imgChooseInterestRate.setOnClickListener(this);
         edtTerm.setEnabled(false);
-        atmMoney = Double.parseDouble(mDataAcount.getAtmMoney());
+        atmMoney = Long.parseLong(mDataAcount.getAtmMoney());
         mTxtMoney.setText(DataHelper.formatMoney(Long.parseLong(mDataAcount.getAtmMoney())) + " VND");
+        mEdtNumberAccount.setText(mDataAcount.getNumberAccount());
         btnOk.setOnClickListener(this);
         setupLogo();
     }
@@ -120,6 +124,7 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
     public void openOTPActivity(int transactionId) {
         Intent intent = new Intent(this, OTPAcvitiy.class);
         intent.putExtra(Constant.TRANSACTION_ID, transactionId);
+        intent.putExtra(Constant.TYPE_TRANSFER_MONEY, Constant.TRANSFER_ATM_SAVING);
         OTPAcvitiy.setOTPActivityListener(this);
         startActivity(intent);
     }

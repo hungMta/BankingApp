@@ -40,6 +40,7 @@
         <activity android:name=".ui.detailAccount.DetailATMAccountActivity"/>
         <activity android:name=".ui.createSavingAccount.CreateSavingAccountActivity"/>
         <activity android:name=".ui.pressOTP.OTPAcvitiy"/>
+        <activity android:name=".ui.transferMoneyATM.TransferMoneyATMActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

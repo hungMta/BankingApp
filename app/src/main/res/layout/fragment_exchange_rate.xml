@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlack"
-                android:text="@string/bank"
+                android:text="@string/bankLc"
                 android:layout_marginRight="5dp"
                 />
 

@@ -7,13 +7,13 @@ import java.util.List;
 public class AvaiableBankLocationResponse {
 
     @SerializedName("data")
-    private List<Bank> banks;
+    private List<BankLc> bankLcs;
 
-    public List<Bank> getBanks() {
-        return banks;
+    public List<BankLc> getBankLcs() {
+        return bankLcs;
     }
 
-    public void setBanks(List<Bank> banks) {
-        this.banks = banks;
+    public void setBankLcs(List<BankLc> bankLcs) {
+        this.bankLcs = bankLcs;
     }
 }

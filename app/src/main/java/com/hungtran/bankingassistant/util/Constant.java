@@ -59,6 +59,7 @@ public class Constant {
     public static final int TRANSFER_SAVING_ATM = 3;
     public static final int TRANSFER_SAVING_SAVING = 4;
     public static final int TRANSFER_LINKING = 5;
+    public static final String TYPE_TRANSFER_MONEY = "TYPE_TRANSFER_MONEY";
 
     public static final String ERROR_OTP = "Mã OTP không hợp lệ hoặc đã hết hạn!";
     public static final String DIALOG = "DIALOG";

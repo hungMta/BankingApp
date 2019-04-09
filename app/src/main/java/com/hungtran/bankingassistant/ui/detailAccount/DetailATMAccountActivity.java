@@ -6,11 +6,13 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
 import com.hungtran.bankingassistant.ui.createSavingAccount.CreateSavingAccountActivity;
+import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneyATMActivity;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.DataHelper;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
@@ -18,7 +20,7 @@ import com.hungtran.bankingassistant.util.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailATMAccountActivity extends BaseActivity implements View.OnClickListener, CreateSavingAccountActivity.CreateSavingAccountActivityListener {
+public class DetailATMAccountActivity extends BaseActivity implements View.OnClickListener, CreateSavingAccountActivity.CreateSavingAccountActivityListener, TransferMoneyATMActivity.TransferMoneyActivityListener {
 
     private DataAcount dataAcount;
     private int idBank;
@@ -41,6 +43,9 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
     @BindView(R.id.imgLogo)
     ImageView mLogo;
 
+    @BindView(R.id.layoutTransfer)
+    LinearLayout mLayoutTranser;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_detail_atm_account;
@@ -58,7 +63,7 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
 
         mImgClose.setOnClickListener(this);
         mLayoutCreateSavingAccount.setOnClickListener(this);
-        CreateSavingAccountActivity.setCreateSavingAccountActivityListener(this);
+        mLayoutTranser.setOnClickListener(this);
         setupLogo();
     }
 
@@ -70,9 +75,17 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
                 break;
             case R.id.layoutCreateSavingAccount:
                 Intent intent = new Intent(this, CreateSavingAccountActivity.class);
+                CreateSavingAccountActivity.setCreateSavingAccountActivityListener(this);
                 intent.putExtra(Constant.DATA_ACCOUNT, dataAcount);
                 intent.putExtra(Constant.ID_BANK, idBank);
                 startActivity(intent);
+                break;
+            case R.id.layoutTransfer:
+                Intent intent2 = new Intent(this, TransferMoneyATMActivity.class);
+                TransferMoneyATMActivity.setTransferMoneyActivityListener(this);
+                intent2.putExtra(Constant.DATA_ACCOUNT, dataAcount);
+                intent2.putExtra(Constant.ID_BANK, idBank);
+                startActivity(intent2);
                 break;
         }
     }
@@ -97,5 +110,10 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
                 mLogo.setImageDrawable(getResources().getDrawable(R.drawable.banner_viettin));
                 break;
         }
+    }
+
+    @Override
+    public void transferMoneySuccess() {
+        finish();
     }
 }

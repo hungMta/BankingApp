@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.hungtran.bankingassistant.model.area.AreaResponse;
 import com.hungtran.bankingassistant.model.bankLocation.AvaiableBankLocationResponse;
-import com.hungtran.bankingassistant.model.bankLocation.Bank;
+import com.hungtran.bankingassistant.model.bankLocation.BankLc;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequest;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequestBody;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationResponse;
@@ -13,7 +13,6 @@ import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.SharePreference;
 
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -115,10 +114,10 @@ public class MapPresenter implements MapConstract.Presenter {
         return new DisposableObserver<AvaiableBankLocationResponse>() {
             @Override
             public void onNext(AvaiableBankLocationResponse avaiableBankLocationResponse) {
-                if (avaiableBankLocationResponse.getBanks() != null) {
-                    Bank bank = new Bank(0, 0, null, null, "Tất cả", null);
-                    bank.setChecked(true);
-                    avaiableBankLocationResponse.getBanks().add(0, bank);
+                if (avaiableBankLocationResponse.getBankLcs() != null) {
+                    BankLc bankLc = new BankLc(0, 0, null, null, "Tất cả", null);
+                    bankLc.setChecked(true);
+                    avaiableBankLocationResponse.getBankLcs().add(0, bankLc);
                 }
                 mView.getAvaiableBankLocationSuccess(avaiableBankLocationResponse);
             }

@@ -5,8 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,8 +36,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -52,7 +48,7 @@ import com.hungtran.bankingassistant.dialog.AreaDialog;
 import com.hungtran.bankingassistant.model.area.Area;
 import com.hungtran.bankingassistant.model.area.AreaResponse;
 import com.hungtran.bankingassistant.model.bankLocation.AvaiableBankLocationResponse;
-import com.hungtran.bankingassistant.model.bankLocation.Bank;
+import com.hungtran.bankingassistant.model.bankLocation.BankLc;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocation;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequestBody;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationResponse;
@@ -60,8 +56,6 @@ import com.hungtran.bankingassistant.model.bankLocation.BranchLocation;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.ImageHelper;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +133,7 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     private String address;
     private AreaResponse areaResponse;
     private Area currentArea = new Area();
-    private List<Bank> avaiableBankList;
+    private List<BankLc> avaiableBankLcList;
     private FilterBankRecyclerViewAdapter filterBankRecyclerViewAdapter;
 
 
@@ -329,16 +323,16 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     }
 
     @Override
-    public void onChooseBank(Bank bank) {
-        idBank = bank.getId();
-        for (int i = 0; i < avaiableBankList.size(); i++) {
-            if (idBank == avaiableBankList.get(i).getId()) {
-                avaiableBankList.get(i).setChecked(true);
+    public void onChooseBank(BankLc bankLc) {
+        idBank = bankLc.getId();
+        for (int i = 0; i < avaiableBankLcList.size(); i++) {
+            if (idBank == avaiableBankLcList.get(i).getId()) {
+                avaiableBankLcList.get(i).setChecked(true);
             } else {
-                avaiableBankList.get(i).setChecked(false);
+                avaiableBankLcList.get(i).setChecked(false);
             }
         }
-        filterBankRecyclerViewAdapter.updateAdapter(avaiableBankList);
+        filterBankRecyclerViewAdapter.updateAdapter(avaiableBankLcList);
     }
 
 
@@ -433,12 +427,12 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
 
     @Override
     public void getAvaiableBankLocationSuccess(AvaiableBankLocationResponse avaiableBankLocationResponse) {
-        avaiableBankList = avaiableBankLocationResponse.getBanks();
-        filterBankRecyclerViewAdapter.updateAdapter(avaiableBankList);
+        avaiableBankLcList = avaiableBankLocationResponse.getBankLcs();
+        filterBankRecyclerViewAdapter.updateAdapter(avaiableBankLcList);
     }
 
     private void setupAvaibleBankLocationRecyclerView() {
-        filterBankRecyclerViewAdapter = new FilterBankRecyclerViewAdapter(this, avaiableBankList);
+        filterBankRecyclerViewAdapter = new FilterBankRecyclerViewAdapter(this, avaiableBankLcList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecylerBankList.setLayoutManager(layoutManager);
         mRecylerBankList.setAdapter(filterBankRecyclerViewAdapter);

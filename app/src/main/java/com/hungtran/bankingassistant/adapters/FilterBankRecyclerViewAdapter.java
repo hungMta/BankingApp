@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.model.bankLocation.Bank;
+import com.hungtran.bankingassistant.model.bankLocation.BankLc;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -23,12 +23,12 @@ import butterknife.ButterKnife;
 public class FilterBankRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private List<Bank> bankList;
+    private List<BankLc> bankLcList;
     private static FilterBankListener mFilterBankListener;
 
-    public FilterBankRecyclerViewAdapter(Context mContext, List<Bank> list) {
+    public FilterBankRecyclerViewAdapter(Context mContext, List<BankLc> list) {
         this.mContext = mContext;
-        this.bankList = list;
+        this.bankLcList = list;
 
     }
 
@@ -44,10 +44,10 @@ public class FilterBankRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         if (i == 0) {
             ((FilterBankItem) viewHolder).mImgBank.setImageBitmap(null);
         } else {
-            Picasso.get().load(bankList.get(i).getImage()).into(((FilterBankItem) viewHolder).mImgBank);
+            Picasso.get().load(bankLcList.get(i).getImage()).into(((FilterBankItem) viewHolder).mImgBank);
         }
-        ((FilterBankItem) viewHolder).mTxtBankName.setText(bankList.get(i).getName());
-        if (bankList.get(i).isChecked()) {
+        ((FilterBankItem) viewHolder).mTxtBankName.setText(bankLcList.get(i).getName());
+        if (bankLcList.get(i).isChecked()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 ((FilterBankItem) viewHolder).mImgBankCheck.setImageDrawable(mContext.getDrawable(R.drawable.ic_check_circle));
             } else {
@@ -64,7 +64,7 @@ public class FilterBankRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             @Override
             public void onClick(View v) {
                 if (mFilterBankListener != null) {
-                    mFilterBankListener.onChooseBank(bankList.get(i));
+                    mFilterBankListener.onChooseBank(bankLcList.get(i));
                 }
             }
         });
@@ -72,11 +72,11 @@ public class FilterBankRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public int getItemCount() {
-        return bankList == null ? 0 : bankList.size();
+        return bankLcList == null ? 0 : bankLcList.size();
     }
 
-    public void updateAdapter(List<Bank> list) {
-        this.bankList = list;
+    public void updateAdapter(List<BankLc> list) {
+        this.bankLcList = list;
         notifyDataSetChanged();
     }
 
@@ -101,7 +101,7 @@ public class FilterBankRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     }
 
     public interface FilterBankListener {
-        void onChooseBank(Bank bank);
+        void onChooseBank(BankLc bankLc);
     }
 
     public static void setFilterBankListener(FilterBankListener listener){
