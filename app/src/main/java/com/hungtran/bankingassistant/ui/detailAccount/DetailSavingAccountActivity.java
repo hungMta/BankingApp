@@ -6,24 +6,24 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
+import com.hungtran.bankingassistant.model.respone.DataAccount.SavingAccount;
 import com.hungtran.bankingassistant.ui.createSavingAccount.CreateSavingAccountActivity;
 import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneyATMActivity;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.DataHelper;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailATMAccountActivity extends BaseActivity implements View.OnClickListener, CreateSavingAccountActivity.CreateSavingAccountActivityListener, TransferMoneyATMActivity.TransferMoneyActivityListener {
-
-    private DataAcount dataAcount;
-    private int idBank;
+public class DetailSavingAccountActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.txtNumberAcount)
     TextView mTxtNumberAccount;
@@ -37,18 +37,30 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
     @BindView(R.id.imgClose)
     ImageView mImgClose;
 
-    @BindView(R.id.layoutCreateSavingAccount)
-    LinearLayout mLayoutCreateSavingAccount;
-
     @BindView(R.id.imgLogo)
     ImageView mLogo;
 
-    @BindView(R.id.layoutTransfer)
-    LinearLayout mLayoutTranser;
+    @BindView(R.id.txtTerm)
+    TextView mTxtTerm;
+
+    @BindView(R.id.txtInterestRate)
+    TextView mTxtInterestRate;
+
+    @BindView(R.id.txtCreateDate)
+    TextView mTxtCreateDate;
+
+    @BindView(R.id.txtDueDate)
+    TextView mTxtDueDate;
+
+    private DataAcount dataAcount;
+    private SavingAccount savingAccount;
+    private int idBank;
+    Date createDate;
+    Date dueDate;
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_detail_atm_account;
+        return R.layout.activity_detail_saving_account;
     }
 
     @Override
@@ -56,14 +68,41 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         dataAcount = (DataAcount) getIntent().getSerializableExtra(Constant.DATA_ACCOUNT);
+        savingAccount = (SavingAccount) getIntent().getSerializableExtra(Constant.SAVING_ACCOUNT);
         idBank = getIntent().getIntExtra(Constant.ID_BANK, 0);
-        mTxtNumberAccount.setText(dataAcount.getNumberAccount());
+        mTxtNumberAccount.setText(savingAccount.getNumberSaving());
         mTxtAccountHoler.setText(dataAcount.getName());
-        mTxtMoney.setText(DataHelper.formatMoney(Long.parseLong(dataAcount.getAtmMoney())) + " VND");
-
+        mTxtMoney.setText(DataHelper.formatMoney(Long.parseLong(savingAccount.getSavingMoney())) + " VND");
+        mTxtInterestRate.setText(savingAccount
+                .getInterestRate() + getResources().getString(R.string.interest_rate_per_year)
+        );
+        mTxtTerm.setText(savingAccount
+                .getTerm() + " " + getResources().getString(R.string.month)
+        );
         mImgClose.setOnClickListener(this);
-        mLayoutCreateSavingAccount.setOnClickListener(this);
-        mLayoutTranser.setOnClickListener(this);
+
+        createDate = DataHelper.getDateFromString(savingAccount.getCreateDate(), Constant.SAVING_FORMAT_DATE);
+        Calendar calCreateDate = Calendar.getInstance();
+        calCreateDate.setTime(createDate);
+        mTxtCreateDate.setText(calCreateDate.get(Calendar.DAY_OF_MONTH) + "/"
+                + calCreateDate.get(Calendar.MONTH) + "/"
+                + calCreateDate.get(Calendar.YEAR)
+        );
+
+        int term = 0;
+        if (savingAccount.getTerm().contains(" ")) {
+            String[] arr = savingAccount.getTerm().split(" ");
+            term = Integer.parseInt(arr[0]);
+        } else {
+            term = Integer.parseInt(savingAccount.getTerm());
+        }
+
+        calCreateDate.add(Calendar.MONTH, term);
+        mTxtDueDate.setText(calCreateDate.get(Calendar.DAY_OF_MONTH) + "/"
+                + calCreateDate.get(Calendar.MONTH) + "/"
+                + calCreateDate.get(Calendar.YEAR)
+        );
+
         setupLogo();
     }
 
@@ -73,27 +112,9 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
             case R.id.imgClose:
                 finish();
                 break;
-            case R.id.layoutCreateSavingAccount:
-                Intent intent = new Intent(this, CreateSavingAccountActivity.class);
-                CreateSavingAccountActivity.setCreateSavingAccountActivityListener(this);
-                intent.putExtra(Constant.DATA_ACCOUNT, dataAcount);
-                intent.putExtra(Constant.ID_BANK, idBank);
-                startActivity(intent);
-                break;
-            case R.id.layoutTransfer:
-                Intent intent2 = new Intent(this, TransferMoneyATMActivity.class);
-                TransferMoneyATMActivity.setTransferMoneyActivityListener(this);
-                intent2.putExtra(Constant.DATA_ACCOUNT, dataAcount);
-                intent2.putExtra(Constant.ID_BANK, idBank);
-                startActivity(intent2);
-                break;
         }
     }
 
-    @Override
-    public void createSavingAccountSuccess() {
-        finish();
-    }
 
     private void setupLogo() {
         switch (idBank) {
@@ -110,10 +131,5 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
                 mLogo.setImageDrawable(getResources().getDrawable(R.drawable.banner_viettin));
                 break;
         }
-    }
-
-    @Override
-    public void transferMoneySuccess() {
-        finish();
     }
 }

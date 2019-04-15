@@ -63,4 +63,11 @@ public class Constant {
 
     public static final String ERROR_OTP = "Mã OTP không hợp lệ hoặc đã hết hạn!";
     public static final String DIALOG = "DIALOG";
+    public static final String PROGRESS = "PROGRESS_DIALOG";
+    public static final String TRANSFER_MONEY = "TRANSFER_MONEY";
+    public static final String RECEIVER_NAME = "RECEIVER_NAME";
+    public static final String RECEIVER_BANK = "RECEIVER_BANK";
+    public static final String RECEIVER_ACCOUNT = "RECEIVER_ACCOUNT";
+    public static String SAVING_ACCOUNT = "SAVING_ACCOUNT";
+    public static String SAVING_FORMAT_DATE =  "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 }

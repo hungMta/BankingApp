@@ -74,7 +74,11 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
 
     @Override
     public void submitOTPSuccess() {
-        showSuccessDialog();
+//        showSuccessDialog();
+        if (otpActivityListener != null) {
+            otpActivityListener.OPTActivitySucess();
+        }
+        finish();
     }
 
     @Override

@@ -101,8 +101,6 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     @BindView(R.id.imgSearchBranchCheck)
     ImageView mImgSearchBranchCheck;
 
-    @BindView(R.id.layoutProgressBar)
-    RelativeLayout mLayoutProgressBar;
 
     @BindView(R.id.edtSearch)
     EditText mEdtSearch;
@@ -473,9 +471,11 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
 
     private void showProgress(boolean isShow) {
         if (isShow) {
-            mLayoutProgressBar.setVisibility(View.VISIBLE);
+            showDialogProgress();
+//            mLayoutProgressBar.setVisibility(View.VISIBLE);
         } else {
-            mLayoutProgressBar.setVisibility(View.GONE);
+            hideDialogProgress();
+//            mLayoutProgressBar.setVisibility(View.GONE);
         }
     }
 

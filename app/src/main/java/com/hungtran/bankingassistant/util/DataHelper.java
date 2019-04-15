@@ -104,6 +104,20 @@ public class DataHelper {
         return null;
     }
 
+    public static Date getDateFromString(String string, String format) {
+        if (string == null) return null;
+        if (format == null) {
+            return getDateFromString(string);
+        }
+        try {
+            Date date = new SimpleDateFormat(format).parse(string);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
+    }
+
     public static String getTime(String time, int type) {
         Date date = DataHelper.getDateFromString(time);
         if (date == null) return "";
@@ -118,5 +132,10 @@ public class DataHelper {
             int day = calendar.get(Calendar.DATE);
             return "" + day + "/" + month;
         }
+    }
+
+    // delete all non-digit in a String
+    public static String deletAllNonDigit(String input){
+       return  input.replaceAll(",","");
     }
 }

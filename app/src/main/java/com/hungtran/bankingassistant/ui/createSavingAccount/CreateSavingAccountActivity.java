@@ -23,6 +23,7 @@ import com.hungtran.bankingassistant.model.interestRate.InterestRate;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
 import com.hungtran.bankingassistant.ui.pressOTP.OTPAcvitiy;
 import com.hungtran.bankingassistant.util.Constant;
+import com.hungtran.bankingassistant.util.CurrencyEditText;
 import com.hungtran.bankingassistant.util.DataHelper;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
@@ -37,8 +38,8 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
     @BindView(R.id.imgChooseInterestRate)
     ImageView imgChooseInterestRate;
 
-    @BindView(R.id.layoutProgressBar)
-    LinearLayout mLayoutProgressBar;
+//    @BindView(R.id.layoutProgressBar)
+//    LinearLayout mLayoutProgressBar;
 
     @BindView(R.id.edtTerm)
     EditText edtTerm;
@@ -47,13 +48,13 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
     TextView mTxtMoney;
 
     @BindView(R.id.edtSavingMoney)
-    EditText mEdtSavingMoney;
+    CurrencyEditText mEdtSavingMoney;
 
     @BindView(R.id.btnOK)
     Button btnOk;
 
-    @BindView(R.id.layoutProgressBarGray)
-    LinearLayout mLayoutProgressBarGray;
+//    @BindView(R.id.layoutProgressBarGray)
+//    LinearLayout mLayoutProgressBarGray;
 
     @BindView(R.id.imgLogo)
     ImageView mLogo;
@@ -93,8 +94,11 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
         mDataAcount = (DataAcount) getIntent().getSerializableExtra(Constant.DATA_ACCOUNT);
         mIdBank = getIntent().getIntExtra(Constant.ID_BANK, 0);
         mPresenter.getInterestRate(mIdBank);
-        mLayoutProgressBar.setVisibility(View.VISIBLE);
-        mLayoutProgressBarGray.setVisibility(View.GONE);
+
+//        mLayoutProgressBar.setVisibility(View.VISIBLE);
+//        mLayoutProgressBarGray.setVisibility(View.GONE);
+        showDialogProgress();
+
         imgChooseInterestRate.setOnClickListener(this);
         edtTerm.setEnabled(false);
         atmMoney = Long.parseLong(mDataAcount.getAtmMoney());
@@ -116,8 +120,9 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
 
     @Override
     public void hideProgressBar() {
-        mLayoutProgressBar.setVisibility(View.GONE);
-        mLayoutProgressBarGray.setVisibility(View.GONE);
+//        mLayoutProgressBar.setVisibility(View.GONE);
+//        mLayoutProgressBarGray.setVisibility(View.GONE);
+        hideDialogProgress();
     }
 
     @Override
@@ -143,7 +148,8 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
             case R.id.btnOK:
                 if (isValidMoney()) {
 //                  showSuccessDialog();
-                    mLayoutProgressBarGray.setVisibility(View.VISIBLE);
+//                    mLayoutProgressBarGray.setVisibility(View.VISIBLE);
+                    showDialogProgress();
                     mPresenter.createSavingAccount(mDataAcount, mIdBank, term, savingMoney, interestRateNumber);
                 }
                 break;
@@ -222,7 +228,8 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
 
     private boolean isValidMoney() {
         if (mEdtSavingMoney.getText().toString().equals("")) return false;
-        savingMoney = Double.parseDouble(mEdtSavingMoney.getText().toString());
+        String format = DataHelper.deletAllNonDigit(mEdtSavingMoney.getText().toString());
+        savingMoney = Double.parseDouble(format);
 
         if (savingMoney > atmMoney) {
             Toast.makeText(this, "Số tiền phải nhỏ hơn số dư khả dụng!", Toast.LENGTH_SHORT).show();

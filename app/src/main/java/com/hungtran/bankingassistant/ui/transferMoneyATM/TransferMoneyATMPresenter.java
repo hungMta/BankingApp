@@ -29,9 +29,6 @@ public class TransferMoneyATMPresenter implements TransferMoneyATMContract.Prese
         mView = view;
     }
 
-
-
-
     private Observable<BankLinkingResponse> getAllBankLinkingObservable() {
         return ServiceGenerator.resquest().getAllBankLinking(SharePreference.getStringVal(Constant.TOKEN_KEY))
                 .subscribeOn(Schedulers.io())
@@ -67,11 +64,11 @@ public class TransferMoneyATMPresenter implements TransferMoneyATMContract.Prese
     }
 
     @Override
-    public void trasnferMoney(DataAcount dataAcount, int idFromBank, int idToBank, String receivingName, double money) {
+    public void trasnferMoney(DataAcount dataAcount, int idFromBank, int idToBank, String receivingAccount, String receivingName, double money) {
         TransferMoney transferMoney = new TransferMoney();
-        transferMoney.setType(Constant.TRANSFER_ATM_SAVING);
+        transferMoney.setType(Constant.TRANSFER_ATM_ATM);
         transferMoney.setFromAccountNumber(dataAcount.getNumberAccount());
-        transferMoney.setToAccountNumber(dataAcount.getNumberAccount());
+        transferMoney.setToAccountNumber(receivingAccount);
         transferMoney.setIdBankFrom(idFromBank);
         transferMoney.setIdBankTo(idToBank);
         transferMoney.setMoney(money);

@@ -215,7 +215,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp">
 
-                    <EditText
+                    <com.hungtran.bankingassistant.util.CurrencyEditText
                         android:id="@+id/edtMoney"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

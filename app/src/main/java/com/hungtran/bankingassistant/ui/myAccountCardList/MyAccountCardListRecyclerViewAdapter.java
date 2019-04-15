@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
+import com.hungtran.bankingassistant.model.respone.DataAccount.SavingAccount;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.DataHelper;
 
@@ -102,7 +103,7 @@ public class MyAccountCardListRecyclerViewAdapter extends RecyclerView.Adapter<R
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
-                        mListener.onMyAccountCardListItemClicked(dataAcount, i);
+                        mListener.onMyAccountCardListItemSavingClicked(dataAcount, i, dataAcount.getSavingAccountList().get(i - 1));
                     }
                 }
             });
@@ -209,6 +210,8 @@ public class MyAccountCardListRecyclerViewAdapter extends RecyclerView.Adapter<R
 
     public interface MyAccountCardListListener {
         void onMyAccountCardListItemClicked(DataAcount acount, int position);
+
+        void onMyAccountCardListItemSavingClicked(DataAcount acount, int position, SavingAccount savingAccount);
     }
 
     public void setMyAccountCardListListener(MyAccountCardListListener listener) {

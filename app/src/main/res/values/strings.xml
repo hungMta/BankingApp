@@ -85,4 +85,5 @@
     <string name="create_saving_money_success">Tạo tài khoản tiết kiệm thành công!</string>
     <string name="transfer_money_atm_success">Gửi tiền thành công!</string>
     <string name="next">Tiếp tục</string>
+    <string name="saving_info">Thông tin tài khoản tiết kiệm</string>
 </resources>

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.user.Account;
 import com.hungtran.bankingassistant.ui.main.MainActivity;
+import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneySuccessAcitvity;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
 import butterknife.BindInt;
@@ -55,14 +56,17 @@ public class LoginActivty extends BaseActivity implements LoginContract.View {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         presenter = new LoginPresenter(this, this);
-
         mEdtEmail.setText("0365023120");
         mEdtPassword.setText("123456");
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mLayoutProgressBar.setVisibility(View.VISIBLE);
+//                mLayoutProgressBar.setVisibility(View.VISIBLE);
+
+//                startActivity(new Intent(getApplicationContext(), TransferMoneySuccessAcitvity.class));
+
+                showDialogProgress();
                 mTxtError.setVisibility(View.INVISIBLE);
                 Account account = new Account();
                 account.setUserName(mEdtEmail.getText().toString());
@@ -109,6 +113,7 @@ public class LoginActivty extends BaseActivity implements LoginContract.View {
 
     @Override
     public void hideProgressBar() {
-        mLayoutProgressBar.setVisibility(View.GONE);
+//        mLayoutProgressBar.setVisibility(View.GONE);
+        hideDialogProgress();
     }
 }

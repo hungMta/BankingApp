@@ -214,7 +214,6 @@
                 android:textColor="@color/colorBlack" />
 
            <RelativeLayout
-               android:id="@+id/layoutTransfer"
                android:layout_width="match_parent"
                android:layout_height="match_parent">
 

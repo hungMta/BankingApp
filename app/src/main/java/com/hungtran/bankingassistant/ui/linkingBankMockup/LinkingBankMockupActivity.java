@@ -53,8 +53,8 @@ public class LinkingBankMockupActivity extends BaseActivity implements View.OnCl
     @BindView(R.id.btnLinking)
     Button mBtnLinking;
 
-    @BindView(R.id.layoutProgressBar)
-    LinearLayout mLayoutProgressBar;
+//    @BindView(R.id.layoutProgressBar)
+//    LinearLayout mLayoutProgressBar;
 
     @BindView(R.id.txtTitle)
     TextView mTxtTitle;
@@ -102,7 +102,8 @@ public class LinkingBankMockupActivity extends BaseActivity implements View.OnCl
                 mTxtErrorPassword.setText("");
                 mTxtErrorATM.setText("");
                 if (validField()) {
-                    mLayoutProgressBar.setVisibility(View.VISIBLE);
+//                    mLayoutProgressBar.setVisibility(View.VISIBLE);
+                    showDialogProgress();
                     mPresenter.linkingBank(mBank, new LinkingBank(mEdtAtmNumber.getText().toString(),
                             mEdtPassword.getText().toString()));
                 }
@@ -146,7 +147,8 @@ public class LinkingBankMockupActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void hideProgressBar() {
-        mLayoutProgressBar.setVisibility(View.GONE);
+//        mLayoutProgressBar.setVisibility(View.GONE);
+        hideDialogProgress();
     }
 
     private void checkBankTheme() {

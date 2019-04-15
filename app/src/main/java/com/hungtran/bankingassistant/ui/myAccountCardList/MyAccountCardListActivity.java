@@ -12,8 +12,10 @@ import android.widget.Toast;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
+import com.hungtran.bankingassistant.model.respone.DataAccount.SavingAccount;
 import com.hungtran.bankingassistant.ui.createSavingAccount.CreateSavingAccountActivity;
 import com.hungtran.bankingassistant.ui.detailAccount.DetailATMAccountActivity;
+import com.hungtran.bankingassistant.ui.detailAccount.DetailSavingAccountActivity;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
@@ -99,11 +101,20 @@ public class MyAccountCardListActivity extends BaseActivity implements MyAccount
             intent.putExtra(Constant.ID_BANK, mIdBank);
             startActivity(intent);
         } else {
-            Intent intent = new Intent(this, CreateSavingAccountActivity.class);
+            Intent intent = new Intent(this, DetailSavingAccountActivity.class);
             intent.putExtra(Constant.DATA_ACCOUNT, acount);
             intent.putExtra(Constant.ID_BANK, mIdBank);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onMyAccountCardListItemSavingClicked(DataAcount acount, int position, SavingAccount savingAccount) {
+        Intent intent = new Intent(this, DetailSavingAccountActivity.class);
+        intent.putExtra(Constant.DATA_ACCOUNT, acount);
+        intent.putExtra(Constant.SAVING_ACCOUNT, savingAccount);
+        intent.putExtra(Constant.ID_BANK, mIdBank);
+        startActivity(intent);
     }
 
     private void setUpBackground(){
