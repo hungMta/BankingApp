@@ -157,7 +157,7 @@ public class CalculateSavingMoneyFragment extends BaseFragment implements Calcul
 
         mListPopupWithdrawType = new ArrayList<>();
         mListPopupWithdrawType.add(new BaseModel(Constant.TYPE_SAVING_WITHDRAW, getResources().getString(R.string.type_with_draw)));
-        mListPopupWithdrawType.add(new BaseModel(Constant.TYPE_SAVING_WITHDRAW_END, getResources().getString(R.string.type_with_draw_end)));
+        mListPopupWithdrawType.add(new BaseModel(Constant.TYPE_SAVING_WITHDRAW_AT_END_TERM, getResources().getString(R.string.type_with_draw_end)));
     }
 
     private void setupEditTextView() {

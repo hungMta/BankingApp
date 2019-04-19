@@ -1,22 +1,24 @@
-package com.hungtran.bankingassistant.ui.detailAccount;
+package com.hungtran.bankingassistant.ui.withdrawMoney;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hungtran.bankingassistant.R;
-import com.hungtran.bankingassistant.dialog.DialogCommon;
 import com.hungtran.bankingassistant.model.interestRate.InterestRate;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
 import com.hungtran.bankingassistant.model.respone.DataAccount.SavingAccount;
-import com.hungtran.bankingassistant.ui.changeSavingMoneyBank.ChangeSavingMoneyBankActivity;
-import com.hungtran.bankingassistant.ui.withdrawMoney.WithdrawMoneyActivity;
+import com.hungtran.bankingassistant.ui.pressOTP.OTPAcvitiy;
+import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneySuccessAcitvity;
 import com.hungtran.bankingassistant.util.Constant;
+import com.hungtran.bankingassistant.util.CurrencyEditText;
 import com.hungtran.bankingassistant.util.DataHelper;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
@@ -26,7 +28,8 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailSavingAccountActivity extends BaseActivity implements View.OnClickListener, DetailSavingAccountContract.View, DialogCommon.DialogCommonListener, WithdrawMoneyActivity.WithdrawMoneyActivityListener, ChangeSavingMoneyBankActivity.ChangeSavingMoneyBankListener {
+public class WithdrawMoneyActivity extends BaseActivity implements WithdrawMoneyContract.View, OTPAcvitiy.OTPActivityListener, TransferMoneySuccessAcitvity.TransferMoneySuccessListener, View.OnClickListener {
+
 
     @BindView(R.id.txtNumberAcount)
     TextView mTxtNumberAccount;
@@ -36,9 +39,6 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
 
     @BindView(R.id.txtMoney)
     TextView mTxtMoney;
-
-    @BindView(R.id.imgClose)
-    ImageView mImgClose;
 
     @BindView(R.id.imgLogo)
     ImageView mLogo;
@@ -55,21 +55,19 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
     @BindView(R.id.txtDueDate)
     TextView mTxtDueDate;
 
-    @BindView(R.id.layoutChangeSavingBank)
-    LinearLayout mLayoutChangeSavingBank;
 
-    @BindView(R.id.layoutWithdraw)
-    LinearLayout mLayoutWithdraw;
+    @BindView(R.id.my_toolbar)
+    Toolbar mToolbar;
 
-    @BindView(R.id.layoutWithdrawAll)
-    LinearLayout mLayoutWithdrawAll;
+    @BindView(R.id.txtMessageWithdraw)
+    TextView mTxtMessageWithDraw;
 
+    @BindView(R.id.edtMoney)
+    CurrencyEditText mEdtMoney;
 
-    @BindView(R.id.layoutDueDate)
-    LinearLayout mLayoutDueDate;
+    @BindView(R.id.btnOK)
+    Button mBtnOk;
 
-    @BindView(R.id.layoutTransaction)
-    LinearLayout mLayoutTransaction;
 
     private DataAcount dataAcount;
     private SavingAccount savingAccount;
@@ -77,36 +75,41 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
     private int idBank;
     Date createDate;
     Date dueDate;
-    private DetailSavingAccountPresenter mPresenter;
+    private long withDrawMoney;
+
+    private WithdrawMoneyPresenter mPresenter;
+
+    private static WithdrawMoneyActivityListener withdrawMoneyActivityListener;
+
+
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_detail_saving_account;
+        return R.layout.activity_withdraw_money;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        mPresenter = new WithdrawMoneyPresenter(this);
         dataAcount = (DataAcount) getIntent().getSerializableExtra(Constant.DATA_ACCOUNT);
         savingAccount = (SavingAccount) getIntent().getSerializableExtra(Constant.SAVING_ACCOUNT);
         idBank = getIntent().getIntExtra(Constant.ID_BANK, 0);
-
-        mPresenter = new DetailSavingAccountPresenter(this);
-        showDialogProgress();
-        mPresenter.getInterestRate(idBank);
-
-
+        interestRate = (InterestRate) getIntent().getSerializableExtra(Constant.SAVING_INTEREST_RATE);
+        mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white));
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         setupData();
         setupLogo();
-
-        mLayoutChangeSavingBank.setOnClickListener(this);
-        mLayoutWithdraw.setOnClickListener(this);
-        mLayoutWithdrawAll.setOnClickListener(this);
+        mBtnOk.setOnClickListener(this);
     }
 
     private void setupData() {
-
         mTxtNumberAccount.setText(savingAccount.getNumberSaving());
         mTxtAccountHoler.setText(dataAcount.getName());
         mTxtMoney.setText(DataHelper.formatMoney(Long.parseLong(savingAccount.getSavingMoney())) + " VND");
@@ -116,7 +119,6 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
         mTxtTerm.setText(savingAccount
                 .getTerm() + " " + getResources().getString(R.string.month)
         );
-        mImgClose.setOnClickListener(this);
 
         createDate = DataHelper.getDateFromString(savingAccount.getCreateDate(), Constant.SAVING_FORMAT_DATE);
         Calendar calCreateDate = Calendar.getInstance();
@@ -139,53 +141,9 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
                 + (calCreateDate.get(Calendar.MONTH) + 1) + "/"
                 + calCreateDate.get(Calendar.YEAR)
         );
-        checkDueDate(calCreateDate);
-    }
 
-    private void checkDueDate(Calendar dueDateCal) {
-        Date currentDate = Calendar.getInstance().getTime();
-        Date dueDate = dueDateCal.getTime();
-        if (dueDate.before(currentDate) || dueDate.equals(currentDate)) {
-            mLayoutTransaction.setVisibility(View.GONE);
-            mLayoutDueDate.setVisibility(View.VISIBLE);
-        } else {
-            mLayoutTransaction.setVisibility(View.VISIBLE);
-            mLayoutDueDate.setVisibility(View.GONE);
-        }
+        mTxtMessageWithDraw.setText(getResources().getString(R.string.message_withdraw_money) + " " + interestRate.getUnlimited() + "%/năm");
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.imgClose:
-                finish();
-                break;
-            case R.id.layoutWithdraw:
-//                showDialogWarning();
-                Intent intent = new Intent(this, WithdrawMoneyActivity.class);
-                intent.putExtra(Constant.SAVING_INTEREST_RATE, interestRate);
-                intent.putExtra(Constant.DATA_ACCOUNT, dataAcount);
-                intent.putExtra(Constant.SAVING_ACCOUNT, savingAccount);
-                intent.putExtra(Constant.ID_BANK, idBank);
-                WithdrawMoneyActivity.setWithdrawMoneyActivityListener(this);
-                startActivity(intent);
-                break;
-            case R.id.layoutWithdrawAll:
-                showDialogWarning();
-                break;
-            case R.id.layoutChangeSavingBank:
-                Intent intent1 = new Intent(this, ChangeSavingMoneyBankActivity.class);
-                intent1.putExtra(Constant.SAVING_INTEREST_RATE, interestRate);
-                intent1.putExtra(Constant.DATA_ACCOUNT, dataAcount);
-                intent1.putExtra(Constant.SAVING_ACCOUNT, savingAccount);
-                intent1.putExtra(Constant.ID_BANK, idBank);
-                ChangeSavingMoneyBankActivity.setChangeSavingMoneyBankListener(this);
-//                WithdrawMoneyActivity.setWithdrawMoneyActivityListener(this);
-                startActivity(intent1);
-                break;
-        }
-    }
-
 
     private void setupLogo() {
         switch (idBank) {
@@ -204,14 +162,7 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
         }
     }
 
-    @Override
-    public void getInterestRateSuccess(InterestRate interestRate) {
-        Log.d(TAG, "getInterestRateSuccess: " + interestRate);
-        this.interestRate = interestRate;
-    }
-
-    @Override
-    public void getInterestRateFail(String message) {
+    private void checkDueDate(){
 
     }
 
@@ -220,25 +171,57 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
         hideDialogProgress();
     }
 
-    private void showDialogWarning() {
-        String message = "Sổ tiết kiệm chưa đến ngày đáo hạn nên số tiền rút sẽ được tính theo lãi suất không kỳ hạn ";
-        DialogCommon dialogCommon = DialogCommon.newInstance(message);
-        dialogCommon.show(getSupportFragmentManager(), Constant.DIALOG);
-        dialogCommon.setDialogListener(this);
+    @Override
+    public void openOTPActivity(int transactionId) {
+        Intent intent = new Intent(this, OTPAcvitiy.class);
+        intent.putExtra(Constant.TRANSACTION_ID, transactionId);
+        intent.putExtra(Constant.TYPE_TRANSFER_MONEY, Constant.TRANSFER_ATM_ATM);
+        OTPAcvitiy.setOTPActivityListener(this);
+        startActivity(intent);
     }
 
     @Override
-    public void onDialogOkClicked() {
-
+    public void withDrawMoneyFail(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void withDrawMoneySuccess() {
+    public void OPTActivitySucess() {
+        Intent intent = new Intent(this, TransferMoneySuccessAcitvity.class);
+//        intent.putExtra(Constant.RECEIVER_BANK, idBank);
+        intent.putExtra(Constant.RECEIVER_NAME, dataAcount.getName());
+        intent.putExtra(Constant.TYPE_TRANSFER_MONEY, Constant.TRANSFER_SAVING_SAVING);
+        intent.putExtra(Constant.TRANSFER_MONEY, withDrawMoney);
+        intent.putExtra(Constant.SAVING_ACCOUNT, savingAccount);
+        TransferMoneySuccessAcitvity.setTransferMoneySuccessListener(this);
+        startActivity(intent);
+    }
+
+    @Override
+    public void doOtherTransaction() {
+        if (withdrawMoneyActivityListener != null) {
+            withdrawMoneyActivityListener.withDrawMoneySuccess();
+        }
         finish();
     }
 
     @Override
-    public void onChangeSavingMoneyBankDestroy() {
-        finish();
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnOK:
+                String format = DataHelper.deletAllNonDigit(mEdtMoney.getText().toString());
+                withDrawMoney = Long.parseLong(format);
+                showDialogProgress();
+                mPresenter.withDrawMoney(dataAcount, savingAccount, idBank, withDrawMoney);
+                break;
+        }
+    }
+
+    public interface WithdrawMoneyActivityListener {
+        void withDrawMoneySuccess();
+    }
+
+    public static void setWithdrawMoneyActivityListener(WithdrawMoneyActivityListener listener){
+        withdrawMoneyActivityListener = listener;
     }
 }

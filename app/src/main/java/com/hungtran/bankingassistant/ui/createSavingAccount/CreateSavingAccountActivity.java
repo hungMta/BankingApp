@@ -22,6 +22,7 @@ import com.hungtran.bankingassistant.model.bank.Bank;
 import com.hungtran.bankingassistant.model.interestRate.InterestRate;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
 import com.hungtran.bankingassistant.ui.pressOTP.OTPAcvitiy;
+import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneySuccessAcitvity;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.CurrencyEditText;
 import com.hungtran.bankingassistant.util.DataHelper;
@@ -30,7 +31,7 @@ import com.hungtran.bankingassistant.util.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CreateSavingAccountActivity extends BaseActivity implements CreateSavingAccountContract.View, View.OnClickListener, InterestRateAndTermDialog.InterestRateAndTermDialogListener, SuccessDialog.SuccessDialogListener, OTPAcvitiy.OTPActivityListener {
+public class CreateSavingAccountActivity extends BaseActivity implements CreateSavingAccountContract.View, View.OnClickListener, InterestRateAndTermDialog.InterestRateAndTermDialogListener, SuccessDialog.SuccessDialogListener, OTPAcvitiy.OTPActivityListener, TransferMoneySuccessAcitvity.TransferMoneySuccessListener {
 
     @BindView(R.id.my_toolbar)
     Toolbar mToolbar;
@@ -64,6 +65,7 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
 
     private DataAcount mDataAcount;
     private int mIdBank;
+    private Bank mBank;
     private CreateSavingAccountPresenter mPresenter;
     private InterestRate mInterestRate;
     private InterestRateAndTermDialog interestRateAndTermDialog;
@@ -93,6 +95,7 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
 
         mDataAcount = (DataAcount) getIntent().getSerializableExtra(Constant.DATA_ACCOUNT);
         mIdBank = getIntent().getIntExtra(Constant.ID_BANK, 0);
+        mBank = (Bank) getIntent().getSerializableExtra(Constant.BANK);
         mPresenter.getInterestRate(mIdBank);
 
 //        mLayoutProgressBar.setVisibility(View.VISIBLE);
@@ -237,7 +240,7 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
         }
 
         if (savingMoney < 3000000) {
-            DialogCommon dialogCommon = DialogCommon.newInstance("Số tiền phải lớn hơn 3.000.000 VND!");
+            DialogCommon dialogCommon = DialogCommon.newInstance(getResources().getString(R.string.error_saving_money));
             dialogCommon.show(getSupportFragmentManager(), Constant.DIALOG);
             return false;
         }
@@ -267,10 +270,28 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
 
     @Override
     public void OPTActivitySucess() {
-        if (createSavingAccountActivityListener != null) {
-            createSavingAccountActivityListener.createSavingAccountSuccess();
-        }
+//        if (createSavingAccountActivityListener != null) {
+////            createSavingAccountActivityListener.createSavingAccountSuccess();
+////        }
+        Intent intent = new Intent(this, TransferMoneySuccessAcitvity.class);
+        intent.putExtra(Constant.SAVING_TERM, term);
+        intent.putExtra(Constant.SAVING_INTEREST_RATE, interestRateNumber);
+        intent.putExtra(Constant.TYPE_TRANSFER_MONEY, Constant.TRANSFER_ATM_SAVING);
+        intent.putExtra(Constant.TRANSFER_MONEY, savingMoney);
+        TransferMoneySuccessAcitvity.setTransferMoneySuccessListener(this);
+        startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void doOtherTransaction() {
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        TransferMoneySuccessAcitvity.setTransferMoneySuccessListener(null);
+        super.onDestroy();
     }
 
     public interface CreateSavingAccountActivityListener {

@@ -65,7 +65,8 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
                     Toast.makeText(getApplicationContext(), "Vui lòng nhập mã OTP", Toast.LENGTH_SHORT).show();
                 }
                 int otp = Integer.parseInt(edtOTP.getText().toString());
-                mLayoutProgressBar.setVisibility(View.VISIBLE);
+//                mLayoutProgressBar.setVisibility(View.VISIBLE);
+                showDialogProgress();
                 mPresenter.submitOTP(transactionId, otp);
             }
         });
@@ -89,7 +90,8 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
 
     @Override
     public void hideProgressBar() {
-        mLayoutProgressBar.setVisibility(View.GONE);
+//        mLayoutProgressBar.setVisibility(View.GONE);
+        hideDialogProgress();
     }
 
 

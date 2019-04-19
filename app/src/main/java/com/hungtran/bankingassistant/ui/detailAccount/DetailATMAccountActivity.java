@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
+import com.hungtran.bankingassistant.dialog.DialogCommon;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
 import com.hungtran.bankingassistant.ui.createSavingAccount.CreateSavingAccountActivity;
 import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneyATMActivity;
@@ -20,7 +21,7 @@ import com.hungtran.bankingassistant.util.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailATMAccountActivity extends BaseActivity implements View.OnClickListener, CreateSavingAccountActivity.CreateSavingAccountActivityListener, TransferMoneyATMActivity.TransferMoneyActivityListener {
+public class DetailATMAccountActivity extends BaseActivity implements View.OnClickListener, CreateSavingAccountActivity.CreateSavingAccountActivityListener, TransferMoneyATMActivity.TransferMoneyActivityListener, DialogCommon.DialogCommonListener {
 
     private DataAcount dataAcount;
     private int idBank;
@@ -46,6 +47,8 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
     @BindView(R.id.layoutTransfer)
     LinearLayout mLayoutTranser;
 
+
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_detail_atm_account;
@@ -64,6 +67,9 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
         mImgClose.setOnClickListener(this);
         mLayoutCreateSavingAccount.setOnClickListener(this);
         mLayoutTranser.setOnClickListener(this);
+
+
+
         setupLogo();
     }
 
@@ -87,6 +93,7 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
                 intent2.putExtra(Constant.ID_BANK, idBank);
                 startActivity(intent2);
                 break;
+
         }
     }
 
@@ -115,5 +122,11 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
     @Override
     public void transferMoneySuccess() {
         finish();
+    }
+
+
+    @Override
+    public void onDialogOkClicked() {
+
     }
 }

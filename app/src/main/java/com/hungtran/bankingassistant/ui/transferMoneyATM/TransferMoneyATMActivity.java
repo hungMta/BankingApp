@@ -32,6 +32,8 @@ public class TransferMoneyATMActivity extends BaseActivity implements TransferMo
 
 
     private static TransferMoneyActivityListener transferMoneyActivityListener;
+
+
     @BindView(R.id.my_toolbar)
     Toolbar mToolbar;
 
@@ -240,6 +242,12 @@ public class TransferMoneyATMActivity extends BaseActivity implements TransferMo
     @Override
     public void doOtherTransaction() {
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        TransferMoneySuccessAcitvity.setTransferMoneySuccessListener(null);
+        super.onDestroy();
     }
 
 

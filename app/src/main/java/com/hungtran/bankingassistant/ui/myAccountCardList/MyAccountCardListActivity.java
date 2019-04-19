@@ -74,7 +74,8 @@ public class MyAccountCardListActivity extends BaseActivity implements MyAccount
     }
 
     private void getDataAccount(){
-        mProgressBar.setVisibility(View.VISIBLE);
+//        mProgressBar.setVisibility(View.VISIBLE);
+        showDialogProgress();
         mPresenter.getDataAccount(mIdBank);
     }
 
@@ -90,7 +91,8 @@ public class MyAccountCardListActivity extends BaseActivity implements MyAccount
 
     @Override
     public void hideProgressBar() {
-        mProgressBar.setVisibility(View.GONE);
+//        mProgressBar.setVisibility(View.GONE);
+        hideDialogProgress();
     }
 
     @Override

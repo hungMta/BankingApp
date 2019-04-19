@@ -11,7 +11,7 @@ public class Constant {
     public static final String TOKEN = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjowLCJ1c2VybmFtZSI6IjEiLCJjdXJyZW50X3RpbWUiOiIxNTUxODQ1NDE2ODAyIiwiZXhwIjoxNTYyMjEzNDE2fQ.0cHbZS1L_USZrigAxTLUacvTJR8HOuSwIORQ_btYDflHUCxZaKXk4KECPaM-qbLxY-VKsox2kBhAmSJAZDecgA";
     public static final String TOKEN_KEY = "TOKEN";
     public static final Integer TYPE_SAVING_WITHDRAW = 0;
-    public static final Integer TYPE_SAVING_WITHDRAW_END = 1;
+    public static final Integer TYPE_SAVING_WITHDRAW_AT_END_TERM = 1;
     public static final Integer TYPE_SAVING_MONTH = 0;
     public static final Integer TYPE_SAVING_YEAR = 1;
     public static final Integer TYPE_PRINCIPAL_BALANCE = 0;
@@ -68,6 +68,8 @@ public class Constant {
     public static final String RECEIVER_NAME = "RECEIVER_NAME";
     public static final String RECEIVER_BANK = "RECEIVER_BANK";
     public static final String RECEIVER_ACCOUNT = "RECEIVER_ACCOUNT";
+    public static final String SAVING_TERM = "SAVING_TERM";
+    public static final String SAVING_INTEREST_RATE = "SAVING_INTEREST_RATE";
     public static String SAVING_ACCOUNT = "SAVING_ACCOUNT";
     public static String SAVING_FORMAT_DATE =  "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 }

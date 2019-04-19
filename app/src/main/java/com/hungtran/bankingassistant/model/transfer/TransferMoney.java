@@ -37,6 +37,9 @@ public class TransferMoney  {
     @SerializedName("branch")
     private String branch;
 
+    @SerializedName("saving_id")
+    private int savingId;
+
     public TransferMoney() {
     }
 
@@ -52,6 +55,14 @@ public class TransferMoney  {
         this.interestRate = interestRate;
         this.currency = currency;
         this.branch = branch;
+    }
+
+    public int getSavingId() {
+        return savingId;
+    }
+
+    public void setSavingId(int savingId) {
+        this.savingId = savingId;
     }
 
     public int getType() {
