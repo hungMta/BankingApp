@@ -15,6 +15,7 @@ import com.hungtran.bankingassistant.model.interestRate.InterestRate;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
 import com.hungtran.bankingassistant.model.respone.DataAccount.SavingAccount;
 import com.hungtran.bankingassistant.ui.changeSavingMoneyBank.ChangeSavingMoneyBankActivity;
+import com.hungtran.bankingassistant.ui.withdrawMoney.WithDrawAllMoneyActivity;
 import com.hungtran.bankingassistant.ui.withdrawMoney.WithdrawMoneyActivity;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.DataHelper;
@@ -26,7 +27,7 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailSavingAccountActivity extends BaseActivity implements View.OnClickListener, DetailSavingAccountContract.View, DialogCommon.DialogCommonListener, WithdrawMoneyActivity.WithdrawMoneyActivityListener, ChangeSavingMoneyBankActivity.ChangeSavingMoneyBankListener {
+public class DetailSavingAccountActivity extends BaseActivity implements View.OnClickListener, DetailSavingAccountContract.View, DialogCommon.DialogCommonListener, WithdrawMoneyActivity.WithdrawMoneyActivityListener, ChangeSavingMoneyBankActivity.ChangeSavingMoneyBankListener, WithDrawAllMoneyActivity.WithDrawAllMoneyListner {
 
     @BindView(R.id.txtNumberAcount)
     TextView mTxtNumberAccount;
@@ -71,6 +72,9 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
     @BindView(R.id.layoutTransaction)
     LinearLayout mLayoutTransaction;
 
+    @BindView(R.id.layoutWithdrawAllTwo)
+    LinearLayout mLayoutWithdrawAll2;
+
     private DataAcount dataAcount;
     private SavingAccount savingAccount;
     private InterestRate interestRate;
@@ -103,6 +107,7 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
         mLayoutChangeSavingBank.setOnClickListener(this);
         mLayoutWithdraw.setOnClickListener(this);
         mLayoutWithdrawAll.setOnClickListener(this);
+        mLayoutWithdrawAll2.setOnClickListener(this);
     }
 
     private void setupData() {
@@ -171,7 +176,15 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
                 startActivity(intent);
                 break;
             case R.id.layoutWithdrawAll:
-                showDialogWarning();
+            case R.id.layoutWithdrawAllTwo:
+//                showDialogWarning();
+                Intent intent2 = new Intent(this, WithDrawAllMoneyActivity.class);
+                intent2.putExtra(Constant.SAVING_INTEREST_RATE, interestRate);
+                intent2.putExtra(Constant.DATA_ACCOUNT, dataAcount);
+                intent2.putExtra(Constant.SAVING_ACCOUNT, savingAccount);
+                intent2.putExtra(Constant.ID_BANK, idBank);
+                startActivity(intent2);
+                WithDrawAllMoneyActivity.setWithDrawAllMoneyListner(this);
                 break;
             case R.id.layoutChangeSavingBank:
                 Intent intent1 = new Intent(this, ChangeSavingMoneyBankActivity.class);
@@ -183,6 +196,7 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
 //                WithdrawMoneyActivity.setWithdrawMoneyActivityListener(this);
                 startActivity(intent1);
                 break;
+
         }
     }
 
@@ -239,6 +253,11 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
 
     @Override
     public void onChangeSavingMoneyBankDestroy() {
+        finish();
+    }
+
+    @Override
+    public void WithDrawAllAcvitiyDestroyed() {
         finish();
     }
 }

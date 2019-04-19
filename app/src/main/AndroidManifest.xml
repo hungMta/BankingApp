@@ -46,6 +46,7 @@
         <activity android:name=".ui.transferMoneyATM.TransferMoneySuccessAcitvity"/>
         <activity android:name=".ui.withdrawMoney.WithdrawMoneyActivity"/>
         <activity android:name=".ui.changeSavingMoneyBank.ChangeSavingMoneyBankActivity"/>
+        <activity android:name=".ui.withdrawMoney.WithDrawAllMoneyActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -70,6 +70,7 @@ public class Constant {
     public static final String RECEIVER_ACCOUNT = "RECEIVER_ACCOUNT";
     public static final String SAVING_TERM = "SAVING_TERM";
     public static final String SAVING_INTEREST_RATE = "SAVING_INTEREST_RATE";
+    public static final String WITH_DRAW_ALL = "WITH_DRAW_ALL";
     public static String SAVING_ACCOUNT = "SAVING_ACCOUNT";
     public static String SAVING_FORMAT_DATE =  "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 }

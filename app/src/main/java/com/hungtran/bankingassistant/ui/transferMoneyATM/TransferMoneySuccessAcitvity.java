@@ -46,6 +46,7 @@ public class TransferMoneySuccessAcitvity extends BaseActivity implements View.O
     private int term;
     private double interestRate;
     private SavingAccount savingAccount;
+    private boolean isWithdrawAll;
 
 
     @Override
@@ -69,7 +70,11 @@ public class TransferMoneySuccessAcitvity extends BaseActivity implements View.O
                 setupTextCreateSaving();
                 break;
             case Constant.TRANSFER_SAVING_ATM:
-                setupTextWithdrawMoney();
+                if (isWithdrawAll) {
+                    setupTextWithdrawAll();
+                } else {
+                    setupTextWithdrawMoney();
+                }
                 break;
             case Constant.TRANSFER_SAVING_SAVING:
                 setupTextSaving2Saving();
@@ -86,9 +91,6 @@ public class TransferMoneySuccessAcitvity extends BaseActivity implements View.O
     }
 
     private void setupTextATM2ATM() {
-        ForegroundColorSpan foregroundPrimary = new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary));
-        ForegroundColorSpan foregroundBlack = new ForegroundColorSpan(getResources().getColor(R.color.colorBlack));
-
         SpannableStringBuilder builder = new SpannableStringBuilder();
 
         SpannableString str1 = new SpannableString(getStringTypeTransfer());
@@ -130,9 +132,6 @@ public class TransferMoneySuccessAcitvity extends BaseActivity implements View.O
     }
 
     private void setupTextCreateSaving() {
-        ForegroundColorSpan foregroundPrimary = new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary));
-        ForegroundColorSpan foregroundBlack = new ForegroundColorSpan(getResources().getColor(R.color.colorBlack));
-
         SpannableStringBuilder builder = new SpannableStringBuilder();
 
         SpannableString str1 = new SpannableString("Qúy khách đã tạo sổ tiết kiệm thành công có số tiền ");
@@ -167,8 +166,6 @@ public class TransferMoneySuccessAcitvity extends BaseActivity implements View.O
     }
 
     private void setupTextWithdrawMoney() {
-        ForegroundColorSpan foregroundPrimary = new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary));
-        ForegroundColorSpan foregroundBlack = new ForegroundColorSpan(getResources().getColor(R.color.colorBlack));
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
 
@@ -185,8 +182,6 @@ public class TransferMoneySuccessAcitvity extends BaseActivity implements View.O
     }
 
     private void setupTextSaving2Saving() {
-        ForegroundColorSpan foregroundPrimary = new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary));
-        ForegroundColorSpan foregroundBlack = new ForegroundColorSpan(getResources().getColor(R.color.colorBlack));
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
 
@@ -247,6 +242,17 @@ public class TransferMoneySuccessAcitvity extends BaseActivity implements View.O
         mTxtMessage.setText(builder, TextView.BufferType.SPANNABLE);
     }
 
+    private void setupTextWithdrawAll() {
+
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+
+        SpannableString str1 = new SpannableString("Quý khách vừa tất toán sổ tiết kiệm thành công. Xin cảm ơn đã sử dụng dịch vụ");
+        str1.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), 0, str1.length(), 0);
+        builder.append(str1);
+
+        mTxtMessage.setText(builder, TextView.BufferType.SPANNABLE);
+    }
+
     private void getData() {
         typeTransfer = getIntent().getIntExtra(Constant.TYPE_TRANSFER_MONEY, 0);
         transferMoney = getIntent().getLongExtra(Constant.TRANSFER_MONEY, 0);
@@ -256,6 +262,7 @@ public class TransferMoneySuccessAcitvity extends BaseActivity implements View.O
         term = getIntent().getIntExtra(Constant.SAVING_TERM, 0);
         interestRate = getIntent().getDoubleExtra(Constant.SAVING_INTEREST_RATE, 0);
         savingAccount = (SavingAccount) getIntent().getSerializableExtra(Constant.SAVING_ACCOUNT);
+        isWithdrawAll = getIntent().getBooleanExtra(Constant.WITH_DRAW_ALL, false);
     }
 
 

@@ -134,6 +134,26 @@ public class DataHelper {
         }
     }
 
+
+    private int getTimeSaving(Date createDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentYear = calendar.get(Calendar.YEAR);
+
+        Calendar createCal = Calendar.getInstance();
+        calendar.setTime(createDate);
+
+        int createMonth = createCal.get(Calendar.MONTH);
+        int createYear = createCal.get(Calendar.YEAR);
+
+
+        int year = currentYear - createYear;
+        int month = currentMonth - createMonth + year * 12;
+
+        return month;
+    }
+
     // delete all non-digit in a String
     public static String deletAllNonDigit(String input){
        return  input.replaceAll(",","");
