@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,30 +18,60 @@
             android:padding="10dp"
             android:src="@drawable/icon_bank" />
 
-        <EditText
-            android:id="@+id/edtEmail"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
-            android:hint="Email"
-            android:imeOptions="actionNext"
-            android:maxLines="1"
-            android:textSize="15sp" />
+            android:layout_marginEnd="30dp">
 
-        <EditText
-            android:id="@+id/edtPassword"
+            <ImageView
+                android:id="@+id/imgPhone"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_phone_accent" />
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Số điện thoại"
+                android:imeOptions="actionNext"
+                android:maxLines="1"
+                android:paddingLeft="40dp"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
-            android:hint="Mật khẩu"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:textSize="15sp" />
+            android:layout_marginEnd="30dp">
 
+            <ImageView
+                android:id="@+id/imgKey"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:padding="3dp"
+                android:src="@drawable/ic_key_accent" />
+
+            <EditText
+                android:id="@+id/edtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Mật khẩu"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingLeft="40dp"
+                android:textSize="15sp" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/txtError"
@@ -60,6 +91,14 @@
             android:text="Đăng nhập"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/register"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

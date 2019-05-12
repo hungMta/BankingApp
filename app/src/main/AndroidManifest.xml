@@ -34,7 +34,20 @@
         <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.main.MainActivityNew"/>
         <activity android:name=".ui.wallet.WalletActivity"/>
-
+        <activity android:name=".ui.linkingBankMockup.LinkingBankMockupActivity"/>
+        <activity android:name=".ui.AvaibleBankLinkingAcitivity.AvaiableBankLinkingActivity"/>
+        <activity android:name=".ui.myAccountCardList.MyAccountCardListActivity"/>
+        <activity android:name=".ui.detailAccount.DetailATMAccountActivity"/>
+        <activity android:name=".ui.createSavingAccount.CreateSavingAccountActivity"/>
+        <activity android:name=".ui.pressOTP.OTPAcvitiy"/>
+        <activity android:name=".ui.transferMoneyATM.TransferMoneyATMActivity"/>
+        <activity android:name=".ui.calculator.CalculatorActivity"/>
+        <activity android:name=".ui.detailAccount.DetailSavingAccountActivity"/>
+        <activity android:name=".ui.transferMoneyATM.TransferMoneySuccessAcitvity"/>
+        <activity android:name=".ui.withdrawMoney.WithdrawMoneyActivity"/>
+        <activity android:name=".ui.changeSavingMoneyBank.ChangeSavingMoneyBankActivity"/>
+        <activity android:name=".ui.withdrawMoney.WithDrawAllMoneyActivity"/>
+        <activity android:name=".ui.transactionHistory.TransactionHistoryActivity"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_api_key" />

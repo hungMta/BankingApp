@@ -36,6 +36,8 @@
                 android:gravity="center"
                 android:layout_toLeftOf="@+id/imgBuyStatus"
                 android:text="@string/buy"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/colorBlack" />
 
 

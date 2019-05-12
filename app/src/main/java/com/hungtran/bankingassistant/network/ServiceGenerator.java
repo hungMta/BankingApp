@@ -1,5 +1,7 @@
 package com.hungtran.bankingassistant.network;
 
+import com.hungtran.bankingassistant.util.Constant;
+
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Scheduler;
@@ -44,4 +46,5 @@ public class ServiceGenerator {
         }
         return bankingApi;
     }
+
 }

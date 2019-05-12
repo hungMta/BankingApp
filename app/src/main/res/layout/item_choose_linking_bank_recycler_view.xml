@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/layout"
+    android:layout_height="70dp">
+
+    <ImageView
+        android:id="@+id/imgBankLogo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/vcb" />
+
+    <TextView
+        android:id="@+id/txtNameBank"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/imgBankLogo"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="Vietcombank"
+        android:textColor="@color/colorBlack" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/ic_arrow_right" />
+
+
+    <View
+        android:id="@+id/viewLineMargin"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:background="@color/colorLightGray" />
+
+    <View
+        android:id="@+id/viewLineFull"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorLightGray" />
+
+</RelativeLayout>

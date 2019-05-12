@@ -4,7 +4,9 @@ import android.media.Image;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Bank {
+import java.io.Serializable;
+
+public class BankLc implements Serializable {
 
     private int id;
     private int category;
@@ -17,7 +19,7 @@ public class Bank {
 
     private boolean isChecked;
 
-    public Bank(int id, int category, String code, String fullName, String name, String image) {
+    public BankLc(int id, int category, String code, String fullName, String name, String image) {
         this.id = id;
         this.category = category;
         this.code = code;

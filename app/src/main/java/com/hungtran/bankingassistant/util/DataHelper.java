@@ -104,6 +104,20 @@ public class DataHelper {
         return null;
     }
 
+    public static Date getDateFromString(String string, String format) {
+        if (string == null) return null;
+        if (format == null) {
+            return getDateFromString(string);
+        }
+        try {
+            Date date = new SimpleDateFormat(format).parse(string);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
+    }
+
     public static String getTime(String time, int type) {
         Date date = DataHelper.getDateFromString(time);
         if (date == null) return "";
@@ -118,5 +132,41 @@ public class DataHelper {
             int day = calendar.get(Calendar.DATE);
             return "" + day + "/" + month;
         }
+    }
+
+
+    private int getTimeSaving(Date createDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentYear = calendar.get(Calendar.YEAR);
+
+        Calendar createCal = Calendar.getInstance();
+        calendar.setTime(createDate);
+
+        int createMonth = createCal.get(Calendar.MONTH);
+        int createYear = createCal.get(Calendar.YEAR);
+
+
+        int year = currentYear - createYear;
+        int month = currentMonth - createMonth + year * 12;
+
+        return month;
+    }
+
+    public static String getTimeFormatFromInterval(long interval){
+        String string = "";
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(interval);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int month = c.get(Calendar.MONTH) + 1;
+        int year = c.get(Calendar.YEAR);
+        string =  day + "/" + month + "/" + year;
+        return string;
+    }
+
+    // delete all non-digit in a String
+    public static String deletAllNonDigit(String input){
+       return  input.replaceAll(",","");
     }
 }

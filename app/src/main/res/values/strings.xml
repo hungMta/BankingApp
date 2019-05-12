@@ -15,7 +15,7 @@
     <string name="gold">Vàng</string>
     <string name="personal">Cá nhân</string>
     <string name="Enterprise">Doanh nghiệp</string>
-    <string name="bank">Ngân hàng</string>
+    <string name="bankLc">Ngân hàng</string>
     <string name="buy_cash">Mua TM</string>
     <string name="buy_card">Mua CK</string>
     <string name="buy">Mua</string>
@@ -66,5 +66,26 @@
     <string name="nearest_area">Địa điểm gần đây</string>
     <string name="search">Tìm kiếm</string>
     <string name="error_login">Sai tài khoản hoặc mật khẩu</string>
-
+    <string name="error_atm">Vui lòng nhập số thẻ ATM</string>
+    <string name="error_password">Vui lòng nhập password</string>
+    <string name="error_policy">Chưa đồng ý điều khoản</string>
+    <string name="register">Đăng kí tài khoản</string>
+    <string name="paymen_account">Tài khoản thanh toán</string>
+    <string name="nummber_account">Số tài khoản</string>
+    <string name="available_balances">Số dư khả dụng</string>
+    <string name="saving_money_book">Tài khoản tiết kiệm</string>
+    <string name="money_number">Số tiền gửi</string>
+    <string name="interest_rate_per_year">%/Năm</string>
+    <string name="branch_open">Chi nhánh mở</string>
+    <string name="account_holder">Chủ tài khoản</string>
+    <string name="history">Lịch sử giao dịch</string>
+    <string name="tranfer">Chuyển tiền</string>
+    <string name="open_saving_account">Mở tài khoản tiết kiệm</string>
+    <string name="from_account">Tài khoản nguồn</string>
+    <string name="create_saving_money_success">Tạo tài khoản tiết kiệm thành công!</string>
+    <string name="transfer_money_atm_success">Gửi tiền thành công!</string>
+    <string name="next">Tiếp tục</string>
+    <string name="saving_info">Thông tin tài khoản tiết kiệm</string>
+    <string name="error_saving_money">Mở tài khoản tiết kiệm không thành công. Số tiền giao dịch nhỏ hơn hạn mức 3,000,000 VND/1 lần</string>
+    <string name="message_withdraw_money">Sổ tiết kiệm chưa đến ngày đáo hạn nên số tiền  rút sẽ được tính theo lãi suất không kỳ hạn</string>
 </resources>

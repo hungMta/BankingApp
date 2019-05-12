@@ -1,6 +1,8 @@
 package com.hungtran.bankingassistant.network;
 
 import com.hungtran.bankingassistant.model.area.AreaResponse;
+import com.hungtran.bankingassistant.model.bank.BankLinkingResponse;
+import com.hungtran.bankingassistant.model.bank.BankResponse;
 import com.hungtran.bankingassistant.model.bankLocation.AvaiableBankLocationResponse;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequest;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequestBody;
@@ -10,7 +12,16 @@ import com.hungtran.bankingassistant.model.exchangeRate.ExchangeRateResponse;
 import com.hungtran.bankingassistant.model.firebase.FCMTokenRequest;
 import com.hungtran.bankingassistant.model.gold.GoldAreaResponse;
 import com.hungtran.bankingassistant.model.interestRate.InterestRateResponse;
+import com.hungtran.bankingassistant.model.linkingBank.LinkBankRequest;
+import com.hungtran.bankingassistant.model.otp.OTPModel;
+import com.hungtran.bankingassistant.model.otp.OTPModelRequest;
+import com.hungtran.bankingassistant.model.respone.DataAccount.DataAccountRespone;
+import com.hungtran.bankingassistant.model.transactionHistory.TransactionHistoryRequest;
+import com.hungtran.bankingassistant.model.transactionHistory.TransactionHistoryResponse;
+import com.hungtran.bankingassistant.model.transfer.TransferMoney;
+import com.hungtran.bankingassistant.model.transfer.TransferTransactionResponse;
 import com.hungtran.bankingassistant.model.user.AccountRequest;
+import com.hungtran.bankingassistant.model.user.AccountResponse;
 
 import io.reactivex.Observable;
 import okhttp3.Response;
@@ -40,9 +51,44 @@ public interface BankingApi {
     @GET("/api/bank/getAllBankPosition")
     Observable<AvaiableBankLocationResponse> getAllBankPosition(@Header("Authorization") String authHeader);
 
-    @POST("/api/authentication")
-    Observable<retrofit2.Response<Void>> login(@Body AccountRequest accountRequest);
+    @POST("/api/authentication/")
+    Observable<retrofit2.Response<AccountResponse>> login(@Body AccountRequest accountRequest);
 
     @POST("/api/user/addfirebase")
     Observable<BaseResponse> postFCMToken(@Header("Authorization") String authHeader, @Body FCMTokenRequest fcmTokenRequest);
+
+    @POST("/login/vietcombank")
+    Observable<BaseResponse> linkVCB(@Body LinkBankRequest linkBankRequest);
+
+    @POST("/login/bidv")
+    Observable<BaseResponse> linkBIDV(@Body LinkBankRequest linkBankRequest);
+
+    @POST("/login/agribank")
+    Observable<BaseResponse> linkAGRI(@Body LinkBankRequest linkBankRequest);
+
+    @POST("/login/vietinbank")
+    Observable<BaseResponse> linkVIETTIN(@Body LinkBankRequest linkBankRequest);
+
+    @GET("/api/bank/getAllBankLinked")
+    Observable<BankResponse> getAllBankLinked(@Header("Authorization") String authHeader);
+
+    @GET("/api/bank/getAllBankLinking")
+    Observable<BankLinkingResponse> getAllBankLinking(@Header("Authorization") String authHeader);
+
+    @GET("/api/bank/getDataAccount")
+    Observable<DataAccountRespone> getDataAccount(@Header("Authorization") String authHeader, @Query("id_bank") int idBank);
+
+    @POST("/api/transfer")
+    Observable<TransferTransactionResponse> transferMoney(@Header("Authorization") String authHeader,
+                                                          @Body TransferMoney transferMoney
+    );
+
+    @POST("/api/transfer/otp")
+    Observable<retrofit2.Response<Void>> submitOTP(@Header("Authorization") String authHeader,
+                                                   @Body OTPModelRequest otpModel
+    );
+
+    @POST("/api/transaction")
+    Observable<TransactionHistoryResponse> getTransactionHistory(@Header("Authorization") String authHeader,
+                                                                 @Body TransactionHistoryRequest request);
 }
