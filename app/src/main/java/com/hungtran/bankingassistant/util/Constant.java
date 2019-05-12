@@ -10,6 +10,7 @@ public class Constant {
     public static final String GOOGLE_MAP_API_URL = "";
     public static final String TOKEN = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjowLCJ1c2VybmFtZSI6IjEiLCJjdXJyZW50X3RpbWUiOiIxNTUxODQ1NDE2ODAyIiwiZXhwIjoxNTYyMjEzNDE2fQ.0cHbZS1L_USZrigAxTLUacvTJR8HOuSwIORQ_btYDflHUCxZaKXk4KECPaM-qbLxY-VKsox2kBhAmSJAZDecgA";
     public static final String TOKEN_KEY = "TOKEN";
+    public static final String ID_USER_KEY = "ID_USER_KEY";
     public static final Integer TYPE_SAVING_WITHDRAW = 0;
     public static final Integer TYPE_SAVING_WITHDRAW_AT_END_TERM = 1;
     public static final Integer TYPE_SAVING_MONTH = 0;

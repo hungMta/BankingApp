@@ -154,6 +154,17 @@ public class DataHelper {
         return month;
     }
 
+    public static String getTimeFormatFromInterval(long interval){
+        String string = "";
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(interval);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int month = c.get(Calendar.MONTH) + 1;
+        int year = c.get(Calendar.YEAR);
+        string =  day + "/" + month + "/" + year;
+        return string;
+    }
+
     // delete all non-digit in a String
     public static String deletAllNonDigit(String input){
        return  input.replaceAll(",","");

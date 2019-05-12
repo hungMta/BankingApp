@@ -8,6 +8,7 @@ import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.respone.MyError;
 import com.hungtran.bankingassistant.model.user.Account;
 import com.hungtran.bankingassistant.model.user.AccountRequest;
+import com.hungtran.bankingassistant.model.user.AccountResponse;
 import com.hungtran.bankingassistant.network.ServiceGenerator;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.SharePreference;
@@ -40,20 +41,24 @@ public class LoginPresenter implements LoginContract.Presenter {
         loginObserverable(accountRequest).subscribeWith(loginObserver());
     }
 
-    private Observable<retrofit2.Response<Void>> loginObserverable(AccountRequest accountRequest) {
+    private Observable<retrofit2.Response<AccountResponse>> loginObserverable(AccountRequest accountRequest) {
         return ServiceGenerator.resquest().login(accountRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private DisposableObserver<retrofit2.Response<Void>> loginObserver() {
-        return new DisposableObserver<retrofit2.Response<Void>>() {
+    private DisposableObserver<retrofit2.Response<AccountResponse>> loginObserver() {
+        return new DisposableObserver<retrofit2.Response<AccountResponse>>() {
             @Override
-            public void onNext(retrofit2.Response<Void> response) {
+            public void onNext(retrofit2.Response<AccountResponse> response) {
                 Headers headers = response.headers();
                 if (response.code() == 200) {
                     String token = headers.get("authentication");
                     SharePreference.setVal(Constant.TOKEN_KEY, token);
+                    AccountResponse accountResponse = response.body();
+                    if (accountResponse != null && accountResponse.getUser() != null) {
+                        SharePreference.setVal(Constant.ID_USER_KEY, accountResponse.getUser().getId());
+                    }
                     Log.d(TAG, "onNext: header : " + headers);
                     mView.loginSuccess();
                 } else if (response.code() == 401) {

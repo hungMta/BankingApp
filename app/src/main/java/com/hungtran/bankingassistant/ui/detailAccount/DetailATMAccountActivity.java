@@ -13,6 +13,7 @@ import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.dialog.DialogCommon;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
 import com.hungtran.bankingassistant.ui.createSavingAccount.CreateSavingAccountActivity;
+import com.hungtran.bankingassistant.ui.transactionHistory.TransactionHistoryActivity;
 import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneyATMActivity;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.DataHelper;
@@ -47,6 +48,9 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
     @BindView(R.id.layoutTransfer)
     LinearLayout mLayoutTranser;
 
+    @BindView(R.id.history)
+    TextView mTxtHistory;
+
 
 
     @Override
@@ -67,6 +71,7 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
         mImgClose.setOnClickListener(this);
         mLayoutCreateSavingAccount.setOnClickListener(this);
         mLayoutTranser.setOnClickListener(this);
+        mTxtHistory.setOnClickListener(this);
 
 
 
@@ -93,7 +98,11 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
                 intent2.putExtra(Constant.ID_BANK, idBank);
                 startActivity(intent2);
                 break;
-
+            case R.id.history:
+                Intent intent1 = new Intent(this, TransactionHistoryActivity.class);
+                intent1.putExtra(Constant.DATA_ACCOUNT, dataAcount);
+                intent1.putExtra(Constant.ID_BANK, idBank);
+                startActivity(intent1);
         }
     }
 

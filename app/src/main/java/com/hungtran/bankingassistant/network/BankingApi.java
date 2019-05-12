@@ -16,9 +16,12 @@ import com.hungtran.bankingassistant.model.linkingBank.LinkBankRequest;
 import com.hungtran.bankingassistant.model.otp.OTPModel;
 import com.hungtran.bankingassistant.model.otp.OTPModelRequest;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAccountRespone;
+import com.hungtran.bankingassistant.model.transactionHistory.TransactionHistoryRequest;
+import com.hungtran.bankingassistant.model.transactionHistory.TransactionHistoryResponse;
 import com.hungtran.bankingassistant.model.transfer.TransferMoney;
 import com.hungtran.bankingassistant.model.transfer.TransferTransactionResponse;
 import com.hungtran.bankingassistant.model.user.AccountRequest;
+import com.hungtran.bankingassistant.model.user.AccountResponse;
 
 import io.reactivex.Observable;
 import okhttp3.Response;
@@ -49,7 +52,7 @@ public interface BankingApi {
     Observable<AvaiableBankLocationResponse> getAllBankPosition(@Header("Authorization") String authHeader);
 
     @POST("/api/authentication/")
-    Observable<retrofit2.Response<Void>> login(@Body AccountRequest accountRequest);
+    Observable<retrofit2.Response<AccountResponse>> login(@Body AccountRequest accountRequest);
 
     @POST("/api/user/addfirebase")
     Observable<BaseResponse> postFCMToken(@Header("Authorization") String authHeader, @Body FCMTokenRequest fcmTokenRequest);
@@ -84,4 +87,8 @@ public interface BankingApi {
     Observable<retrofit2.Response<Void>> submitOTP(@Header("Authorization") String authHeader,
                                                    @Body OTPModelRequest otpModel
     );
+
+    @POST("/api/transaction")
+    Observable<TransactionHistoryResponse> getTransactionHistory(@Header("Authorization") String authHeader,
+                                                                 @Body TransactionHistoryRequest request);
 }
