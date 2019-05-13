@@ -48,6 +48,7 @@
         <activity android:name=".ui.changeSavingMoneyBank.ChangeSavingMoneyBankActivity"/>
         <activity android:name=".ui.withdrawMoney.WithDrawAllMoneyActivity"/>
         <activity android:name=".ui.transactionHistory.TransactionHistoryActivity"/>
+        <activity android:name=".ui.transactionHistory.TransactionHistoryDetailAcitivty"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_api_key" />

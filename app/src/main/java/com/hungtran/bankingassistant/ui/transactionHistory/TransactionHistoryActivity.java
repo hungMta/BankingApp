@@ -1,5 +1,6 @@
 package com.hungtran.bankingassistant.ui.transactionHistory;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabItem;
@@ -139,6 +140,15 @@ public class TransactionHistoryActivity extends BaseActivity implements Transact
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(transactionHistoryAdapter);
+
+        transactionHistoryAdapter.setTransactionHistoryAdapterListener(new TransactionHistoryAdapter.TransactionHistoryAdapterListener() {
+            @Override
+            public void onItemCick(TransactionHistory transactionHistory) {
+                Intent intent = new Intent(getApplicationContext(), TransactionHistoryDetailAcitivty.class);
+                intent.putExtra(Constant.TRANSFER_MONEY, transactionHistory);
+                startActivity(intent);
+            }
+        });
     }
 
     private void updateRecycler(int tabIndex) {

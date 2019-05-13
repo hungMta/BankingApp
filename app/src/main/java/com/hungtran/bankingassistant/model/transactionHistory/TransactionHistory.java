@@ -2,7 +2,9 @@ package com.hungtran.bankingassistant.model.transactionHistory;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TransactionHistory {
+import java.io.Serializable;
+
+public class TransactionHistory  implements Serializable {
 
     private int id;
 
