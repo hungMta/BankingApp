@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
@@ -27,6 +28,7 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<RecyclerView
     private Context mContext;
     private int idUser = 0;
     private String nummberAccount;
+    private  TransactionHistoryAdapterListener transactionHistoryAdapterListener;
 
 
     public TransactionHistoryAdapter(Context context, List<TransactionHistory> transactionHistories, String numberAccount) {
@@ -60,6 +62,15 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<RecyclerView
                     .getColor(R.color.colorLightPrimary));
             ((ItemView) viewHolder).txtStatusMoney.setText("+" + money + "");
         }
+
+        ((ItemView) viewHolder).layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (transactionHistoryAdapterListener != null) {
+                    transactionHistoryAdapterListener.onItemCick(transactionHistories.get(i));
+                }
+            }
+        });
     }
 
     @Override
@@ -84,9 +95,21 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<RecyclerView
         @BindView(R.id.txtStatusMoney)
         TextView txtStatusMoney;
 
+        @BindView(R.id.layout)
+        RelativeLayout layout;
+
+
         public ItemView(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface TransactionHistoryAdapterListener {
+        void onItemCick(TransactionHistory transactionHistory);
+    }
+
+    public  void setTransactionHistoryAdapterListener(TransactionHistoryAdapterListener listener){
+        transactionHistoryAdapterListener = listener;
     }
 }
