@@ -72,6 +72,9 @@ public class Constant {
     public static final String SAVING_TERM = "SAVING_TERM";
     public static final String SAVING_INTEREST_RATE = "SAVING_INTEREST_RATE";
     public static final String WITH_DRAW_ALL = "WITH_DRAW_ALL";
+    public static final String ERROR_UNKNOWN = "Đã có lỗi Vui lòng thử lại!";
+    public static final String REGISTER_ACCOUNT = "REGISTER_ACCOUNT";
+    public static final String REGISTER_REQUEST = "REGISTER_REQUEST";
     public static String SAVING_ACCOUNT = "SAVING_ACCOUNT";
     public static String SAVING_FORMAT_DATE =  "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 }
