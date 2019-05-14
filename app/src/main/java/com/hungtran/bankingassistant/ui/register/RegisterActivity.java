@@ -81,7 +81,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
      * Validating form
      */
     private void submitForm() {
-        if (!validateName()) {
+               if (!validateName()) {
             return;
         }
 
