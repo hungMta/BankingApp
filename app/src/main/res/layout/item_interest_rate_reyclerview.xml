@@ -1,78 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="41dp">
+    android:layout_height="41dp"
+    android:orientation="vertical">
 
 
     <LinearLayout
         android:id="@+id/layoutItem"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="10"
+        android:layout_height="40dp"
         android:gravity="center"
-        android:layout_height="40dp">
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <!--<ImageView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="2"-->
-            <!--android:layout_height="match_parent" />-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="2"-->
+        <!--android:layout_height="match_parent" />-->
 
         <TextView
             android:id="@+id/txtBankName"
             android:layout_width="0dp"
-            android:gravity="center"
-            android:textColor="@color/colorBlack"
+            android:layout_height="match_parent"
             android:layout_weight="2"
+            android:gravity="center"
             android:text="VCB"
-            android:layout_height="match_parent"
-            />
+            android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/txtFirstRate"
+        <RelativeLayout
             android:layout_width="0dp"
-            android:gravity="center"
-            android:textColor="@color/colorBlack"
-            android:layout_weight="2"
-            android:text="5.5"
             android:layout_height="match_parent"
-            />
+            android:layout_weight="2">
 
-        <TextView
-            android:id="@+id/txtSecondRate"
+            <TextView
+                android:id="@+id/txtFirstRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_primary_corner_radius_circle"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="5.5"
+                android:textColor="@color/colorBlack" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:textColor="@color/colorBlack"
             android:layout_height="match_parent"
-            android:text="6.5"
-            />
-        <TextView
-            android:id="@+id/txtThirdRate"
+            android:layout_weight="2">
+
+
+            <TextView
+                android:id="@+id/txtSecondRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="6.5"
+                android:textColor="@color/colorBlack" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:textColor="@color/colorBlack"
-            android:text="6.5"
             android:layout_height="match_parent"
-            />
-        <TextView
-            android:id="@+id/txtFourthRate"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/txtThirdRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="6.5"
+                android:textColor="@color/colorBlack" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
-            android:gravity="center"
-            android:textColor="@color/colorBlack"
-            android:layout_weight="2"
             android:layout_height="match_parent"
-            android:text="6.5"
-            />
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/txtFourthRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="6.5"
+                android:textColor="@color/colorBlack" />
+
+        </RelativeLayout>
 
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:background="@color/colorLight2Gray"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:background="@color/colorLight2Gray" />
 
 </LinearLayout>
