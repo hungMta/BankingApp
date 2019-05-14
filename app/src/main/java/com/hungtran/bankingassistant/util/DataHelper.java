@@ -126,11 +126,30 @@ public class DataHelper {
         if (type == 0) {
             int hour = calendar.get(Calendar.HOUR);
             int min = calendar.get(Calendar.MINUTE);
-            return "" + hour + ":" + min;
+            String _hour = hour + "";
+            String _min = min + "";
+            if (hour < 10) {
+                _hour = "0"+ hour;
+            }
+            if (min < 10) {
+                _min = "0"+min;
+            }
+            return _hour + ":" + _min;
         } else {
-            int month = calendar.get(Calendar.MONTH);
+            int month = calendar.get(Calendar.MONTH) + 1;
             int day = calendar.get(Calendar.DATE);
-            return "" + day + "/" + month;
+            String _month = month + "";
+            String _day = day + "";
+
+            if (month < 10) {
+                _month = "0" + month;
+            }
+
+            if (day < 10) {
+                _day = "0" + day;
+            }
+
+            return "" + _day + "/" + _month;
         }
     }
 

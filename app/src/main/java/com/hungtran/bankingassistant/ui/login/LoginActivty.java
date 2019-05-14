@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.user.Account;
 import com.hungtran.bankingassistant.ui.main.MainActivity;
+import com.hungtran.bankingassistant.ui.register.RegisterActivity;
 import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneySuccessAcitvity;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
@@ -44,6 +45,9 @@ public class LoginActivty extends BaseActivity implements LoginContract.View {
     @BindView(R.id.imgKey)
     ImageView mImgKey;
 
+    @BindView(R.id.txtRegister)
+    TextView mTxtRegister;
+
     private LoginPresenter presenter;
 
     @Override
@@ -56,16 +60,12 @@ public class LoginActivty extends BaseActivity implements LoginContract.View {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         presenter = new LoginPresenter(this, this);
-        mEdtEmail.setText("0365023120");
-        mEdtPassword.setText("123456");
+        mEdtEmail.setText("0988807808");
+        mEdtPassword.setText("1234567");
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mLayoutProgressBar.setVisibility(View.VISIBLE);
-
-//                startActivity(new Intent(getApplicationContext(), TransferMoneySuccessAcitvity.class));
-
                 showDialogProgress();
                 mTxtError.setVisibility(View.INVISIBLE);
                 Account account = new Account();
@@ -94,6 +94,14 @@ public class LoginActivty extends BaseActivity implements LoginContract.View {
             public void onFocusChange(View v, boolean hasFocus) {
                 mImgPhone.setImageDrawable(getResources().getDrawable(R.drawable.ic_phone_accent));
                 mImgKey.setImageDrawable(getResources().getDrawable(R.drawable.ic_key));
+            }
+        });
+
+        mTxtRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
             }
         });
     }

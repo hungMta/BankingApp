@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BankingAssistant</string>
+    <string name="app_name">CrossEBank</string>
     <string name="google_map_api_key">AIzaSyDd7iNuIulKY_fwWFqF9U9EBocSAcBdqHg</string>
     <string name="news">Tin tức</string>
     <string name="market">Thị trường</string>
@@ -88,4 +88,13 @@
     <string name="saving_info">Thông tin tài khoản tiết kiệm</string>
     <string name="error_saving_money">Mở tài khoản tiết kiệm không thành công. Số tiền giao dịch nhỏ hơn hạn mức 3,000,000 VND/1 lần</string>
     <string name="message_withdraw_money">Sổ tiết kiệm chưa đến ngày đáo hạn nên số tiền  rút sẽ được tính theo lãi suất không kỳ hạn</string>
+    <string name="name">Tên</string>
+    <string name="phone">Số điện thoại</string>
+    <string name="password">Mật khẩu</string>
+    <string name="register_">Đăng kí</string>
+    <string name="err_msg_email">Email không hợp lệ</string>
+    <string name="err_msg_name">Vui lòng nhập tên người dùng</string>
+    <string name="err_msg_password">Mật khẩu không hợp lệ</string>
+    <string name="register_success">Đăng ký tài khoản thành công</string>
+    <string name="err_msg_phone">Vui long nhập số điện thoại</string>
 </resources>

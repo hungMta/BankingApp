@@ -360,6 +360,7 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     }
 
     private void searchBank() {
+        if (myLocation == null) return;
         BankLocationRequestBody bankLocationRequestBody = new BankLocationRequestBody();
         bankLocationRequestBody.setId(idBank);
         bankLocationRequestBody.setType(typeSearch);

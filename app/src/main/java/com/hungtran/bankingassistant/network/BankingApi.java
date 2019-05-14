@@ -7,6 +7,7 @@ import com.hungtran.bankingassistant.model.bankLocation.AvaiableBankLocationResp
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequest;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationRequestBody;
 import com.hungtran.bankingassistant.model.bankLocation.BankLocationResponse;
+import com.hungtran.bankingassistant.model.base.BaseModel;
 import com.hungtran.bankingassistant.model.base.BaseResponse;
 import com.hungtran.bankingassistant.model.exchangeRate.ExchangeRateResponse;
 import com.hungtran.bankingassistant.model.firebase.FCMTokenRequest;
@@ -15,6 +16,7 @@ import com.hungtran.bankingassistant.model.interestRate.InterestRateResponse;
 import com.hungtran.bankingassistant.model.linkingBank.LinkBankRequest;
 import com.hungtran.bankingassistant.model.otp.OTPModel;
 import com.hungtran.bankingassistant.model.otp.OTPModelRequest;
+import com.hungtran.bankingassistant.model.register.RegisterRequest;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAccountRespone;
 import com.hungtran.bankingassistant.model.transactionHistory.TransactionHistoryRequest;
 import com.hungtran.bankingassistant.model.transactionHistory.TransactionHistoryResponse;
@@ -91,4 +93,11 @@ public interface BankingApi {
     @POST("/api/transaction")
     Observable<TransactionHistoryResponse> getTransactionHistory(@Header("Authorization") String authHeader,
                                                                  @Body TransactionHistoryRequest request);
+
+    @POST("/api/authentication/requestRegister")
+    Observable<BaseResponse> verifyEmail(@Query("email") String email);
+
+
+    @POST("/api/authentication/register")
+    Observable<retrofit2.Response<Void>> registerAccount(@Body  RegisterRequest registerRequest);
 }

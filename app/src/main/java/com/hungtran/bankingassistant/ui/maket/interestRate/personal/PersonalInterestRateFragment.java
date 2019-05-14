@@ -102,7 +102,7 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
 
 
     private void setupRecyclerView() {
-        mAdapter = new InterestRateRecyclerViewAdapter(null);
+        mAdapter = new InterestRateRecyclerViewAdapter(getContext(),null);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);

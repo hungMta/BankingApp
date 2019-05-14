@@ -3,6 +3,7 @@ package com.hungtran.bankingassistant.model.otp;
 import com.google.gson.annotations.SerializedName;
 
 public class OTPModel {
+
     @SerializedName("otp")
     private int otp;
 

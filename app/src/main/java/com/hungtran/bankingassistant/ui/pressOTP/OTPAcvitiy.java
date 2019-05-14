@@ -1,5 +1,6 @@
 package com.hungtran.bankingassistant.ui.pressOTP;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.dialog.DialogCommon;
 import com.hungtran.bankingassistant.dialog.SuccessDialog;
+import com.hungtran.bankingassistant.model.register.RegisterRequest;
+import com.hungtran.bankingassistant.ui.login.LoginActivty;
 import com.hungtran.bankingassistant.ui.myAccountCardList.MyAccountCardListPresenter;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
@@ -39,6 +42,8 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
     private int transactionId;
     private static OTPActivityListener otpActivityListener;
     private int typeTranserMoney;
+    private boolean isRegister;
+    private RegisterRequest registerRequest;
 
     @Override
     public int getLayoutId() {
@@ -50,6 +55,8 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         transactionId = getIntent().getIntExtra(Constant.TRANSACTION_ID, 0);
+        isRegister = getIntent().getBooleanExtra(Constant.REGISTER_ACCOUNT, false);
+        registerRequest = (RegisterRequest) getIntent().getSerializableExtra(Constant.REGISTER_REQUEST);
         mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +74,12 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
                 int otp = Integer.parseInt(edtOTP.getText().toString());
 //                mLayoutProgressBar.setVisibility(View.VISIBLE);
                 showDialogProgress();
-                mPresenter.submitOTP(transactionId, otp);
+                if (isRegister) {
+                    registerRequest.setOtp(otp);
+                    mPresenter.registerAccount(registerRequest);
+                } else {
+                    mPresenter.submitOTP(transactionId, otp);
+                }
             }
         });
         typeTranserMoney = getIntent().getIntExtra(Constant.TYPE_TRANSFER_MONEY, 0);
@@ -90,8 +102,28 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
 
     @Override
     public void hideProgressBar() {
-//        mLayoutProgressBar.setVisibility(View.GONE);
         hideDialogProgress();
+    }
+
+    @Override
+    public void registerSuccess() {
+        DialogCommon dialogCommon = DialogCommon.newInstance(getResources().getString(R.string.register_success));
+        dialogCommon.show(getSupportFragmentManager(), Constant.DIALOG);
+        dialogCommon.setDialogListener(new DialogCommon.DialogCommonListener() {
+            @Override
+            public void onDialogOkClicked() {
+                Intent intent = new Intent(getApplicationContext(), LoginActivty.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void registerFail(String message) {
+        DialogCommon dialogCommon = DialogCommon.newInstance(message);
+        dialogCommon.show(getSupportFragmentManager(), Constant.DIALOG);
     }
 
 
