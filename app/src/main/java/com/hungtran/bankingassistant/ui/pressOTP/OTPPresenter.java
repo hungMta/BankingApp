@@ -3,6 +3,7 @@ package com.hungtran.bankingassistant.ui.pressOTP;
 import android.content.Context;
 import android.util.Log;
 
+import com.hungtran.bankingassistant.model.base.BaseResponse;
 import com.hungtran.bankingassistant.model.error.AppError;
 import com.hungtran.bankingassistant.model.error.AppErrors;
 import com.hungtran.bankingassistant.model.interestRate.InterestRateByBank;
@@ -43,6 +44,70 @@ public class OTPPresenter implements OTPContract.Presenter {
     @Override
     public void registerAccount(RegisterRequest registerRequest) {
         registerObsererable(registerRequest).subscribeWith(registerObserver());
+    }
+
+    @Override
+    public void changePassword(RegisterRequest registerRequest) {
+        changePasswordObservable(registerRequest).subscribeWith(changePasswordObserver());
+    }
+
+    @Override
+    public void forgotPassword(RegisterRequest registerRequest) {
+        forgotPasswordObservable(registerRequest).subscribeWith(forgotPasswordObserver());
+    }
+
+    private Observable<BaseResponse> forgotPasswordObservable(RegisterRequest registerRequest){
+        return ServiceGenerator.resquest().changePassword(SharePreference.getStringVal(Constant.TOKEN_KEY), registerRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private DisposableObserver<BaseResponse> forgotPasswordObserver(){
+        return  new DisposableObserver<BaseResponse>() {
+            @Override
+            public void onNext(BaseResponse response) {
+                mView.changePasswordSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                String message = AppError.mapError(e);
+                mView.changePasswordFail(message);
+                mView.hideProgressBar();
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideProgressBar();
+            }
+        };
+    }
+
+    private Observable<BaseResponse> changePasswordObservable(RegisterRequest registerRequest){
+        return ServiceGenerator.resquest().changePassword(SharePreference.getStringVal(Constant.TOKEN_KEY), registerRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private DisposableObserver<BaseResponse> changePasswordObserver(){
+        return  new DisposableObserver<BaseResponse>() {
+            @Override
+            public void onNext(BaseResponse response) {
+                mView.changePasswordSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                String message = AppError.mapError(e);
+                mView.changePasswordFail(message);
+                mView.hideProgressBar();
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideProgressBar();
+            }
+        };
     }
 
 

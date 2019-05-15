@@ -181,6 +181,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
         Intent intent = new Intent(this, OTPAcvitiy.class);
         intent.putExtra(Constant.REGISTER_ACCOUNT, true);
         intent.putExtra(Constant.REGISTER_REQUEST, registerRequest);
+        intent.putExtra(Constant.OTP_TYPE, Constant.OTP_REGISTER);
         startActivity(intent);
     }
 

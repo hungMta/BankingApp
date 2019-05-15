@@ -10,6 +10,8 @@ public interface ChangePaswordContract {
         void getOTPFail(String message);
 
         void getOTPSuccess();
+
+        void hideProgress();
     }
 
     interface Presenter {

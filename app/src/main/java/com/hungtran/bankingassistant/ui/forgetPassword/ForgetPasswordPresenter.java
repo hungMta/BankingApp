@@ -1,4 +1,4 @@
-package com.hungtran.bankingassistant.ui.changePassword;
+package com.hungtran.bankingassistant.ui.forgetPassword;
 
 import com.hungtran.bankingassistant.model.base.BaseResponse;
 import com.hungtran.bankingassistant.model.error.AppError;
@@ -6,23 +6,21 @@ import com.hungtran.bankingassistant.network.ServiceGenerator;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.SharePreference;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 
 /**
- * Created by hungtd on 5/14/19.
+ * Created by hungtd on 5/15/19.
  */
 
-public class ChangePasswordPresenter implements ChangePaswordContract.Presenter {
+public class ForgetPasswordPresenter implements ForgetPasswordContract.Presenter {
 
-    ChangePaswordContract.View mView;
 
-    public ChangePasswordPresenter(ChangePaswordContract.View view) {
+    ForgetPasswordContract.View mView;
+
+    public ForgetPasswordPresenter(ForgetPasswordContract.View view) {
         this.mView = view;
     }
 

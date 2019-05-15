@@ -1,5 +1,7 @@
 package com.hungtran.bankingassistant.dialog;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -65,4 +67,5 @@ public class DialogCommon extends DialogFragment {
     public void setDialogListener(DialogCommonListener listener) {
         dialogCommonListener = listener;
     }
+
 }

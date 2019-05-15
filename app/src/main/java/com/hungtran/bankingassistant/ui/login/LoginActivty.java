@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.user.Account;
+import com.hungtran.bankingassistant.ui.forgetPassword.ForgetPasswordActivity;
 import com.hungtran.bankingassistant.ui.main.MainActivity;
 import com.hungtran.bankingassistant.ui.register.RegisterActivity;
 import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneySuccessAcitvity;
@@ -47,6 +48,10 @@ public class LoginActivty extends BaseActivity implements LoginContract.View {
 
     @BindView(R.id.txtRegister)
     TextView mTxtRegister;
+
+
+    @BindView(R.id.txtForgotPassword)
+    TextView mTxtForgotPassword;
 
     private LoginPresenter presenter;
 
@@ -101,6 +106,14 @@ public class LoginActivty extends BaseActivity implements LoginContract.View {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mTxtForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ForgetPasswordActivity.class);
                 startActivity(intent);
             }
         });

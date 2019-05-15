@@ -25,6 +25,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class OTPAcvitiy extends BaseActivity implements OTPContract.View, SuccessDialog.SuccessDialogListener {
+    int OTP_NORMAL = 0;
+    int OTP_REGISTER = 1;
+    int OTP_CHANGE_PASSWORD = 2;
 
     @BindView(R.id.my_toolbar)
     Toolbar mToolbar;
@@ -44,6 +47,8 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
     private int typeTranserMoney;
     private boolean isRegister;
     private RegisterRequest registerRequest;
+    private int typeOTP;
+
 
     @Override
     public int getLayoutId() {
@@ -56,6 +61,7 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
         ButterKnife.bind(this);
         transactionId = getIntent().getIntExtra(Constant.TRANSACTION_ID, 0);
         isRegister = getIntent().getBooleanExtra(Constant.REGISTER_ACCOUNT, false);
+        typeOTP = getIntent().getIntExtra(Constant.OTP_TYPE, Constant.OTP_NORMAL);
         registerRequest = (RegisterRequest) getIntent().getSerializableExtra(Constant.REGISTER_REQUEST);
         mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -74,11 +80,24 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
                 int otp = Integer.parseInt(edtOTP.getText().toString());
 //                mLayoutProgressBar.setVisibility(View.VISIBLE);
                 showDialogProgress();
-                if (isRegister) {
-                    registerRequest.setOtp(otp);
-                    mPresenter.registerAccount(registerRequest);
-                } else {
-                    mPresenter.submitOTP(transactionId, otp);
+                switch (typeOTP) {
+                    case 0: // otp normal - transfer money
+                        mPresenter.submitOTP(transactionId, otp);
+                        break;
+                    case 1: // otp register
+                        registerRequest.setOtp(otp);
+                        mPresenter.registerAccount(registerRequest);
+                        break;
+                    case 2: // change password.
+                        registerRequest.setOtp(otp);
+                        mPresenter.changePassword(registerRequest);
+                        break;
+                    case 3:
+                            registerRequest.setOtp(otp);
+                            mPresenter.forgotPassword(registerRequest);
+                    default:
+                        hideDialogProgress();
+                        break;
                 }
             }
         });
@@ -124,6 +143,52 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
     public void registerFail(String message) {
         DialogCommon dialogCommon = DialogCommon.newInstance(message);
         dialogCommon.show(getSupportFragmentManager(), Constant.DIALOG);
+    }
+
+    @Override
+    public void changePasswordSuccess() {
+        DialogCommon dialogCommon = DialogCommon.newInstance(getResources().getString(R.string.change_password_success));
+        dialogCommon.show(getSupportFragmentManager(), Constant.DIALOG);
+        dialogCommon.setDialogListener(new DialogCommon.DialogCommonListener() {
+            @Override
+            public void onDialogOkClicked() {
+                if (otpActivityListener != null) {
+                    otpActivityListener.OPTActivitySucess();
+                }
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void changePasswordFail(String message) {
+        DialogCommon.newInstance(message).show(getSupportFragmentManager(), Constant.DIALOG);
+    }
+
+    @Override
+    public void forgotPasswordSuccess() {
+        DialogCommon dialogCommon = DialogCommon.newInstance(getResources().getString(R.string.change_password_success));
+        dialogCommon.show(getSupportFragmentManager(), Constant.DIALOG);
+        dialogCommon.setDialogListener(new DialogCommon.DialogCommonListener() {
+            @Override
+            public void onDialogOkClicked() {
+
+                Intent intent = new Intent(getApplicationContext(), LoginActivty.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+
+//                if (otpActivityListener != null) {
+//                    otpActivityListener.OPTActivitySucess();
+//                }
+//                finish();
+            }
+        });
+    }
+
+    @Override
+    public void forgotPasswordFail(String message) {
+        DialogCommon.newInstance(message).show(getSupportFragmentManager(), Constant.DIALOG);
     }
 
 
