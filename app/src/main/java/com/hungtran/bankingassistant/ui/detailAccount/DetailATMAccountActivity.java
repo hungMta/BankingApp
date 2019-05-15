@@ -90,6 +90,12 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
                 intent.putExtra(Constant.DATA_ACCOUNT, dataAcount);
                 intent.putExtra(Constant.ID_BANK, idBank);
                 startActivity(intent);
+                CreateSavingAccountActivity.setCreateSavingAccountActivityListener(new CreateSavingAccountActivity.CreateSavingAccountActivityListener() {
+                    @Override
+                    public void createSavingAccountSuccess() {
+                        finish();
+                    }
+                });
                 break;
             case R.id.layoutTransfer:
                 Intent intent2 = new Intent(this, TransferMoneyATMActivity.class);
@@ -97,6 +103,12 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
                 intent2.putExtra(Constant.DATA_ACCOUNT, dataAcount);
                 intent2.putExtra(Constant.ID_BANK, idBank);
                 startActivity(intent2);
+                TransferMoneyATMActivity.setTransferMoneyActivityListener(new TransferMoneyATMActivity.TransferMoneyActivityListener() {
+                    @Override
+                    public void transferMoneySuccess() {
+                        finish();
+                    }
+                });
                 break;
             case R.id.history:
                 Intent intent1 = new Intent(this, TransactionHistoryActivity.class);

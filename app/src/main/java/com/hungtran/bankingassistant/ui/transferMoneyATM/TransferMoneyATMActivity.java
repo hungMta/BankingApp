@@ -240,12 +240,14 @@ public class TransferMoneyATMActivity extends BaseActivity implements TransferMo
 
     @Override
     public void doOtherTransaction() {
+        if (transferMoneyActivityListener != null) {
+            transferMoneyActivityListener.transferMoneySuccess();
+        }
         finish();
     }
 
     @Override
     protected void onDestroy() {
-        TransferMoneySuccessAcitvity.setTransferMoneySuccessListener(null);
         super.onDestroy();
     }
 

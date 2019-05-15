@@ -126,11 +126,15 @@ public class WithDrawAllMoneyActivity extends BaseActivity implements WithdrawMo
         long money = 0;
         if (list.size() == 0) {
             money = Long.parseLong(savingAccount.getSavingMoney());
+            long interestMoney = (long) (money * (interesetRate / 100));
+            money += interestMoney;
+            return money;
         } else {
             money = list.get(list.size() - 1);
+            money += Long.parseLong(savingAccount.getSavingMoney());
+            return money;
         }
-        money += Long.parseLong(savingAccount.getSavingMoney());
-        return money;
+
     }
 
     private boolean isDueDate() {

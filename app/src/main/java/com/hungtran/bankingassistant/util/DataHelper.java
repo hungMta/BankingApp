@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DataHelper {
 
@@ -92,7 +93,7 @@ public class DataHelper {
         try {
             String[] subArr = string.split("\\.");
             if (subArr.length > 0) {
-                Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(subArr[0]);
+                Date date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.ENGLISH).parse(subArr[0]);
                 return date;
             } else {
                 return null;
