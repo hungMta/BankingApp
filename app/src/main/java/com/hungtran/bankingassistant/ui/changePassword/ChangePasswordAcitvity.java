@@ -1,16 +1,16 @@
-package com.hungtran.bankingassistant.ui.register;
+package com.hungtran.bankingassistant.ui.changePassword;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,108 +20,76 @@ import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.dialog.DialogCommon;
 import com.hungtran.bankingassistant.model.register.RegisterRequest;
 import com.hungtran.bankingassistant.ui.pressOTP.OTPAcvitiy;
+import com.hungtran.bankingassistant.ui.register.RegisterActivity;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by hungtd on 5/14/19.
  */
 
-public class RegisterActivity extends BaseActivity implements RegisterContract.View {
+public class ChangePasswordAcitvity extends BaseActivity implements ChangePaswordContract.View, OTPAcvitiy.OTPActivityListener {
 
+    @BindView(R.id.my_toolbar)
+    Toolbar mToolbar;
 
-    private EditText inputName, inputEmail, inputPassword, inputPhone;
-    private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword, inputLayoutPhone;
-    private Button btnSignUp;
+    private EditText inputEmail, inputPassword;
+    private TextInputLayout inputLayoutEmail, inputLayoutPassword;
 
-    private RegisterPresenter mPresenter;
+    @BindView(R.id.btn_ok)
+    Button btnOk;
+
+    ChangePasswordPresenter mPresenter;
 
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_register;
+        return R.layout.acitivity_change_password;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.WHITE);
-        }
-
-        mPresenter = new RegisterPresenter(this);
-
-        inputLayoutName = (TextInputLayout) findViewById(R.id.input_layout_name);
-        inputLayoutEmail = (TextInputLayout) findViewById(R.id.input_layout_email);
-        inputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
-        inputLayoutPhone = (TextInputLayout) findViewById(R.id.input_layout_phoneNumber);
-        inputName = (EditText) findViewById(R.id.input_name);
-        inputEmail = (EditText) findViewById(R.id.input_email);
-        inputPassword = (EditText) findViewById(R.id.input_password);
-        inputPhone = (EditText) findViewById(R.id.input_phoneNumber);
-        btnSignUp = (Button) findViewById(R.id.btn_signup);
-
-        inputName.addTextChangedListener(new MyTextWatcher(inputName));
-        inputEmail.addTextChangedListener(new MyTextWatcher(inputEmail));
-        inputPassword.addTextChangedListener(new MyTextWatcher(inputPassword));
-        inputPhone.addTextChangedListener(new MyTextWatcher(inputPhone));
-
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        ButterKnife.bind(this);
+        mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white));
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitForm();
+                finish();
             }
         });
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submit();
+            }
+        });
+
+        inputEmail = (EditText) findViewById(R.id.input_email);
+        inputPassword = (EditText) findViewById(R.id.input_password);
+        inputLayoutEmail = (TextInputLayout) findViewById(R.id.input_layout_email);
+        inputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
+        inputEmail.addTextChangedListener(new MyTextWatcher(inputEmail));
+        inputPassword.addTextChangedListener(new MyTextWatcher(inputPassword));
+
+        mPresenter = new ChangePasswordPresenter(this);
     }
 
 
-    /**
-     * Validating form
-     */
-    private void submitForm() {
-               if (!validateName()) {
-            return;
-        }
-
-        if (!validateEmail()) {
-            return;
-        }
+    private void submit() {
 
         if (!validatePassword()) {
             return;
         }
 
         showDialogProgress();
+        mPresenter.getOTP();
 
-        mPresenter.verifyEmail(inputEmail.getText().toString());
-
-//        Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
-    }
-
-    private boolean validateName() {
-        if (inputName.getText().toString().trim().isEmpty()) {
-            inputLayoutName.setError(getString(R.string.err_msg_name));
-            requestFocus(inputName);
-            return false;
-        } else {
-            inputLayoutName.setErrorEnabled(false);
-        }
-
-        return true;
-    }
-
-    private boolean validatePhone() {
-        if (inputPhone.getText().toString().trim().isEmpty()) {
-            inputLayoutPhone.setError(getString(R.string.err_msg_phone));
-            requestFocus(inputPhone);
-            return false;
-        } else {
-            inputLayoutPhone.setErrorEnabled(false);
-        }
-
-        return true;
     }
 
     private boolean validateEmail() {
@@ -161,41 +129,33 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     }
 
     @Override
-    public void hideProgressBar() {
-        hideDialogProgress();
-    }
-
-    @Override
-    public void verifyEmailFail(String message) {
-        DialogCommon dialogCommon =  DialogCommon.newInstance(message);
+    public void getOTPFail(String message) {
+        DialogCommon dialogCommon = DialogCommon.newInstance(message);
         dialogCommon.show(getSupportFragmentManager(), Constant.DIALOG);
     }
 
     @Override
-    public void verifyEmailSuccess() {
+    public void getOTPSuccess() {
         RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.setEmail(inputEmail.getText().toString());
-        registerRequest.setName(inputName.getText().toString());
-        registerRequest.setPhone(inputPhone.getText().toString());
         registerRequest.setPassword(inputPassword.getText().toString());
         Intent intent = new Intent(this, OTPAcvitiy.class);
-        intent.putExtra(Constant.REGISTER_ACCOUNT, true);
         intent.putExtra(Constant.REGISTER_REQUEST, registerRequest);
-        intent.putExtra(Constant.OTP_TYPE, Constant.OTP_REGISTER);
+        intent.putExtra(Constant.OTP_TYPE, Constant.OTP_CHANGE_PASSWORD);
         startActivity(intent);
+        OTPAcvitiy.setOTPActivityListener(this);
     }
 
     @Override
-    public void registerSuccess() {
-
+    public void hideProgress() {
+        hideDialogProgress();
     }
 
     @Override
-    public void registerFail(String message) {
-
+    public void OPTActivitySucess() {
+        finish();
     }
 
-    private class MyTextWatcher implements TextWatcher {
+    public class MyTextWatcher implements TextWatcher {
 
         private View view;
 
@@ -211,16 +171,11 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
         public void afterTextChanged(Editable editable) {
             switch (view.getId()) {
-                case R.id.input_name:
-                    validateName();
-                    break;
                 case R.id.input_email:
                     validateEmail();
                     break;
                 case R.id.input_password:
                     validatePassword();
-                case R.id.input_phoneNumber:
-                    validatePhone();
                     break;
             }
         }

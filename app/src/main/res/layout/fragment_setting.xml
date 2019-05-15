@@ -88,14 +88,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="20dp">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:padding="10dp"
                 android:src="@drawable/ic_access_time" />
 
@@ -117,14 +117,14 @@
         <LinearLayout
             android:id="@+id/layoutCalculator"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="20dp">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:padding="10dp"
                 android:src="@drawable/ic_calculator" />
 
@@ -145,14 +145,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="20dp">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:padding="10dp"
                 android:src="@drawable/ic_access_time" />
 
@@ -171,6 +171,7 @@
 
 
     <LinearLayout
+        android:id="@+id/layoutChangePassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -179,14 +180,46 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="20dp">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:padding="13dp"
+                android:src="@drawable/ic_key_accent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:text="@string/change_password"
+                android:textColor="@color/colorBlack" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layoutLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="20dp">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:padding="10dp"
                 android:src="@drawable/ic_logout" />
 

@@ -50,6 +50,8 @@
         <activity android:name=".ui.transactionHistory.TransactionHistoryActivity"/>
         <activity android:name=".ui.transactionHistory.TransactionHistoryDetailAcitivty"/>
         <activity android:name=".ui.register.RegisterActivity"/>
+        <activity android:name=".ui.changePassword.ChangePasswordAcitvity"/>
+        <activity android:name=".ui.forgetPassword.ForgetPasswordActivity"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_api_key" />

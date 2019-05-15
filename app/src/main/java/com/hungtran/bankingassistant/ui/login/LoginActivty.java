@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.user.Account;
+import com.hungtran.bankingassistant.ui.forgetPassword.ForgetPasswordActivity;
 import com.hungtran.bankingassistant.ui.main.MainActivity;
 import com.hungtran.bankingassistant.ui.register.RegisterActivity;
 import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneySuccessAcitvity;
@@ -48,6 +49,10 @@ public class LoginActivty extends BaseActivity implements LoginContract.View {
     @BindView(R.id.txtRegister)
     TextView mTxtRegister;
 
+
+    @BindView(R.id.txtForgotPassword)
+    TextView mTxtForgotPassword;
+
     private LoginPresenter presenter;
 
     @Override
@@ -60,8 +65,8 @@ public class LoginActivty extends BaseActivity implements LoginContract.View {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         presenter = new LoginPresenter(this, this);
-        mEdtEmail.setText("0988807808");
-        mEdtPassword.setText("1234567");
+        mEdtEmail.setText("0365023120");
+        mEdtPassword.setText("123456");
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +106,14 @@ public class LoginActivty extends BaseActivity implements LoginContract.View {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mTxtForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ForgetPasswordActivity.class);
                 startActivity(intent);
             }
         });
