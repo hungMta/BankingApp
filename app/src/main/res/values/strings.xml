@@ -101,4 +101,5 @@
     <string name="new_password">Mật khẩu mới</string>
     <string name="change_password_success">Đổi mật khẩu thành công</string>
     <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="account_bank">Tài khoản ngân hàng</string>
 </resources>

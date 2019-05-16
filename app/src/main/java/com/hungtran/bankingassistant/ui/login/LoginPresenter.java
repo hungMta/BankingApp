@@ -58,6 +58,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                     AccountResponse accountResponse = response.body();
                     if (accountResponse != null && accountResponse.getUser() != null) {
                         SharePreference.setVal(Constant.ID_USER_KEY, accountResponse.getUser().getId());
+                        SharePreference.setVal(Constant.USER_KEY, accountResponse.getUser());
                     }
                     Log.d(TAG, "onNext: header : " + headers);
                     mView.loginSuccess();
