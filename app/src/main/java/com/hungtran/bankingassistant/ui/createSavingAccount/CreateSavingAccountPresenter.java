@@ -38,7 +38,7 @@ public class CreateSavingAccountPresenter
     }
 
     @Override
-    public void createSavingAccount(DataAcount dataAcount, int idBank, int term, double money, double interestRate) {
+    public void createSavingAccount(DataAcount dataAcount, int idBank, int term, long money, double interestRate) {
         TransferMoney transferMoney = new TransferMoney();
         transferMoney.setType(Constant.TRANSFER_ATM_SAVING);
         transferMoney.setFromAccountNumber(dataAcount.getNumberAccount());
