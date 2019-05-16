@@ -1,11 +1,14 @@
 package com.hungtran.bankingassistant.util;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DataHelper {
 
@@ -92,7 +95,7 @@ public class DataHelper {
         try {
             String[] subArr = string.split("\\.");
             if (subArr.length > 0) {
-                Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(subArr[0]);
+                Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).parse(subArr[0]);
                 return date;
             } else {
                 return null;
@@ -124,15 +127,21 @@ public class DataHelper {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         if (type == 0) {
-            int hour = calendar.get(Calendar.HOUR);
-            int min = calendar.get(Calendar.MINUTE);
+            String[] splitTime = getHourMinTime(time);
+            int hour = 0;
+            int min = 0;
+            if (splitTime.length > 2) {
+                hour = Integer.parseInt(splitTime[0]);
+                min = Integer.parseInt(splitTime[1]);
+            }
+
             String _hour = hour + "";
             String _min = min + "";
             if (hour < 10) {
-                _hour = "0"+ hour;
+                _hour = "0" + hour;
             }
             if (min < 10) {
-                _min = "0"+min;
+                _min = "0" + min;
             }
             return _hour + ":" + _min;
         } else {
@@ -151,6 +160,17 @@ public class DataHelper {
 
             return "" + _day + "/" + _month;
         }
+    }
+
+
+    private static String[] getHourMinTime(String strDate) {
+        String[] split = strDate.split(" ");
+        if (split.length >= 2) {
+            String stringTime = split[1];
+            String[] splitTime = stringTime.split(":");
+            return splitTime;
+        }
+        return new String[]{"00", "00", "00"};
     }
 
 
@@ -173,19 +193,19 @@ public class DataHelper {
         return month;
     }
 
-    public static String getTimeFormatFromInterval(long interval){
+    public static String getTimeFormatFromInterval(long interval) {
         String string = "";
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(interval);
         int day = c.get(Calendar.DAY_OF_MONTH);
         int month = c.get(Calendar.MONTH) + 1;
         int year = c.get(Calendar.YEAR);
-        string =  day + "/" + month + "/" + year;
+        string = day + "/" + month + "/" + year;
         return string;
     }
 
     // delete all non-digit in a String
-    public static String deletAllNonDigit(String input){
-       return  input.replaceAll(",","");
+    public static String deletAllNonDigit(String input) {
+        return input.replaceAll(",", "");
     }
 }
