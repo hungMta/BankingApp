@@ -26,7 +26,7 @@ public class TransferMoney  {
     private int term;
 
     @SerializedName("money")
-    private double money;
+    private long money;
 
     @SerializedName("interest_rate")
     private double interestRate;
@@ -43,7 +43,7 @@ public class TransferMoney  {
     public TransferMoney() {
     }
 
-    public TransferMoney(int type, String fromAccountNumber, String toAccountNumber, int idBankFrom, int idBankTo, String nameTo, int term, double money, double interestRate, String currency, String branch) {
+    public TransferMoney(int type, String fromAccountNumber, String toAccountNumber, int idBankFrom, int idBankTo, String nameTo, int term, long money, double interestRate, String currency, String branch) {
         this.type = type;
         this.fromAccountNumber = fromAccountNumber;
         this.toAccountNumber = toAccountNumber;
@@ -121,11 +121,11 @@ public class TransferMoney  {
         this.term = term;
     }
 
-    public double getMoney() {
+    public long getMoney() {
         return money;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(long money) {
         this.money = money;
     }
 

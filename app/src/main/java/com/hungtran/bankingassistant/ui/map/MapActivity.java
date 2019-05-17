@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -29,8 +32,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,7 +52,9 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.adapters.AreaRecylerViewAdapter;
 import com.hungtran.bankingassistant.adapters.BranchSearchRecyclerViewAdapter;
@@ -75,8 +90,12 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         MapConstract.View,
         OnMapReadyCallback,
         BranchSearchRecyclerViewAdapter.OnBranchRecyclerViewApdapterListener,
-        FilterBankRecyclerViewAdapter.FilterBankListener {
+        FilterBankRecyclerViewAdapter.FilterBankListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        com.google.android.gms.location.LocationListener {
     private static final Integer FINE_LOCATION_CODE = 10101;
+
+    private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
+    private long FASTEST_INTERVAL = 2000; /* 2 sec */
     @BindView(R.id.my_toolbar)
     Toolbar mToolbar;
 
@@ -133,6 +152,9 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     private Area currentArea = new Area();
     private List<BankLc> avaiableBankLcList;
     private FilterBankRecyclerViewAdapter filterBankRecyclerViewAdapter;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private Location mlocation;
 
 
     @Override
@@ -173,7 +195,6 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         }
         mapFragment.getMapAsync(this);
 
-
         mLayoutSearchAtm.setOnClickListener(this);
         mLayoutSearchBranch.setOnClickListener(this);
         mLayoutFilter.setVisibility(View.GONE);
@@ -181,6 +202,8 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         mTxtArea.setOnClickListener(this);
         AreaRecylerViewAdapter.setAreaOnItemClick(this);
         setupAvaibleBankLocationRecyclerView();
+
+        buildGoogleApiClient();
     }
 
     @Override
@@ -192,12 +215,7 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_favorite) {
             if (isShowedLayoutFilter) {
                 isShowedLayoutFilter = false;
@@ -214,12 +232,29 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         return super.onOptionsItemSelected(item);
     }
 
+    protected synchronized void buildGoogleApiClient() {
+        Log.i(TAG, "Building GoogleApiClient");
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mGoogleApiClient.disconnect();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == FINE_LOCATION_CODE) {
             mapFragment.getMapAsync(this);
+            buildGoogleApiClient();
         }
     }
 
@@ -227,23 +262,41 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        ObservableOnSubscribe<Location> handler = emitter -> {
-            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    mMyLocation = location;
-                    emitter.onNext(mMyLocation);
-                    emitter.onComplete();
-                }
-            });
-        };
+        mGoogleApiClient.connect();
+//        startLocationUpdates();
 
-        Observable<Location> observable = Observable.create(handler);
-        observable.subscribe(this::redirectToCurrentLocation,
-                error -> Log.d(TAG, "onMapReady: error " + error)
-        );
+//        ObservableOnSubscribe<Location> handler = emitter -> {
+//            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+//            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+//                @Override
+//                public void onSuccess(Location location) {
+//                    mMyLocation = location;
+//                    emitter.onNext(mMyLocation);
+//                    emitter.onComplete();
+//                }
+//
+//
+//            });
+//        };
+//
+//        Observable<Location> observable = Observable.create(handler);
+//        observable.subscribe(this::redirectToCurrentLocation,
+//                error -> Log.d(TAG, "onMapReady: error " + error)
+//        );
     }
+
+    private void startLocationUpdate() {
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(UPDATE_INTERVAL)
+                .setFastestInterval(FASTEST_INTERVAL);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+    }
+
 
     @Override
     public void onItemBranchReyclerViewAdapterClicked(BranchLocation branchLocation) {
@@ -333,6 +386,46 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         filterBankRecyclerViewAdapter.updateAdapter(avaiableBankLcList);
     }
 
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        startLocationUpdate();
+        mlocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mlocation == null){
+            startLocationUpdate();
+        }
+
+        if (mlocation != null) {
+
+        } else {
+            Toast.makeText(this, "Location not detected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (myLocation != null) return;
+        mlocation = location;
+        String msg = "Updated Location: " +
+                Double.toString(location.getLatitude()) + "," +
+                Double.toString(location.getLongitude());
+//        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        redirectToCurrentLocation(location);
+    }
+
 
     public interface OnMapActivityListener {
         void onMapActivtyDestroy();
@@ -380,7 +473,7 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         mMap.clear();
         markMyLocation();
         List<BranchLocation> branchLocationList = new ArrayList<>();
-        Toast.makeText(this, "success + " + bankLocationResponse.getBankLocations().size(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "success + " + bankLocationResponse.getBankLocations().size(), Toast.LENGTH_SHORT).show();
         if (bankLocationResponse.getBankLocations().size() == 0) {
             mBranchSearchRecyclerViewAdapter.updateAdapter(null, null);
             return;

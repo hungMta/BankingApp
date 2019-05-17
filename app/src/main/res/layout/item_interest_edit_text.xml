@@ -15,7 +15,7 @@
         android:maxLines="1"
         android:lines="1"
         android:imeOptions="actionDone"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:paddingRight="50dp"
         android:paddingLeft="50dp"
         android:gravity="center"

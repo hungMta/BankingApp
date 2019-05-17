@@ -70,7 +70,7 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
     private InterestRate mInterestRate;
     private InterestRateAndTermDialog interestRateAndTermDialog;
     private double atmMoney;
-    private double savingMoney;
+    private long savingMoney;
     private static CreateSavingAccountActivityListener createSavingAccountActivityListener;
     private double interestRateNumber;
     private int term;
@@ -232,7 +232,7 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
     private boolean isValidMoney() {
         if (mEdtSavingMoney.getText().toString().equals("")) return false;
         String format = DataHelper.deletAllNonDigit(mEdtSavingMoney.getText().toString());
-        savingMoney = Double.parseDouble(format);
+        savingMoney = Long.parseLong(format);
 
         if (savingMoney > atmMoney) {
             Toast.makeText(this, "Số tiền phải nhỏ hơn số dư khả dụng!", Toast.LENGTH_SHORT).show();
