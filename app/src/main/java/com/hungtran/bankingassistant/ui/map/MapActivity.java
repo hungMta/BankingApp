@@ -90,7 +90,8 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         MapConstract.View,
         OnMapReadyCallback,
         BranchSearchRecyclerViewAdapter.OnBranchRecyclerViewApdapterListener,
-        FilterBankRecyclerViewAdapter.FilterBankListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        FilterBankRecyclerViewAdapter.FilterBankListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        com.google.android.gms.location.LocationListener {
     private static final Integer FINE_LOCATION_CODE = 10101;
 
     private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
@@ -153,6 +154,7 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     private FilterBankRecyclerViewAdapter filterBankRecyclerViewAdapter;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
+    private Location mlocation;
 
 
     @Override
@@ -213,12 +215,7 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_favorite) {
             if (isShowedLayoutFilter) {
                 isShowedLayoutFilter = false;
@@ -257,6 +254,7 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == FINE_LOCATION_CODE) {
             mapFragment.getMapAsync(this);
+            buildGoogleApiClient();
         }
     }
 
@@ -264,8 +262,6 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMyLocationEnabled(true);
-
         mGoogleApiClient.connect();
 //        startLocationUpdates();
 
@@ -289,138 +285,18 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
 //        );
     }
 
-    protected void startLocationUpdates() {
-
-        // Create the location request to start receiving updates
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(UPDATE_INTERVAL);
-        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
-
-        // Create LocationSettingsRequest object using location request
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
-        builder.addLocationRequest(mLocationRequest);
-        LocationSettingsRequest locationSettingsRequest = builder.build();
-
-        // Check whether location settings are satisfied
-        // https://developers.google.com/android/reference/com/google/android/gms/location/SettingsClient
-        SettingsClient settingsClient = LocationServices.getSettingsClient(this);
-        Task<LocationSettingsResponse> task = settingsClient.checkLocationSettings(locationSettingsRequest);
-        task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
-            @SuppressLint("MissingPermission")
-            @Override
-            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                LocationServices.getFusedLocationProviderClient(getApplicationContext()).requestLocationUpdates(mLocationRequest, new LocationCallback() {
-                            @Override
-                            public void onLocationResult(LocationResult locationResult) {
-                                // do work here
-                                onLocationChanged(locationResult.getLastLocation());
-                            }
-                        },
-                        Looper.myLooper());
-
-                LocationServices.getFusedLocationProviderClient(getApplicationContext()).getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        Log.d(TAG, "onSuccess: ");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: ");
-                    }
-                });
-            }
-        });
-
-        // new Google API SDK v11 uses getFusedLocationProviderClient(this)
-//        if (ActivityCompat.checkSelfPermission(this,
-//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-//                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
-//        LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, new LocationCallback() {
-//                    @Override
-//                    public void onLocationResult(LocationResult locationResult) {
-//                        // do work here
-//                        onLocationChanged(locationResult.getLastLocation());
-//                    }
-//                },
-//                Looper.myLooper());
-    }
-
-    public void onLocationChanged(Location location) {
-        // New location has now been determined
-        String msg = "Updated Location: " +
-                Double.toString(location.getLatitude()) + "," +
-                Double.toString(location.getLongitude());
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        // You can now create a LatLng Object for use with maps
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        Log.d(TAG, "onLocationChanged: " + latLng);
-    }
-
-    protected void createLocationRequest() {
-//        //remove location updates so that it resets
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-
-            }
-        }); //Import should not be **android.Location.LocationListener**
-        //import should be **import com.google.android.gms.location.LocationListener**;
-
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        //restart location updates with the new interval
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+    private void startLocationUpdate() {
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(UPDATE_INTERVAL)
+                .setFastestInterval(FASTEST_INTERVAL);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-
-        LocationCallback locationCallback = new LocationCallback() {
-
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-                Log.d(TAG, "onLocationResult: " + locationResult);
-            }
-
-            @Override
-            public void onLocationAvailability(LocationAvailability locationAvailability) {
-                super.onLocationAvailability(locationAvailability);
-            }
-        };
-
-
-
-        LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, locationCallback, null);
-
-       LocationServices.getFusedLocationProviderClient(this).getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-           @Override
-           public void onSuccess(Location location) {
-               Log.d(TAG, "onSuccess: ");
-           }
-       });
-
-
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
+
 
     @Override
     public void onItemBranchReyclerViewAdapterClicked(BranchLocation branchLocation) {
@@ -512,8 +388,21 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-//        createLocationRequest();
-        startLocationUpdates();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        startLocationUpdate();
+        mlocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mlocation == null){
+            startLocationUpdate();
+        }
+
+        if (mlocation != null) {
+
+        } else {
+            Toast.makeText(this, "Location not detected", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -524,6 +413,17 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (myLocation != null) return;
+        mlocation = location;
+        String msg = "Updated Location: " +
+                Double.toString(location.getLatitude()) + "," +
+                Double.toString(location.getLongitude());
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        redirectToCurrentLocation(location);
     }
 
 
