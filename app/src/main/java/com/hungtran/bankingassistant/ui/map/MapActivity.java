@@ -422,7 +422,7 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         redirectToCurrentLocation(location);
     }
 
@@ -473,7 +473,7 @@ public class MapActivity extends BaseActivity implements AreaDialog.AreaDialogLi
         mMap.clear();
         markMyLocation();
         List<BranchLocation> branchLocationList = new ArrayList<>();
-        Toast.makeText(this, "success + " + bankLocationResponse.getBankLocations().size(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "success + " + bankLocationResponse.getBankLocations().size(), Toast.LENGTH_SHORT).show();
         if (bankLocationResponse.getBankLocations().size() == 0) {
             mBranchSearchRecyclerViewAdapter.updateAdapter(null, null);
             return;

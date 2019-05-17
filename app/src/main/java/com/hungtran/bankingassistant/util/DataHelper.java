@@ -4,11 +4,14 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class DataHelper {
 
@@ -74,11 +77,13 @@ public class DataHelper {
         return result;
     }
 
+    // term should be 12 month
+    // timeSaving should be month
     public static List<Long> calculateInterestRate(long initialMoney, double interestRate, int term, int timeSaving, int typeWithdraw) {
         if (timeSaving < term || term == 0) return new ArrayList<>();
         List<Long> listInterestRate = new ArrayList<>();
         while (timeSaving / term > 0) {
-            long interestMoney = (long) (initialMoney * (interestRate / 100));
+            long interestMoney = (long) (initialMoney * (interestRate / 100 / 12));
             listInterestRate.add(interestMoney);
             timeSaving -= term;
             if (typeWithdraw == Constant.TYPE_SAVING_WITHDRAW) {
@@ -88,6 +93,19 @@ public class DataHelper {
             }
         }
         return listInterestRate;
+    }
+
+    public static long calculateSavingInterestRate(long initalMoney, double interestRate, int term, String createDateString) {
+        long totalMoney = initalMoney;
+        if (!isDueDateSaving(createDateString, term)) { // no term
+            int diffDays = getDiffDays(createDateString);
+            long interestMoney = (long) ((initalMoney * interestRate / 100 / (term * 30)) * diffDays);
+            totalMoney += interestMoney;
+        } else { // with term
+            long interestMoney = (long) ((initalMoney * interestRate / 100 / 12) * term);
+            totalMoney += interestMoney;
+        }
+        return totalMoney;
     }
 
     public static Date getDateFromString(String string) {
@@ -207,5 +225,34 @@ public class DataHelper {
     // delete all non-digit in a String
     public static String deletAllNonDigit(String input) {
         return input.replaceAll(",", "");
+    }
+
+    public static int getDiffDays(String createDate) {
+        Date date = DataHelper.getDateFromString(createDate, Constant.DATE_FORMAT);
+        Date currentDate = new Date();
+
+        long diffMillies = Math.abs(currentDate.getTime() - date.getTime());
+        long diff = TimeUnit.DAYS.convert(diffMillies, TimeUnit.MILLISECONDS);
+
+        return (int) diff;
+    }
+
+    public static boolean isDueDateSaving(String createDateString, int term) {
+        Date createDate = DataHelper.getDateFromString(createDateString, Constant.DATE_FORMAT);
+        Date currentDate = new Date();
+
+        Calendar createCalendar = Calendar.getInstance();
+        createCalendar.setTime(createDate);
+        Calendar currentCalendar = Calendar.getInstance();
+        currentCalendar.setTime(currentDate);
+
+        createCalendar.add(Calendar.MONTH, term);
+
+        int compare = currentDate.compareTo(createCalendar.getTime());
+        if (compare <= 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

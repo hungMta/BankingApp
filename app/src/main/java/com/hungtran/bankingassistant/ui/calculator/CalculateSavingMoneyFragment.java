@@ -98,8 +98,7 @@ public class CalculateSavingMoneyFragment extends BaseFragment implements Calcul
         mBtnWithdrawType.setOnClickListener(this);
         mLayoutTimeSavingType.setOnClickListener(this);
     }
-
-
+    
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

@@ -62,6 +62,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
         setupTabbar();
         mPresenter = new MainPresenter(this, this);
         mPresenter.submitFirebaseToken();
+
     }
 
     private void setupTabbar() {

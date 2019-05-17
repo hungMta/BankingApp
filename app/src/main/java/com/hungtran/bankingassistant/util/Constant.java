@@ -85,6 +85,6 @@ public class Constant {
     public static int OTP_REGISTER = 1;
     public static int OTP_CHANGE_PASSWORD = 2;
     public static int OTP_FORGOT_PASSWORD = 3;
-
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
 }
