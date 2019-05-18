@@ -40,10 +40,14 @@ public class TransferMoney  {
     @SerializedName("saving_id")
     private int savingId;
 
+    @SerializedName("message")
+    private String message;
+
     public TransferMoney() {
     }
 
-    public TransferMoney(int type, String fromAccountNumber, String toAccountNumber, int idBankFrom, int idBankTo, String nameTo, int term, long money, double interestRate, String currency, String branch) {
+    public TransferMoney(int type, String fromAccountNumber, String toAccountNumber,
+                         int idBankFrom, int idBankTo, String nameTo, int term, long money, double interestRate, String currency, String branch, String message) {
         this.type = type;
         this.fromAccountNumber = fromAccountNumber;
         this.toAccountNumber = toAccountNumber;
@@ -55,6 +59,15 @@ public class TransferMoney  {
         this.interestRate = interestRate;
         this.currency = currency;
         this.branch = branch;
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public int getSavingId() {
