@@ -19,6 +19,7 @@ public interface TransferMoneyATMContract {
 
     interface Presenter {
         void getAvaibleBankLinking();
-        void trasnferMoney(DataAcount dataAcount, int idFromBank, int idToBank, String receivingAccount, String receivingName, long money);
+        void trasnferMoney(DataAcount dataAcount, int idFromBank,
+                           int idToBank, String receivingAccount, String receivingName, long money, String message);
     }
 }

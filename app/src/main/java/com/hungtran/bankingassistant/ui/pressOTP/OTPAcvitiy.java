@@ -93,8 +93,8 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
                         mPresenter.changePassword(registerRequest);
                         break;
                     case 3:
-                            registerRequest.setOtp(otp);
-                            mPresenter.forgotPassword(registerRequest);
+                        registerRequest.setOtp(otp);
+                        mPresenter.forgotPassword(registerRequest);
                     default:
                         hideDialogProgress();
                         break;

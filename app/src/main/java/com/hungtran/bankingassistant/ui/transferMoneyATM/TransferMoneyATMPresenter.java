@@ -64,7 +64,8 @@ public class TransferMoneyATMPresenter implements TransferMoneyATMContract.Prese
     }
 
     @Override
-    public void trasnferMoney(DataAcount dataAcount, int idFromBank, int idToBank, String receivingAccount, String receivingName, long money) {
+    public void trasnferMoney(DataAcount dataAcount, int idFromBank, int idToBank,
+                              String receivingAccount, String receivingName, long money, String message) {
         TransferMoney transferMoney = new TransferMoney();
         transferMoney.setType(Constant.TRANSFER_ATM_ATM);
         transferMoney.setFromAccountNumber(dataAcount.getNumberAccount());
@@ -73,6 +74,7 @@ public class TransferMoneyATMPresenter implements TransferMoneyATMContract.Prese
         transferMoney.setIdBankTo(idToBank);
         transferMoney.setMoney(money);
         transferMoney.setNameTo(receivingName);
+        transferMoney.setMessage(message);
         transferMoneyObserverable(transferMoney).subscribeWith(transferMoneyObserver());
     }
 

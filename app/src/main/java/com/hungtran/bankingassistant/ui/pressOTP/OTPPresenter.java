@@ -57,7 +57,7 @@ public class OTPPresenter implements OTPContract.Presenter {
     }
 
     private Observable<BaseResponse> forgotPasswordObservable(RegisterRequest registerRequest){
-        return ServiceGenerator.resquest().changePassword(SharePreference.getStringVal(Constant.TOKEN_KEY), registerRequest)
+        return ServiceGenerator.resquest().forgotPasswordSubmit(SharePreference.getStringVal(Constant.TOKEN_KEY), registerRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

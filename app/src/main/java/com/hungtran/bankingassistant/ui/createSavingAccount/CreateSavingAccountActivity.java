@@ -28,6 +28,10 @@ import com.hungtran.bankingassistant.util.CurrencyEditText;
 import com.hungtran.bankingassistant.util.DataHelper;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -38,9 +42,6 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
 
     @BindView(R.id.imgChooseInterestRate)
     ImageView imgChooseInterestRate;
-
-//    @BindView(R.id.layoutProgressBar)
-//    LinearLayout mLayoutProgressBar;
 
     @BindView(R.id.edtTerm)
     EditText edtTerm;
@@ -53,9 +54,6 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
 
     @BindView(R.id.btnOK)
     Button btnOk;
-
-//    @BindView(R.id.layoutProgressBarGray)
-//    LinearLayout mLayoutProgressBarGray;
 
     @BindView(R.id.imgLogo)
     ImageView mLogo;
@@ -74,6 +72,8 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
     private static CreateSavingAccountActivityListener createSavingAccountActivityListener;
     private double interestRateNumber;
     private int term;
+
+    private HashMap<String, Double> interestRateMap = new HashMap<>();
 
     @Override
     public int getLayoutId() {
@@ -98,8 +98,6 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
         mBank = (Bank) getIntent().getSerializableExtra(Constant.BANK);
         mPresenter.getInterestRate(mIdBank);
 
-//        mLayoutProgressBar.setVisibility(View.VISIBLE);
-//        mLayoutProgressBarGray.setVisibility(View.GONE);
         showDialogProgress();
 
         imgChooseInterestRate.setOnClickListener(this);
@@ -114,6 +112,7 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
     @Override
     public void getInterestRateSuccess(InterestRate interestRate) {
         mInterestRate = interestRate;
+        interestRateMap = getMapInterest();
     }
 
     @Override
@@ -123,8 +122,6 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
 
     @Override
     public void hideProgressBar() {
-//        mLayoutProgressBar.setVisibility(View.GONE);
-//        mLayoutProgressBarGray.setVisibility(View.GONE);
         hideDialogProgress();
     }
 
@@ -150,8 +147,6 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
                 break;
             case R.id.btnOK:
                 if (isValidMoney()) {
-//                  showSuccessDialog();
-//                    mLayoutProgressBarGray.setVisibility(View.VISIBLE);
                     showDialogProgress();
                     mPresenter.createSavingAccount(mDataAcount, mIdBank, term, savingMoney, interestRateNumber);
                 }
@@ -168,7 +163,8 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
         fragmentTransaction.addToBackStack(null);
 
         // Create and show the dialog.
-        InterestRateAndTermDialog dialog = InterestRateAndTermDialog.newInstance(mInterestRate);
+//        InterestRateAndTermDialog dialog = InterestRateAndTermDialog.newInstance(mInterestRate);
+        InterestRateAndTermDialog dialog = InterestRateAndTermDialog.newInstance(interestRateMap);
         dialog.show(fragmentTransaction, "dialog");
         dialog.setAreaDialogListener(this);
     }
@@ -229,6 +225,18 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
         }
     }
 
+    @Override
+    public void onInterestRateAndTermDialogDestroy(String term, double interestRate) {
+        int _term = Integer.parseInt(term);
+        if (_term == 0){
+            edtTerm.setText("Không kì hạn - Lãi suất " + mInterestRate.getUnlimited() + "%/năm");
+        } else {
+            edtTerm.setText(term + " tháng - Lãi suất " + interestRate + "%/năm");
+        }
+        this.term = _term;
+        interestRateNumber = interestRate;
+    }
+
     private boolean isValidMoney() {
         if (mEdtSavingMoney.getText().toString().equals("")) return false;
         String format = DataHelper.deletAllNonDigit(mEdtSavingMoney.getText().toString());
@@ -270,14 +278,11 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
 
     @Override
     public void OPTActivitySucess() {
-//        if (createSavingAccountActivityListener != null) {
-////            createSavingAccountActivityListener.createSavingAccountSuccess();
-////        }
         Intent intent = new Intent(this, TransferMoneySuccessAcitvity.class);
         intent.putExtra(Constant.SAVING_TERM, term);
         intent.putExtra(Constant.SAVING_INTEREST_RATE, interestRateNumber);
         intent.putExtra(Constant.TYPE_TRANSFER_MONEY, Constant.TRANSFER_ATM_SAVING);
-        long savingLong = (long )savingMoney;
+        long savingLong = (long) savingMoney;
         intent.putExtra(Constant.TRANSFER_MONEY, savingLong);
         TransferMoneySuccessAcitvity.setTransferMoneySuccessListener(this);
         startActivity(intent);
@@ -323,11 +328,57 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
         }
     }
 
+
+    private HashMap<String, Double> getMapInterest() {
+        HashMap<String, Double> data = new HashMap<>();
+        if (mInterestRate.getUnlimited() != null) {
+            data.put("0", Double.parseDouble(mInterestRate.getUnlimited()));
+        }
+
+        if (mInterestRate.getMonth1() != null) {
+            data.put("1", Double.parseDouble(mInterestRate.getMonth1()));
+        }
+
+        if (mInterestRate.getMonth2() != null) {
+            data.put("2", Double.parseDouble(mInterestRate.getMonth2()));
+        }
+
+        if (mInterestRate.getMonth3() != null) {
+            data.put("3", Double.parseDouble(mInterestRate.getMonth3()));
+        }
+
+        if (mInterestRate.getMonth6() != null) {
+            data.put("6", Double.parseDouble(mInterestRate.getMonth6()));
+        }
+
+        if (mInterestRate.getMonth9() != null) {
+            data.put("9", Double.parseDouble(mInterestRate.getMonth9()));
+        }
+
+        if (mInterestRate.getMonth12() != null) {
+            data.put("12", Double.parseDouble(mInterestRate.getMonth12()));
+        }
+
+        if (mInterestRate.getMonth18() != null) {
+            data.put("18", Double.parseDouble(mInterestRate.getMonth18()));
+        }
+
+        if (mInterestRate.getMonth24() != null) {
+            data.put("24", Double.parseDouble(mInterestRate.getMonth24()));
+        }
+
+        if (mInterestRate.getMonth36() != null) {
+            data.put("36", Double.parseDouble(mInterestRate.getMonth36()));
+        }
+
+        return data;
+    }
+
     public interface CreateSavingAccountListener {
 
     }
 
-    public static void setCreateSavingAccountListener(CreateSavingAccountActivityListener listener){
+    public static void setCreateSavingAccountListener(CreateSavingAccountActivityListener listener) {
         createSavingAccountActivityListener = listener;
     }
 }

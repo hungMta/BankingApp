@@ -209,7 +209,9 @@ public class TransferMoneyATMActivity extends BaseActivity implements TransferMo
 
                 recevingName = mEdtReceivingAcountName.getText().toString();
                 showDialogProgress();
-                mPresenter.trasnferMoney(mDataAcount, mIdBank, receivingBank.getId_bank(), mEdtRecevingAccount.getText().toString(), mEdtReceivingAcountName.getText().toString(), sendingMoney);
+                mPresenter.trasnferMoney(mDataAcount, mIdBank, receivingBank.getId_bank(),
+                        mEdtRecevingAccount.getText().toString(),
+                        mEdtReceivingAcountName.getText().toString(), sendingMoney, mEdtContent.getText().toString());
         }
     }
 
