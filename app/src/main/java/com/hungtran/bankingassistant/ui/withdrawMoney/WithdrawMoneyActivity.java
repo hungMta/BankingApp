@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -76,6 +77,7 @@ public class WithdrawMoneyActivity extends BaseActivity implements WithdrawMoney
     Date createDate;
     Date dueDate;
     private long withDrawMoney;
+    private long totalMoney;
 
     private WithdrawMoneyPresenter mPresenter;
 
@@ -110,6 +112,7 @@ public class WithdrawMoneyActivity extends BaseActivity implements WithdrawMoney
     }
 
     private void setupData() {
+        totalMoney = Long.parseLong(savingAccount.getSavingMoney());
         mTxtNumberAccount.setText(savingAccount.getNumberSaving());
         mTxtAccountHoler.setText(dataAcount.getName());
         mTxtMoney.setText(DataHelper.formatMoney(Long.parseLong(savingAccount.getSavingMoney())) + " VND");
@@ -211,10 +214,21 @@ public class WithdrawMoneyActivity extends BaseActivity implements WithdrawMoney
             case R.id.btnOK:
                 String format = DataHelper.deletAllNonDigit(mEdtMoney.getText().toString());
                 withDrawMoney = Long.parseLong(format);
+                if (!validateMoney()) {
+                    return;
+                }
                 showDialogProgress();
                 mPresenter.withDrawMoney(dataAcount, savingAccount, idBank, withDrawMoney);
                 break;
         }
+    }
+
+    private boolean validateMoney(){
+        if (withDrawMoney > totalMoney) {
+            Toast.makeText(this, "Số tiền rút phải nhỏ hơn số tiền trong tài khoản tiết kiệm", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     public interface WithdrawMoneyActivityListener {

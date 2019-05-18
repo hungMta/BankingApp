@@ -77,13 +77,26 @@ public class ExchangeRateFragment extends BaseFragment implements ExchangeRateCo
 
     @Override
     public void showExchangeRates(List<ExchangeRate> list) {
-        if (list.size() == 0) { return; }
+        if (list.size() == 0) {
+            return;
+        }
         mViewAdapter.updateAdapter(list.get(0));
         this.exchangeRates = list;
         this.currentExchangeRate = list.get(0);
         mTxtCurrentBankName.setText(currentExchangeRate.getName());
         try {
             mTxtTimeUpdate.setText(getString(R.string.time_update) + " " + list.get(0).getTimeCrawling());
+            if (list.size() > 0 && list.get(0) != null) {
+                if (list.get(0).getCurrentExchangerate() != null && list.get(0).getCurrentExchangerate().size() > 0) {
+                    String time = list.get(0).getCurrentExchangerate().get(0).getTimeCrawling();
+                    if (!time.equals(null)) {
+                        String[] timeArr = time.split("\\.");
+                        if (timeArr.length > 0) {
+                            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " + timeArr[0]);
+                        }
+                    }
+                }
+            }
         } catch (NullPointerException e) {
 
         }

@@ -42,7 +42,7 @@ import java.io.InputStream;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SettingFragment extends BaseFragment implements View.OnClickListener {
+public class SettingFragment extends BaseFragment implements View.OnClickListener, SettingContract.View {
 
     private static final String TAG = "HUNGTD";
     private static final int PICK_IMAGE = 987;
@@ -72,6 +72,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     ImageView mImageAvata;
 
     private static SettingFragment instance;
+    private SettingPresenter mPresenter;
     private User user;
 
     public static SettingFragment getInstance() {
@@ -101,6 +102,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         mTxtName.setText(user.getName());
         mTxtPhonenumber.setText(user.getPhone());
         Log.d(TAG, "onViewCreated: " + user);
+        mPresenter = new SettingPresenter(this);
     }
 
     @Override
@@ -115,6 +117,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                 startActivity(intent1);
                 break;
             case R.id.layoutLogout:
+                mPresenter.logout();
                 Intent intent2 = new Intent(getContext(), LoginActivty.class);
                 intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
