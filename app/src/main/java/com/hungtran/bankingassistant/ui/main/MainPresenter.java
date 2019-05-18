@@ -44,7 +44,7 @@ public class MainPresenter implements MainContract.Presenter {
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
                         // Log and toast
-                        Log.d("FCM token ", token);
+                        Log.d("FCM", token);
                         FCMToken fcmToken = new FCMToken(token);
                         FCMTokenRequest fcmTokenRequest = new FCMTokenRequest(fcmToken);
                         submitFirebaseTokenObservable(fcmTokenRequest).subscribeWith(submitFirebaseTokenObserver());

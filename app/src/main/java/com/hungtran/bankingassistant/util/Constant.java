@@ -47,7 +47,8 @@ public class Constant {
 
     public static final String MESSAGE = "MESSAGE";
     public static final String TRANSACTION_ID = "TRANSACTION_ID";
-
+    public static final int NOTI_SAVING_WITH_DRAW = 5;
+    public static final int NOTI_RECEIVE_MONEY = 1;
     /**
      * 1: atm - amt
      * 2 atm - saving
