@@ -172,6 +172,7 @@ public class TransferMoneyATMActivity extends BaseActivity implements TransferMo
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -204,6 +205,7 @@ public class TransferMoneyATMActivity extends BaseActivity implements TransferMo
                     Toast.makeText(this, "Số tiền chuyển phải nhỏ hơn số dư khả dụng!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
 
                 recevingName = mEdtReceivingAcountName.getText().toString();
                 showDialogProgress();
