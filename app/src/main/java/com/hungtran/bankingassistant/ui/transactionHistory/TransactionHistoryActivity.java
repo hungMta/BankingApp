@@ -41,15 +41,6 @@ public class TransactionHistoryActivity extends BaseActivity implements Transact
     @BindView(R.id.reyclerView)
     RecyclerView recyclerView;
 
-//    @BindView(R.id.tabAll2)
-//    TabItem mTabAll;
-//
-//    @BindView(R.id.tabReceivingMoney)
-//    TabItem mTabReceivingMoney;
-//
-//    @BindView(R.id.tabSendingMoney)
-//    TabItem mTabSendingMoney;
-
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
 

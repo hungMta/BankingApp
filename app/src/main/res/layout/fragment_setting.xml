@@ -41,6 +41,7 @@
             <ImageView
                 android:id="@+id/imgAvata"
                 android:layout_width="80dp"
+                android:scaleType="centerCrop"
                 android:layout_height="80dp"
                 android:src="@drawable/ic_avata" />
 
@@ -54,6 +55,7 @@
             android:paddingStart="20dp">
 
             <TextView
+                android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tran Duy Hung"
@@ -61,6 +63,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/txtPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -87,23 +90,24 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/layoutAcccountBank"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="20dp">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:padding="10dp"
-                android:src="@drawable/ic_access_time" />
+                android:src="@drawable/ic_credit_card_red" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
-                android:text="Lịch sử giao dịch"
+                android:text="@string/account_bank"
                 android:textColor="@color/colorBlack" />
 
         </LinearLayout>
@@ -117,14 +121,14 @@
         <LinearLayout
             android:id="@+id/layoutCalculator"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="20dp">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:padding="10dp"
                 android:src="@drawable/ic_calculator" />
 
@@ -144,23 +148,24 @@
             android:background="@color/colorBackground" />
 
         <LinearLayout
+            android:id="@+id/layoutMapSearch"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="20dp">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:padding="10dp"
-                android:src="@drawable/ic_access_time" />
+                android:src="@drawable/ic_place" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
-                android:text="Lịch sử giao dịch"
+                android:text="@string/place"
                 android:textColor="@color/colorBlack" />
 
         </LinearLayout>
@@ -171,6 +176,7 @@
 
 
     <LinearLayout
+        android:id="@+id/layoutChangePassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -179,14 +185,46 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="20dp">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:padding="13dp"
+                android:src="@drawable/ic_key_accent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:text="@string/change_password"
+                android:textColor="@color/colorBlack" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layoutLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="20dp">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:padding="10dp"
                 android:src="@drawable/ic_logout" />
 

@@ -97,4 +97,9 @@
     <string name="err_msg_password">Mật khẩu không hợp lệ</string>
     <string name="register_success">Đăng ký tài khoản thành công</string>
     <string name="err_msg_phone">Vui long nhập số điện thoại</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="new_password">Mật khẩu mới</string>
+    <string name="change_password_success">Đổi mật khẩu thành công</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="account_bank">Tài khoản ngân hàng</string>
 </resources>

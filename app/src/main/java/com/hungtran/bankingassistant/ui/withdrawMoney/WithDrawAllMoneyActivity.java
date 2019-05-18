@@ -119,42 +119,53 @@ public class WithDrawAllMoneyActivity extends BaseActivity implements WithdrawMo
     }
 
     private long getTotalMoney() {
+        long initialMoney = Long.parseLong(savingAccount.getSavingMoney());
         int term = Integer.parseInt(savingAccount.getTerm());
-        List<Long> list = DataHelper.calculateInterestRate(Long.parseLong(savingAccount.getSavingMoney()),
-                interesetRate,
-                Integer.parseInt(savingAccount.getTerm()), 1, Constant.TYPE_SAVING_WITHDRAW_AT_END_TERM);
-        long money = 0;
-        if (list.size() == 0) {
-            money = Long.parseLong(savingAccount.getSavingMoney());
-        } else {
-            money = list.get(list.size() - 1);
-        }
-        money += Long.parseLong(savingAccount.getSavingMoney());
-        return money;
+        String createDate = savingAccount.getCreateDate();
+        double interestRate = interesetRate;
+
+        long totalMoney = DataHelper.calculateSavingInterestRate(initialMoney, interestRate, term, createDate);
+        return  totalMoney;
+
+//        List<Long> list = DataHelper.calculateInterestRate(Long.parseLong(savingAccount.getSavingMoney()),
+//                interesetRate,
+//                Integer.parseInt(savingAccount.getTerm()), 1, Constant.TYPE_SAVING_WITHDRAW_AT_END_TERM);
+//        long money = 0;
+//        if (list.size() == 0) {
+//            money = Long.parseLong(savingAccount.getSavingMoney());
+//            long interestMoney = (long) (money * (interesetRate / 100));
+//            money += interestMoney;
+//            return money;
+//        } else {
+//            money = list.get(list.size() - 1);
+//            money += Long.parseLong(savingAccount.getSavingMoney());
+//            return money;
+//        }
     }
 
     private boolean isDueDate() {
-        Date createDate = DataHelper.getDateFromString(savingAccount.getCreateDate(), Constant.SAVING_FORMAT_DATE);
-        Calendar calCreateDate = Calendar.getInstance();
-        calCreateDate.setTime(createDate);
-
-        int term = 0;
-        if (savingAccount.getTerm().contains(" ")) {
-            String[] arr = savingAccount.getTerm().split(" ");
-            term = Integer.parseInt(arr[0]);
-        } else {
-            term = Integer.parseInt(savingAccount.getTerm());
-        }
-
-        calCreateDate.add(Calendar.MONTH, term);
-
-        Date currentDate = Calendar.getInstance().getTime();
-        Date dueDate = calCreateDate.getTime();
-        if (dueDate.before(currentDate) || dueDate.equals(currentDate)) {
-            return true;
-        } else {
-            return false;
-        }
+        return DataHelper.isDueDateSaving(savingAccount.getCreateDate(), Integer.parseInt(savingAccount.getTerm()));
+//        Date createDate = DataHelper.getDateFromString(savingAccount.getCreateDate(), Constant.SAVING_FORMAT_DATE);
+//        Calendar calCreateDate = Calendar.getInstance();
+//        calCreateDate.setTime(createDate);
+//
+//        int term = 0;
+//        if (savingAccount.getTerm().contains(" ")) {
+//            String[] arr = savingAccount.getTerm().split(" ");
+//            term = Integer.parseInt(arr[0]);
+//        } else {
+//            term = Integer.parseInt(savingAccount.getTerm());
+//        }
+//
+//        calCreateDate.add(Calendar.MONTH, term);
+//
+//        Date currentDate = Calendar.getInstance().getTime();
+//        Date dueDate = calCreateDate.getTime();
+//        if (dueDate.before(currentDate) || dueDate.equals(currentDate)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
     }
 
     private long getInterestMoney() {

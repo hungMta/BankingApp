@@ -1,11 +1,17 @@
 package com.hungtran.bankingassistant.util;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class DataHelper {
 
@@ -71,11 +77,13 @@ public class DataHelper {
         return result;
     }
 
+    // term should be 12 month
+    // timeSaving should be month
     public static List<Long> calculateInterestRate(long initialMoney, double interestRate, int term, int timeSaving, int typeWithdraw) {
         if (timeSaving < term || term == 0) return new ArrayList<>();
         List<Long> listInterestRate = new ArrayList<>();
         while (timeSaving / term > 0) {
-            long interestMoney = (long) (initialMoney * (interestRate / 100));
+            long interestMoney = (long) (initialMoney * (interestRate / 100 / 12));
             listInterestRate.add(interestMoney);
             timeSaving -= term;
             if (typeWithdraw == Constant.TYPE_SAVING_WITHDRAW) {
@@ -87,12 +95,25 @@ public class DataHelper {
         return listInterestRate;
     }
 
+    public static long calculateSavingInterestRate(long initalMoney, double interestRate, int term, String createDateString) {
+        long totalMoney = initalMoney;
+        if (!isDueDateSaving(createDateString, term)) { // no term
+            int diffDays = getDiffDays(createDateString);
+            long interestMoney = (long) ((initalMoney * interestRate / 100 / (term * 30)) * diffDays);
+            totalMoney += interestMoney;
+        } else { // with term
+            long interestMoney = (long) ((initalMoney * interestRate / 100 / 12) * term);
+            totalMoney += interestMoney;
+        }
+        return totalMoney;
+    }
+
     public static Date getDateFromString(String string) {
         if (string == null) return null;
         try {
             String[] subArr = string.split("\\.");
             if (subArr.length > 0) {
-                Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(subArr[0]);
+                Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).parse(subArr[0]);
                 return date;
             } else {
                 return null;
@@ -124,15 +145,21 @@ public class DataHelper {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         if (type == 0) {
-            int hour = calendar.get(Calendar.HOUR);
-            int min = calendar.get(Calendar.MINUTE);
+            String[] splitTime = getHourMinTime(time);
+            int hour = 0;
+            int min = 0;
+            if (splitTime.length > 2) {
+                hour = Integer.parseInt(splitTime[0]);
+                min = Integer.parseInt(splitTime[1]);
+            }
+
             String _hour = hour + "";
             String _min = min + "";
             if (hour < 10) {
-                _hour = "0"+ hour;
+                _hour = "0" + hour;
             }
             if (min < 10) {
-                _min = "0"+min;
+                _min = "0" + min;
             }
             return _hour + ":" + _min;
         } else {
@@ -151,6 +178,17 @@ public class DataHelper {
 
             return "" + _day + "/" + _month;
         }
+    }
+
+
+    private static String[] getHourMinTime(String strDate) {
+        String[] split = strDate.split(" ");
+        if (split.length >= 2) {
+            String stringTime = split[1];
+            String[] splitTime = stringTime.split(":");
+            return splitTime;
+        }
+        return new String[]{"00", "00", "00"};
     }
 
 
@@ -173,19 +211,48 @@ public class DataHelper {
         return month;
     }
 
-    public static String getTimeFormatFromInterval(long interval){
+    public static String getTimeFormatFromInterval(long interval) {
         String string = "";
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(interval);
         int day = c.get(Calendar.DAY_OF_MONTH);
         int month = c.get(Calendar.MONTH) + 1;
         int year = c.get(Calendar.YEAR);
-        string =  day + "/" + month + "/" + year;
+        string = day + "/" + month + "/" + year;
         return string;
     }
 
     // delete all non-digit in a String
-    public static String deletAllNonDigit(String input){
-       return  input.replaceAll(",","");
+    public static String deletAllNonDigit(String input) {
+        return input.replaceAll(",", "");
+    }
+
+    public static int getDiffDays(String createDate) {
+        Date date = DataHelper.getDateFromString(createDate, Constant.DATE_FORMAT);
+        Date currentDate = new Date();
+
+        long diffMillies = Math.abs(currentDate.getTime() - date.getTime());
+        long diff = TimeUnit.DAYS.convert(diffMillies, TimeUnit.MILLISECONDS);
+
+        return (int) diff;
+    }
+
+    public static boolean isDueDateSaving(String createDateString, int term) {
+        Date createDate = DataHelper.getDateFromString(createDateString, Constant.DATE_FORMAT);
+        Date currentDate = new Date();
+
+        Calendar createCalendar = Calendar.getInstance();
+        createCalendar.setTime(createDate);
+        Calendar currentCalendar = Calendar.getInstance();
+        currentCalendar.setTime(currentDate);
+
+        createCalendar.add(Calendar.MONTH, term);
+
+        int compare = currentDate.compareTo(createCalendar.getTime());
+        if (compare <= 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

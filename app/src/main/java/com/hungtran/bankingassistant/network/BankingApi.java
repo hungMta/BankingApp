@@ -25,6 +25,7 @@ import com.hungtran.bankingassistant.model.transfer.TransferTransactionResponse;
 import com.hungtran.bankingassistant.model.user.AccountRequest;
 import com.hungtran.bankingassistant.model.user.AccountResponse;
 
+import butterknife.BindView;
 import io.reactivex.Observable;
 import okhttp3.Response;
 import retrofit2.http.Body;
@@ -99,5 +100,17 @@ public interface BankingApi {
 
 
     @POST("/api/authentication/register")
-    Observable<retrofit2.Response<Void>> registerAccount(@Body  RegisterRequest registerRequest);
+    Observable<retrofit2.Response<Void>> registerAccount(@Body RegisterRequest registerRequest);
+
+    @GET("/api/user/changepassword")
+    Observable<BaseResponse> getOTPChangePassword(@Header("Authorization") String authHeader);
+
+    @POST("/api/user/changepassword")
+    Observable<BaseResponse> changePassword(@Header("Authorization") String authHeader, @Body RegisterRequest registerRequest);
+
+    @POST("/api/authentication/requestForgotPassword")
+    Observable<BaseResponse> requestForgotPassword(@Query("email") String email);
+
+    @POST("/api/authentication/forgotPassword")
+    Observable<BaseResponse> forgotPasswordSubmit(@Header("Authorization") String authHeader, @Body RegisterRequest registerRequest);
 }

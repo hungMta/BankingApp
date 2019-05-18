@@ -70,7 +70,7 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
     private InterestRate mInterestRate;
     private InterestRateAndTermDialog interestRateAndTermDialog;
     private double atmMoney;
-    private double savingMoney;
+    private long savingMoney;
     private static CreateSavingAccountActivityListener createSavingAccountActivityListener;
     private double interestRateNumber;
     private int term;
@@ -232,7 +232,7 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
     private boolean isValidMoney() {
         if (mEdtSavingMoney.getText().toString().equals("")) return false;
         String format = DataHelper.deletAllNonDigit(mEdtSavingMoney.getText().toString());
-        savingMoney = Double.parseDouble(format);
+        savingMoney = Long.parseLong(format);
 
         if (savingMoney > atmMoney) {
             Toast.makeText(this, "Số tiền phải nhỏ hơn số dư khả dụng!", Toast.LENGTH_SHORT).show();
@@ -277,7 +277,8 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
         intent.putExtra(Constant.SAVING_TERM, term);
         intent.putExtra(Constant.SAVING_INTEREST_RATE, interestRateNumber);
         intent.putExtra(Constant.TYPE_TRANSFER_MONEY, Constant.TRANSFER_ATM_SAVING);
-        intent.putExtra(Constant.TRANSFER_MONEY, savingMoney);
+        long savingLong = (long )savingMoney;
+        intent.putExtra(Constant.TRANSFER_MONEY, savingLong);
         TransferMoneySuccessAcitvity.setTransferMoneySuccessListener(this);
         startActivity(intent);
         finish();
@@ -285,6 +286,9 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
 
     @Override
     public void doOtherTransaction() {
+        if (createSavingAccountActivityListener != null) {
+            createSavingAccountActivityListener.createSavingAccountSuccess();
+        }
         finish();
     }
 
@@ -317,5 +321,13 @@ public class CreateSavingAccountActivity extends BaseActivity implements CreateS
                 mLogo.setImageDrawable(getResources().getDrawable(R.drawable.banner_viettin));
                 break;
         }
+    }
+
+    public interface CreateSavingAccountListener {
+
+    }
+
+    public static void setCreateSavingAccountListener(CreateSavingAccountActivityListener listener){
+        createSavingAccountActivityListener = listener;
     }
 }

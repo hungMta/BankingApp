@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.internal.Primitives;
 import com.google.gson.reflect.TypeToken;
 import com.hungtran.bankingassistant.R;
+import com.hungtran.bankingassistant.model.base.BaseResponse;
+import com.hungtran.bankingassistant.model.user.User;
 
 import org.json.JSONArray;
 
@@ -63,6 +65,7 @@ public class SharePreference {
     public static void setVal(String KEY, int value) {
         getInstance().prefs.edit().putInt(KEY, value).apply();
     }
+
 
     public static void setVal(String KEY, long value) {
         getInstance().prefs.edit().putLong(KEY, value).apply();

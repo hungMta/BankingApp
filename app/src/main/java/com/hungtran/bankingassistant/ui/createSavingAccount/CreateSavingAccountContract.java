@@ -17,7 +17,7 @@ public interface CreateSavingAccountContract {
     interface Prenseter {
         void getInterestRate(int idBank);
 
-        void createSavingAccount(DataAcount dataAcount, int idBank, int term, double money, double interestRate);
+        void createSavingAccount(DataAcount dataAcount, int idBank, int term, long money, double interestRate);
     }
 
 }

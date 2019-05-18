@@ -46,18 +46,17 @@ public class AppError {
         this.message = message;
     }
 
-    public static String mapError(String code){
+    public static String mapError(String code) {
         switch (code) {
             case "E50001":
                 break;
             case "E00001":
                 return "Email đã tồn tại";
-
         }
         return "Error";
     }
 
-    public static AppErrors mapAppErrors(Throwable e){
+    public static AppErrors mapAppErrors(Throwable e) {
         ResponseBody responseBody = ((HttpException) e).response().errorBody();
         Gson gson = new Gson();
         assert responseBody != null;
@@ -67,10 +66,10 @@ public class AppError {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        return  appErrors;
+        return appErrors;
     }
 
-    public static String mapFirstError(AppErrors appErrors){
+    public static String mapFirstError(AppErrors appErrors) {
         List<String> listError = new ArrayList<>();
 
         if (appErrors != null && appErrors.getErrors() != null) {
@@ -83,6 +82,12 @@ public class AppError {
         if (listError.size() == 0) {
             listError.add(Constant.ERROR_UNKNOWN);
         }
-        return  listError.get(0);
+        return listError.get(0);
+    }
+
+    public static String mapError(Throwable e) {
+        AppErrors appErrors = mapAppErrors(e);
+        String firstError = mapFirstError(appErrors);
+        return firstError;
     }
 }
