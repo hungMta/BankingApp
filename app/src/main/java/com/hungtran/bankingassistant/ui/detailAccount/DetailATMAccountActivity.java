@@ -15,6 +15,7 @@ import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
 import com.hungtran.bankingassistant.ui.createSavingAccount.CreateSavingAccountActivity;
 import com.hungtran.bankingassistant.ui.transactionHistory.TransactionHistoryActivity;
 import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneyATMActivity;
+import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneySuccessAcitvity;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.DataHelper;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
@@ -22,7 +23,7 @@ import com.hungtran.bankingassistant.util.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailATMAccountActivity extends BaseActivity implements View.OnClickListener, CreateSavingAccountActivity.CreateSavingAccountActivityListener, TransferMoneyATMActivity.TransferMoneyActivityListener, DialogCommon.DialogCommonListener {
+public class DetailATMAccountActivity extends BaseActivity implements View.OnClickListener, CreateSavingAccountActivity.CreateSavingAccountActivityListener, TransferMoneyATMActivity.TransferMoneyActivityListener, DialogCommon.DialogCommonListener, TransferMoneySuccessAcitvity.TransferMoneySuccessListener {
 
     private DataAcount dataAcount;
     private int idBank;
@@ -72,7 +73,7 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
         mLayoutCreateSavingAccount.setOnClickListener(this);
         mLayoutTranser.setOnClickListener(this);
         mTxtHistory.setOnClickListener(this);
-
+        TransferMoneySuccessAcitvity.setTransferMoneySuccessListener(this);
 
 
         setupLogo();
@@ -149,5 +150,10 @@ public class DetailATMAccountActivity extends BaseActivity implements View.OnCli
     @Override
     public void onDialogOkClicked() {
 
+    }
+
+    @Override
+    public void doOtherTransaction() {
+        finish();
     }
 }

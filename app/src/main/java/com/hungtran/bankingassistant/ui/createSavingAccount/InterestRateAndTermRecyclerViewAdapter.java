@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,24 +15,41 @@ import com.hungtran.bankingassistant.model.interestRate.InterestRate;
 
 import java.security.Key;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class InterestRateAndTermRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private InterestRate mInterestRate;
     private HashMap<String, Double> interestRateMap;
+    private Map<String, Double> interestRateSortMap;
     private InterestRateAndTermListener interestRateAndTermListener;
     private List<String> keys;
+    private List<Integer> keysInteger;
     public InterestRateAndTermRecyclerViewAdapter(InterestRate interestRate) {
         this.mInterestRate = interestRate;
     }
 
     public InterestRateAndTermRecyclerViewAdapter(HashMap<String, Double> interestRateMap) {
         this.interestRateMap = interestRateMap;
-        keys = new ArrayList<>(interestRateMap.keySet());
+        interestRateSortMap = new TreeMap<>(interestRateMap);
+        keys = new ArrayList<>(interestRateSortMap.keySet());
+        keysInteger = new ArrayList<>();
+        for (String key: keys) {
+            keysInteger.add(Integer.parseInt(key));
+        }
+        Collections.sort(keysInteger, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer s1, Integer s2) {
+                return s1.compareTo(s2);
+            }
+        });
+        Log.d("", "InterestRateAndTermRecyclerViewAdapter: ");
     }
 
     @NonNull
@@ -51,9 +69,9 @@ public class InterestRateAndTermRecyclerViewAdapter extends RecyclerView.Adapter
 //            }
 //       }
 
-        String keyIndex = keys.get(i);
-        Double valueIndex = interestRateMap.get(keyIndex);
-        if (keyIndex.equals("0")) {
+        int keyIndex = keysInteger.get(i);
+        Double valueIndex = interestRateSortMap.get(String.valueOf(keyIndex));
+        if (keyIndex == 0) {
             ((DefaultItemRecyclerView) viewHolder).text.setText("Không kì hạn - Lãi suất " + valueIndex + "/năm");
         } else {
             ((DefaultItemRecyclerView) viewHolder).text.setText(keyIndex + " Tháng - Lãi suất " + valueIndex + "%/năm");
@@ -96,14 +114,14 @@ public class InterestRateAndTermRecyclerViewAdapter extends RecyclerView.Adapter
             @Override
             public void onClick(View v) {
 //                interestRateAndTermListener.onItemInterestRateAndTermLicked(mInterestRate, i);
-                interestRateAndTermListener.onItemInterestRateAndTermLicked(keyIndex, valueIndex);
+                interestRateAndTermListener.onItemInterestRateAndTermLicked(String.valueOf(keyIndex), valueIndex);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return keys == null ? 0 : keys.size();
+        return keysInteger == null ? 0 : keysInteger.size();
     }
 
     public interface InterestRateAndTermListener {
