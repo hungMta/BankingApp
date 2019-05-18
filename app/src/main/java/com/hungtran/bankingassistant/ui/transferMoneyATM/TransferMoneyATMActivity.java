@@ -196,6 +196,9 @@ public class TransferMoneyATMActivity extends BaseActivity implements TransferMo
                 }
 
                 String format = DataHelper.deletAllNonDigit(mEdtSendingMoney.getText().toString());
+                if (format.equals("")) {
+                    return;
+                }
                 sendingMoney = Long.parseLong(format);
                 if (sendingMoney > myMoney) {
                     Toast.makeText(this, "Số tiền chuyển phải nhỏ hơn số dư khả dụng!", Toast.LENGTH_SHORT).show();
