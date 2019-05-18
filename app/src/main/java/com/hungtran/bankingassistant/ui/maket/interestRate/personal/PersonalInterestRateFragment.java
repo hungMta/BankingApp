@@ -174,7 +174,11 @@ public class PersonalInterestRateFragment extends BaseFragment implements Person
             if (interestRateResponse.getInterestRateByBankList().size() > 0) {
                 timeUpdate = interestRateResponse.getInterestRateByBankList().get(0).getTimeCrawling();
             }
-            mTxtTimeUpdate.setText(getString(R.string.time_update) + " " + timeUpdate);
+            String[] timeArr = timeUpdate.split("\\.");
+            if (timeArr.length > 0 ){
+                mTxtTimeUpdate.setText(getString(R.string.time_update) + " " + timeArr[0]);
+            }
+
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
