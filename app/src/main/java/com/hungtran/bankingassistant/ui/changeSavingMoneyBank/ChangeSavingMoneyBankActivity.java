@@ -361,6 +361,11 @@ public class ChangeSavingMoneyBankActivity extends BaseActivity implements View.
     }
 
     @Override
+    public void onInterestRateAndTermDialogDestroy(String term, double interestRate) {
+
+    }
+
+    @Override
     public void OPTActivitySucess() {
         Intent intent = new Intent(this, TransferMoneySuccessAcitvity.class);
         intent.putExtra(Constant.RECEIVER_BANK, receivingBank);

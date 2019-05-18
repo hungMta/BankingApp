@@ -18,11 +18,15 @@ import com.hungtran.bankingassistant.R;
 import com.hungtran.bankingassistant.model.interestRate.InterestRate;
 import com.hungtran.bankingassistant.ui.createSavingAccount.InterestRateAndTermRecyclerViewAdapter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class InterestRateAndTermDialog extends DialogFragment implements InterestRateAndTermRecyclerViewAdapter.InterestRateAndTermListener {
     public static final String INTEREST_RATE = "INTEREST_RATE";
+    public static final String INTEREST_RATE_MAP = "INTEREST_RATE_MAP";
     private InterestRate interestRate;
     private InterestRateAndTermRecyclerViewAdapter adapter;
     private InterestRateAndTermDialogListener interestRateAndTermDialogListener;
@@ -36,11 +40,20 @@ public class InterestRateAndTermDialog extends DialogFragment implements Interes
     @BindView(R.id.title)
     TextView mTitle;
 
+    private HashMap<String, Double> interestRateMap;
 
     public static InterestRateAndTermDialog newInstance(InterestRate interestRate) {
         InterestRateAndTermDialog dialog = new InterestRateAndTermDialog();
         Bundle args = new Bundle();
         args.putSerializable(INTEREST_RATE, interestRate);
+        dialog.setArguments(args);
+        return dialog;
+    }
+
+    public static InterestRateAndTermDialog newInstance(HashMap<String, Double> map){
+        InterestRateAndTermDialog dialog = new InterestRateAndTermDialog();
+        Bundle args = new Bundle();
+        args.putSerializable(INTEREST_RATE_MAP, map);
         dialog.setArguments(args);
         return dialog;
     }
@@ -52,6 +65,7 @@ public class InterestRateAndTermDialog extends DialogFragment implements Interes
         View view = inflater.inflate(R.layout.fragment_dialog_area, container, false);
         ButterKnife.bind(this, view);
         interestRate = (InterestRate) getArguments().getSerializable(INTEREST_RATE);
+        interestRateMap = (HashMap<String, Double>) getArguments().getSerializable(INTEREST_RATE_MAP);
         setupRecyclerView();
         mImgClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +78,8 @@ public class InterestRateAndTermDialog extends DialogFragment implements Interes
     }
 
     private void setupRecyclerView() {
-        adapter = new InterestRateAndTermRecyclerViewAdapter(interestRate);
+//        adapter = new InterestRateAndTermRecyclerViewAdapter(interestRate);
+        adapter = new InterestRateAndTermRecyclerViewAdapter(interestRateMap);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(adapter);
@@ -80,8 +95,18 @@ public class InterestRateAndTermDialog extends DialogFragment implements Interes
         dismiss();
     }
 
+    @Override
+    public void onItemInterestRateAndTermLicked(String term, double interest) {
+        if (interestRateAndTermDialogListener != null) {
+            interestRateAndTermDialogListener.onInterestRateAndTermDialogDestroy(term, interest);
+            dismiss();
+        }
+        dismiss();
+    }
+
     public interface InterestRateAndTermDialogListener {
         void onInterestRateAndTermDialogDestroy(InterestRate interestRate, int position);
+        void onInterestRateAndTermDialogDestroy(String term, double interestRate);
     }
 
     public  void setAreaDialogListener(InterestRateAndTermDialogListener listener) {
