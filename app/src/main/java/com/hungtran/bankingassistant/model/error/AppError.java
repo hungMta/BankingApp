@@ -52,6 +52,10 @@ public class AppError {
                 break;
             case "E00001":
                 return "Email đã tồn tại";
+            case "E00002":
+                return "Mã OTP không hợp lệ hoặc đã hết hạn";
+            case "E00004":
+                return "Tài khoản nhận không chính xác, vui lòng kiểm tra lại";
         }
         return "Error";
     }
@@ -87,6 +91,19 @@ public class AppError {
 
     public static String mapError(Throwable e) {
         AppErrors appErrors = mapAppErrors(e);
+        String firstError = mapFirstError(appErrors);
+        return firstError;
+    }
+
+    public static String mapError(ResponseBody responseBody){
+        Gson gson = new Gson();
+        assert responseBody != null;
+        AppErrors appErrors = null;
+        try {
+            appErrors = gson.fromJson(responseBody.string(), AppErrors.class);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
         String firstError = mapFirstError(appErrors);
         return firstError;
     }

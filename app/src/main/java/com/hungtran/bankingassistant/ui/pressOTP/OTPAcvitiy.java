@@ -74,8 +74,9 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edtOTP.getText().toString().equals("")) {
+                if (edtOTP.getText().toString().equals("") || edtOTP.getText().toString() == "") {
                     Toast.makeText(getApplicationContext(), "Vui lòng nhập mã OTP", Toast.LENGTH_SHORT).show();
+                    return ;
                 }
                 int otp = Integer.parseInt(edtOTP.getText().toString());
 //                mLayoutProgressBar.setVisibility(View.VISIBLE);

@@ -52,6 +52,7 @@
         <activity android:name=".ui.register.RegisterActivity"/>
         <activity android:name=".ui.changePassword.ChangePasswordAcitvity"/>
         <activity android:name=".ui.forgetPassword.ForgetPasswordActivity"/>
+        <activity android:name=".ui.changeSavingMoneyBank.BeforeChangeSavingMoneyBankAcitivity"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_api_key" />

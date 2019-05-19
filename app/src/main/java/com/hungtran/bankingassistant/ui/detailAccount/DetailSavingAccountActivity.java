@@ -14,6 +14,7 @@ import com.hungtran.bankingassistant.dialog.DialogCommon;
 import com.hungtran.bankingassistant.model.interestRate.InterestRate;
 import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
 import com.hungtran.bankingassistant.model.respone.DataAccount.SavingAccount;
+import com.hungtran.bankingassistant.ui.changeSavingMoneyBank.BeforeChangeSavingMoneyBankAcitivity;
 import com.hungtran.bankingassistant.ui.changeSavingMoneyBank.ChangeSavingMoneyBankActivity;
 import com.hungtran.bankingassistant.ui.withdrawMoney.WithDrawAllMoneyActivity;
 import com.hungtran.bankingassistant.ui.withdrawMoney.WithdrawMoneyActivity;
@@ -27,7 +28,7 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailSavingAccountActivity extends BaseActivity implements View.OnClickListener, DetailSavingAccountContract.View, DialogCommon.DialogCommonListener, WithdrawMoneyActivity.WithdrawMoneyActivityListener, ChangeSavingMoneyBankActivity.ChangeSavingMoneyBankListener, WithDrawAllMoneyActivity.WithDrawAllMoneyListner {
+public class DetailSavingAccountActivity extends BaseActivity implements View.OnClickListener, DetailSavingAccountContract.View, DialogCommon.DialogCommonListener, WithdrawMoneyActivity.WithdrawMoneyActivityListener, ChangeSavingMoneyBankActivity.ChangeSavingMoneyBankListener, WithDrawAllMoneyActivity.WithDrawAllMoneyListner, BeforeChangeSavingMoneyBankAcitivity.BeforeChangeSavingListener {
 
     @BindView(R.id.txtNumberAcount)
     TextView mTxtNumberAccount;
@@ -187,14 +188,14 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
                 WithDrawAllMoneyActivity.setWithDrawAllMoneyListner(this);
                 break;
             case R.id.layoutChangeSavingBank:
-                Intent intent1 = new Intent(this, ChangeSavingMoneyBankActivity.class);
-                intent1.putExtra(Constant.SAVING_INTEREST_RATE, interestRate);
-                intent1.putExtra(Constant.DATA_ACCOUNT, dataAcount);
-                intent1.putExtra(Constant.SAVING_ACCOUNT, savingAccount);
-                intent1.putExtra(Constant.ID_BANK, idBank);
-                ChangeSavingMoneyBankActivity.setChangeSavingMoneyBankListener(this);
-//                WithdrawMoneyActivity.setWithdrawMoneyActivityListener(this);
-                startActivity(intent1);
+                Intent intent4 = new Intent(this, BeforeChangeSavingMoneyBankAcitivity.class);
+                intent4.putExtra(Constant.SAVING_INTEREST_RATE, interestRate);
+                intent4.putExtra(Constant.DATA_ACCOUNT, dataAcount);
+                intent4.putExtra(Constant.SAVING_ACCOUNT, savingAccount);
+                intent4.putExtra(Constant.ID_BANK, idBank);
+                startActivity(intent4);
+                BeforeChangeSavingMoneyBankAcitivity.setBeforeChangeSavingListener(this);
+
                 break;
 
         }
@@ -259,5 +260,16 @@ public class DetailSavingAccountActivity extends BaseActivity implements View.On
     @Override
     public void WithDrawAllAcvitiyDestroyed() {
         finish();
+    }
+
+    @Override
+    public void doChangeSavingMoney() {
+        Intent intent1 = new Intent(this, ChangeSavingMoneyBankActivity.class);
+        intent1.putExtra(Constant.SAVING_INTEREST_RATE, interestRate);
+        intent1.putExtra(Constant.DATA_ACCOUNT, dataAcount);
+        intent1.putExtra(Constant.SAVING_ACCOUNT, savingAccount);
+        intent1.putExtra(Constant.ID_BANK, idBank);
+        ChangeSavingMoneyBankActivity.setChangeSavingMoneyBankListener(this);
+        startActivity(intent1);
     }
 }

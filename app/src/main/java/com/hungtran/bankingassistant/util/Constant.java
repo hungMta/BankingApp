@@ -77,6 +77,7 @@ public class Constant {
     public static final String REGISTER_ACCOUNT = "REGISTER_ACCOUNT";
     public static final String REGISTER_REQUEST = "REGISTER_REQUEST";
     public static final String USER_KEY = "USER_KEY";
+    public static final String TYPE_CHANGE_SAVING = "TYPE_CHANGE_SAVING";
     public static String SAVING_ACCOUNT = "SAVING_ACCOUNT";
     public static String SAVING_FORMAT_DATE =  "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static String OTP_TYPE = "OTP_TYPE";

@@ -87,7 +87,7 @@ public interface BankingApi {
     );
 
     @POST("/api/transfer/otp")
-    Observable<retrofit2.Response<Void>> submitOTP(@Header("Authorization") String authHeader,
+    Observable<BaseResponse> submitOTP(@Header("Authorization") String authHeader,
                                                    @Body OTPModelRequest otpModel
     );
 

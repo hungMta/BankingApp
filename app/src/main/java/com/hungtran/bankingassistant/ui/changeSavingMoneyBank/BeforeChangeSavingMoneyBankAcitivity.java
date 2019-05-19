@@ -1,4 +1,4 @@
-package com.hungtran.bankingassistant.ui.withdrawMoney;
+package com.hungtran.bankingassistant.ui.changeSavingMoneyBank;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,19 +17,18 @@ import com.hungtran.bankingassistant.model.respone.DataAccount.DataAcount;
 import com.hungtran.bankingassistant.model.respone.DataAccount.SavingAccount;
 import com.hungtran.bankingassistant.ui.pressOTP.OTPAcvitiy;
 import com.hungtran.bankingassistant.ui.transferMoneyATM.TransferMoneySuccessAcitvity;
+import com.hungtran.bankingassistant.ui.withdrawMoney.WithdrawMoneyContract;
+import com.hungtran.bankingassistant.ui.withdrawMoney.WithdrawMoneyPresenter;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.DataHelper;
 import com.hungtran.bankingassistant.util.base.BaseActivity;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WithDrawAllMoneyActivity extends BaseActivity implements WithdrawMoneyContract.View, View.OnClickListener, TransferMoneySuccessAcitvity.TransferMoneySuccessListener, OTPAcvitiy.OTPActivityListener {
+public class BeforeChangeSavingMoneyBankAcitivity extends BaseActivity implements WithdrawMoneyContract.View, View.OnClickListener, TransferMoneySuccessAcitvity.TransferMoneySuccessListener, OTPAcvitiy.OTPActivityListener {
 
+    private static BeforeChangeSavingListener beforeChangeSavingListener;
     @BindView(R.id.txtMessageWithdraw)
     TextView mTxtMessageWithdraw;
 
@@ -50,7 +49,7 @@ public class WithDrawAllMoneyActivity extends BaseActivity implements WithdrawMo
     private double interesetRate;
     private InterestRate interestRateObj;
     WithdrawMoneyPresenter presenter;
-    private static WithDrawAllMoneyListner withDrawAllMoneyListner;
+    private static com.hungtran.bankingassistant.ui.withdrawMoney.WithDrawAllMoneyActivity.WithDrawAllMoneyListner withDrawAllMoneyListner;
     private int type = 0;
 
     @Override
@@ -94,7 +93,7 @@ public class WithDrawAllMoneyActivity extends BaseActivity implements WithdrawMo
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
 
-        SpannableString str1 = new SpannableString("Quý khách sẽ nhận được tổng số tiền là ");
+        SpannableString str1 = new SpannableString("Sổ tiết kiệm mới sẽ có tổng số tiền là ");
         str1.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), 0, str1.length(), 0);
         builder.append(str1);
 
@@ -122,7 +121,7 @@ public class WithDrawAllMoneyActivity extends BaseActivity implements WithdrawMo
         strMoney3.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary)), 0, interestMoneystr.length(), 0);
         builder.append(strMoney3);
 
-        SpannableString str3 = new SpannableString(" tiền lãi. Toán bộ số tiền sẽ được chuyển vào tài khoản thanh toán");
+        SpannableString str3 = new SpannableString(" tiền lãi.");
         str3.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), 0, str3.length(), 0);
         builder.append(str3);
 
@@ -137,7 +136,7 @@ public class WithDrawAllMoneyActivity extends BaseActivity implements WithdrawMo
         double interestRate = interesetRate;
 
         long totalMoney = DataHelper.calculateSavingInterestRate(initialMoney, interestRate, term, createDate);
-        return  totalMoney;
+        return totalMoney;
 
 //        List<Long> list = DataHelper.calculateInterestRate(Long.parseLong(savingAccount.getSavingMoney()),
 //                interesetRate,
@@ -210,8 +209,12 @@ public class WithDrawAllMoneyActivity extends BaseActivity implements WithdrawMo
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnOK:
-                showDialogProgress();
-                presenter.withDrawMoney(dataAcount, savingAccount, idBank, Long.parseLong(savingAccount.getSavingMoney()));
+                if (beforeChangeSavingListener != null) {
+                    beforeChangeSavingListener.doChangeSavingMoney();
+                }
+                finish();
+//                showDialogProgress();
+//                presenter.withDrawMoney(dataAcount, savingAccount, idBank, Long.parseLong(savingAccount.getSavingMoney()));
                 break;
         }
     }
@@ -236,11 +239,13 @@ public class WithDrawAllMoneyActivity extends BaseActivity implements WithdrawMo
         startActivity(intent);
     }
 
-    public interface WithDrawAllMoneyListner {
-        void WithDrawAllAcvitiyDestroyed();
+    public interface BeforeChangeSavingListener {
+        void doChangeSavingMoney();
     }
 
-    public static void setWithDrawAllMoneyListner(WithDrawAllMoneyListner listner){
-        withDrawAllMoneyListner = listner;
+    public static void setBeforeChangeSavingListener(BeforeChangeSavingListener listner) {
+        beforeChangeSavingListener = listner;
     }
+
+
 }
