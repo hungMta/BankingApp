@@ -34,7 +34,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (dialogProgress != null
                 && dialogProgress.getDialog() != null
                 && dialogProgress.getDialog().isShowing()) {
-            dialogProgress.dismiss();
+            try {
+                dialogProgress.dismiss();
+            }catch (Exception e) {
+
+            }
         }
     }
 }

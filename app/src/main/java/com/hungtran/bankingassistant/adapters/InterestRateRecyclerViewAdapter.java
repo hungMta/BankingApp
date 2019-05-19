@@ -65,6 +65,7 @@ public class InterestRateRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         if (maxFirstRate <= _value1 && maxFirstRate != 0) {
             ((InterestRateItem) viewHolder).mTxtFirstRate.setTextColor(Color.WHITE);
             ((InterestRateItem) viewHolder).mTxtFirstRate.setBackground(mContext.getDrawable(R.drawable.bg_primary_corner_radius_circle));
+//            ((InterestRateItem) viewHolder).mTxtFirstRate.setBackground(mContext.getDrawable(R.drawable.bg_primary_corner_radius_circle));
         } else {
             ((InterestRateItem) viewHolder).mTxtFirstRate.setTextColor(Color.BLACK);
             ((InterestRateItem) viewHolder).mTxtFirstRate.setBackground(null);

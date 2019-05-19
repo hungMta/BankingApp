@@ -2,6 +2,8 @@ package com.hungtran.bankingassistant.service;
 
 import android.app.ActivityManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Build;
@@ -47,27 +49,53 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Gson gson = new Gson();
             NotiModel notiModel = gson.fromJson(body, NotiModel.class);
             if (notiModel.getType() == Constant.NOTI_SAVING_WITH_DRAW) {
+                title = "Thông báo sổ tiết kiệm";
                 message = "Ngân hàng " + notiModel.getNameBank() +
-                        " thống báo: sổ tiết kiệm " +
+                        " thông báo: sổ tiết kiệm " +
                         notiModel.getSavingId() + "đã đến ngày đáo hạn. Qúy khách vui lòng tất toán sổ.";
             } else if (notiModel.getType() == Constant.NOTI_RECEIVE_MONEY) {
+                title = "Thông báo nhận tiền";
                 message = "Ngân hàng " + notiModel.getNameBankReceive() + " thông báo bạn vừa nhận được "
                         + DataHelper.formatMoney(notiModel.getMoney()) + "VND từ "
                         + notiModel.getNotiReceverModel().getName() + " Với lời nhắn: " + notiModel.getMessage();
 
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         Notification notification = new NotificationCompat.Builder(this)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setChannelId("CHANNEL_ID")
+                .setChannelId("123")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(message))
                 .build();
-        NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
-        manager.notify(123, notification);
+        createNotificationChannel(notification);
+//        NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
+//        manager.notify(123, notification);
+    }
+
+    private void createNotificationChannel(Notification notification) {
+        int id = (int)(Math.random() * 50 + 1);
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Banking";
+            String description = "CrossEBanking";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("123", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+            notificationManager.notify(id, notification);
+        }  else {
+            NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
+            manager.notify(id, notification);
+        }
     }
 
     private boolean isAppIsInBackground(Context context) {

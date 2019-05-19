@@ -24,7 +24,7 @@ public class NotiModel {
     @SerializedName("name_bank_receive")
     private String nameBankReceive;
 
-    @SerializedName("form")
+    @SerializedName("from")
     private NotiReceverModel notiReceverModel;
 
     public NotiModel(int type, String nameBank, int savingId, long money, String message,
