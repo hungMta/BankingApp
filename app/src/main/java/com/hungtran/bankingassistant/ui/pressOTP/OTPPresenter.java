@@ -198,8 +198,8 @@ public class OTPPresenter implements OTPContract.Presenter {
             public void onError(Throwable e) {
 
                 try {
-                    String error = "";
-                    error = ((HttpException) e).response().errorBody().string().toString();
+                    String error = ((HttpException) e).response().errorBody().string().toString();
+//                    error =
                     String message = AppError.mapError(error);
                     mView.submitOTPFail(message);
 

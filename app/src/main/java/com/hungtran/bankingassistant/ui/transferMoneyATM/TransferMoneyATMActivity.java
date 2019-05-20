@@ -114,8 +114,8 @@ public class TransferMoneyATMActivity extends BaseActivity implements TransferMo
 
         myMoney = Double.parseDouble(mDataAcount.getAtmMoney());
 
-        mEdtRecevingAccount.setText("960988807808");
-        mEdtReceivingAcountName.setText("NGUYEN VAN THUAN");
+//        mEdtRecevingAccount.setText("960988807808");
+//        mEdtReceivingAcountName.setText("NGUYEN VAN THUAN");
     }
 
     private void bindData() {
