@@ -58,6 +58,8 @@ public class AppError {
                 return "Tài khoản nhận không chính xác, vui lòng kiểm tra lại";
             case "E00008":
                 return "Email không tồn tại";
+            case "E00005":
+                return "Tài khoản thụ hưởng không đúng, vui lòng kiểm tra lại";
         }
         return Constant.ERROR_UNKNOWN;
     }

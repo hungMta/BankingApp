@@ -65,8 +65,8 @@ public class LoginActivty extends BaseActivity implements LoginContract.View {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         presenter = new LoginPresenter(this, this);
-        mEdtEmail.setText("0365023120");
-        mEdtPassword.setText("123456");
+//        mEdtEmail.setText("0365023120");
+//        mEdtPassword.setText("123456");
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
