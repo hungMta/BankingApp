@@ -62,7 +62,7 @@ public class OTPPresenter implements OTPContract.Presenter {
     }
 
     private Observable<BaseResponse> forgotPasswordObservable(RegisterRequest registerRequest) {
-        return ServiceGenerator.resquest().forgotPasswordSubmit(SharePreference.getStringVal(Constant.TOKEN_KEY), registerRequest)
+        return ServiceGenerator.resquest().forgotPasswordSubmit(registerRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -71,13 +71,19 @@ public class OTPPresenter implements OTPContract.Presenter {
         return new DisposableObserver<BaseResponse>() {
             @Override
             public void onNext(BaseResponse response) {
-                mView.changePasswordSuccess();
+                mView.forgotPasswordSuccess();
             }
 
             @Override
             public void onError(Throwable e) {
-                String message = AppError.mapError(e);
-                mView.changePasswordFail(message);
+                try {
+                    String error = ((HttpException) e).response().errorBody().string().toString();
+                    String message = AppError.mapError(error);
+                    mView.forgotPasswordFail(message);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
                 mView.hideProgressBar();
             }
 
@@ -103,7 +109,13 @@ public class OTPPresenter implements OTPContract.Presenter {
 
             @Override
             public void onError(Throwable e) {
-                String message = AppError.mapError(e);
+                String error = "";
+                try {
+                    error = ((HttpException) e).response().errorBody().string().toString();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                String message = AppError.mapError(error);
                 mView.changePasswordFail(message);
                 mView.hideProgressBar();
             }
@@ -133,9 +145,14 @@ public class OTPPresenter implements OTPContract.Presenter {
 
             @Override
             public void onError(Throwable e) {
-                AppErrors appErrors = AppError.mapAppErrors(e);
-                String errorMessage = AppError.mapFirstError(appErrors);
-                mView.registerFail(errorMessage);
+                String error = null;
+                try {
+                    error = ((HttpException) e).response().errorBody().string().toString();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                String message = AppError.mapError(error);
+                mView.registerFail(message);
                 mView.hideProgressBar();
             }
 
@@ -179,16 +196,27 @@ public class OTPPresenter implements OTPContract.Presenter {
 
             @Override
             public void onError(Throwable e) {
-                Log.d(TAG, "onError: " + e.getMessage());
+
                 try {
-                    String errorMsg = AppError.mapError(e);
-                    mView.submitOTPFail(errorMsg);
-                } catch (Exception e1) {
-                    String errorMsg = Constant.ERROR_UNKNOWN;
-                    mView.submitOTPFail(errorMsg);
-                } finally {
-                    mView.hideProgressBar();
+                    String error = "";
+                    error = ((HttpException) e).response().errorBody().string().toString();
+                    String message = AppError.mapError(error);
+                    mView.submitOTPFail(message);
+
+                } catch (IOException e1) {
+                    e1.printStackTrace();
                 }
+                mView.hideProgressBar();
+                Log.d(TAG, "onError: " + e.getMessage());
+//                try {
+//                    String errorMsg = AppError.mapError(e);
+//                    mView.submitOTPFail(errorMsg);
+//                } catch (Exception e1) {
+//                    String errorMsg = Constant.ERROR_UNKNOWN;
+//                    mView.submitOTPFail(errorMsg);
+//                } finally {
+//                    mView.hideProgressBar();
+//                }
             }
 
             @Override

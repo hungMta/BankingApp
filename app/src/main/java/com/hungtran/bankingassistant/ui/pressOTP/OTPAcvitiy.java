@@ -76,8 +76,15 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
             public void onClick(View v) {
                 if (edtOTP.getText().toString().equals("") || edtOTP.getText().toString() == "") {
                     Toast.makeText(getApplicationContext(), "Vui lòng nhập mã OTP", Toast.LENGTH_SHORT).show();
-                    return ;
+                    return;
                 }
+
+                if (!isValid()){
+                    Toast.makeText(getApplicationContext(), "Mã OTP không hợp lệ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 int otp = Integer.parseInt(edtOTP.getText().toString());
 //                mLayoutProgressBar.setVisibility(View.VISIBLE);
                 showDialogProgress();
@@ -103,6 +110,16 @@ public class OTPAcvitiy extends BaseActivity implements OTPContract.View, Succes
             }
         });
         typeTranserMoney = getIntent().getIntExtra(Constant.TYPE_TRANSFER_MONEY, 0);
+    }
+
+    private boolean isValid() {
+        String text = edtOTP.getText().toString();
+        try {
+            int num = Integer.parseInt(text);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @Override

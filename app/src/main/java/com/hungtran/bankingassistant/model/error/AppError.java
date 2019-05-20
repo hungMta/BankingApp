@@ -46,7 +46,7 @@ public class AppError {
         this.message = message;
     }
 
-    public static String mapError(String code) {
+    public static String mapErrorCode(String code) {
         switch (code) {
             case "E50001":
                 break;
@@ -56,20 +56,30 @@ public class AppError {
                 return "Mã OTP không hợp lệ hoặc đã hết hạn";
             case "E00004":
                 return "Tài khoản nhận không chính xác, vui lòng kiểm tra lại";
+            case "E00008":
+                return "Email không tồn tại";
         }
-        return "Error";
+        return Constant.ERROR_UNKNOWN;
     }
 
     public static AppErrors mapAppErrors(Throwable e) {
-        ResponseBody responseBody = ((HttpException) e).response().errorBody();
-        Gson gson = new Gson();
-        assert responseBody != null;
         AppErrors appErrors = null;
         try {
-            appErrors = gson.fromJson(responseBody.string(), AppErrors.class);
+            String error = ((HttpException) e).response().errorBody().string().toString();
+            Gson gson = new Gson();
+            appErrors = gson.fromJson(error, AppErrors.class);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+//        ResponseBody responseBody = ((HttpException) e).response().errorBody();
+        Gson gson = new Gson();
+//        assert responseBody != null;
+
+//        try {
+//            appErrors = gson.fromJson(responseBody.string(), AppErrors.class);
+//        } catch (IOException e1) {
+//            e1.printStackTrace();
+//        }
         return appErrors;
     }
 
@@ -79,7 +89,7 @@ public class AppError {
         if (appErrors != null && appErrors.getErrors() != null) {
             for (AppError error : appErrors.getErrors()
                     ) {
-                listError.add(AppError.mapError(error.getCode()));
+                listError.add(AppError.mapErrorCode(error.getCode()));
             }
         }
 
@@ -95,16 +105,29 @@ public class AppError {
         return firstError;
     }
 
-    public static String mapError(ResponseBody responseBody){
-        Gson gson = new Gson();
-        assert responseBody != null;
-        AppErrors appErrors = null;
-        try {
-            appErrors = gson.fromJson(responseBody.string(), AppErrors.class);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+    public static String mapError(String error) {
+        AppErrors appErrors = mapAppErrors(error);
         String firstError = mapFirstError(appErrors);
         return firstError;
     }
+
+    public static AppErrors mapAppErrors(String error) {
+        AppErrors appErrors = null;
+        Gson gson = new Gson();
+        appErrors = gson.fromJson(error, AppErrors.class);
+        return appErrors;
+    }
+
+//    public static String mapError(ResponseBody responseBody){
+//        Gson gson = new Gson();
+//        assert responseBody != null;
+//        AppErrors appErrors = null;
+//        try {
+//            appErrors = gson.fromJson(responseBody.string(), AppErrors.class);
+//        } catch (IOException e1) {
+//            e1.printStackTrace();
+//        }
+//        String firstError = mapFirstError(appErrors);
+//        return firstError;
+//    }
 }

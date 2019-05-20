@@ -92,7 +92,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
         }
 
         showDialogProgress();
-        mPresenter.getOTP();
+        mPresenter.getOTP(inputEmail.getText().toString());
     }
 
     private boolean validateEmail() {
@@ -149,7 +149,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
 
     @Override
     public void hideProgress() {
-
+        hideDialogProgress();
     }
 
     @Override
