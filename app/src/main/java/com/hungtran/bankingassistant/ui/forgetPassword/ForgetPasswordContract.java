@@ -15,6 +15,6 @@ public interface ForgetPasswordContract {
     }
 
     interface Presenter {
-        void getOTP();
+        void getOTP(String email);
     }
 }

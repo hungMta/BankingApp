@@ -87,7 +87,7 @@ public interface BankingApi {
     );
 
     @POST("/api/transfer/otp")
-    Observable<retrofit2.Response<Void>> submitOTP(@Header("Authorization") String authHeader,
+    Observable<BaseResponse> submitOTP(@Header("Authorization") String authHeader,
                                                    @Body OTPModelRequest otpModel
     );
 
@@ -112,7 +112,7 @@ public interface BankingApi {
     Observable<BaseResponse> requestForgotPassword(@Query("email") String email);
 
     @POST("/api/authentication/forgotPassword")
-    Observable<BaseResponse> forgotPasswordSubmit(@Header("Authorization") String authHeader, @Body RegisterRequest registerRequest);
+    Observable<BaseResponse> forgotPasswordSubmit( @Body RegisterRequest registerRequest);
 
     @GET("/api/logout")
     Observable<BaseResponse> logout(@Header("Authorization") String authHeader);

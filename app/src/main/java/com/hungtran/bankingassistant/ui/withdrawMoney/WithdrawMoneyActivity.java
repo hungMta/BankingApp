@@ -193,7 +193,7 @@ public class WithdrawMoneyActivity extends BaseActivity implements WithdrawMoney
         Intent intent = new Intent(this, TransferMoneySuccessAcitvity.class);
 //        intent.putExtra(Constant.RECEIVER_BANK, idBank);
         intent.putExtra(Constant.RECEIVER_NAME, dataAcount.getName());
-        intent.putExtra(Constant.TYPE_TRANSFER_MONEY, Constant.TRANSFER_SAVING_SAVING);
+        intent.putExtra(Constant.TYPE_TRANSFER_MONEY, Constant.TRANSFER_SAVING_ATM);
         intent.putExtra(Constant.TRANSFER_MONEY, withDrawMoney);
         intent.putExtra(Constant.SAVING_ACCOUNT, savingAccount);
         TransferMoneySuccessAcitvity.setTransferMoneySuccessListener(this);

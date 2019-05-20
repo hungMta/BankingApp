@@ -45,34 +45,39 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String body = map.get("body");
         String title = map.get("title");
         String message = "";
+        boolean isShowNoti = false;
         try {
             Gson gson = new Gson();
             NotiModel notiModel = gson.fromJson(body, NotiModel.class);
             if (notiModel.getType() == Constant.NOTI_SAVING_WITH_DRAW) {
+                isShowNoti = true;
                 title = "Thông báo sổ tiết kiệm";
                 message = "Ngân hàng " + notiModel.getNameBank() +
                         " thông báo: sổ tiết kiệm " +
-                        notiModel.getSavingId() + "đã đến ngày đáo hạn. Qúy khách vui lòng tất toán sổ.";
+                        notiModel.getSavingId() + " đã đến ngày đáo hạn. Qúy khách vui lòng tất toán sổ.";
             } else if (notiModel.getType() == Constant.NOTI_RECEIVE_MONEY) {
                 title = "Thông báo nhận tiền";
                 message = "Ngân hàng " + notiModel.getNameBankReceive() + " thông báo bạn vừa nhận được "
                         + DataHelper.formatMoney(notiModel.getMoney()) + "VND từ "
                         + notiModel.getNotiReceverModel().getName() + " Với lời nhắn: " + notiModel.getMessage();
-
+                isShowNoti = true;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setChannelId("123")
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(message))
-                .build();
-        createNotificationChannel(notification);
+        if (isShowNoti) {
+            Notification notification = new NotificationCompat.Builder(this)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setSmallIcon(R.mipmap.ic_app)
+                    .setChannelId("123")
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(message))
+                    .build();
+            createNotificationChannel(notification);
+        }
+
 //        NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
 //        manager.notify(123, notification);
     }

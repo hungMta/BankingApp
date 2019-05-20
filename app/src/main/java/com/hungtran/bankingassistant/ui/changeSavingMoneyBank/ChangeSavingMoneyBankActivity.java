@@ -29,6 +29,7 @@ import com.hungtran.bankingassistant.util.base.BaseActivity;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -102,7 +103,7 @@ public class ChangeSavingMoneyBankActivity extends BaseActivity implements View.
     private List<Bank> bankList;
     private ChangeSavingMoneyBankPresenter mPresenter;
     private static ChangeSavingMoneyBankListener changeSavingMoneyBankListener;
-
+    private HashMap<String, Double> interestRateMap = new HashMap<>();
     @Override
     public int getLayoutId() {
         return R.layout.activity_change_saving_mone_bank;
@@ -299,9 +300,57 @@ public class ChangeSavingMoneyBankActivity extends BaseActivity implements View.
         fragmentTransaction.addToBackStack(null);
 
         // Create and show the dialog.
-        InterestRateAndTermDialog dialog = InterestRateAndTermDialog.newInstance(interestRate);
+        interestRateMap = getMapInterest();
+        InterestRateAndTermDialog dialog = InterestRateAndTermDialog.newInstance(interestRateMap);
         dialog.show(fragmentTransaction, "dialog");
         dialog.setAreaDialogListener(this);
+    }
+
+
+
+    private HashMap<String, Double> getMapInterest() {
+        HashMap<String, Double> data = new HashMap<>();
+        if (interestRate.getUnlimited() != null) {
+            data.put("0", Double.parseDouble(interestRate.getUnlimited()));
+        }
+
+        if (interestRate.getMonth1() != null) {
+            data.put("1", Double.parseDouble(interestRate.getMonth1()));
+        }
+
+        if (interestRate.getMonth2() != null) {
+            data.put("2", Double.parseDouble(interestRate.getMonth2()));
+        }
+
+        if (interestRate.getMonth3() != null) {
+            data.put("3", Double.parseDouble(interestRate.getMonth3()));
+        }
+
+        if (interestRate.getMonth6() != null) {
+            data.put("6", Double.parseDouble(interestRate.getMonth6()));
+        }
+
+        if (interestRate.getMonth9() != null) {
+            data.put("9", Double.parseDouble(interestRate.getMonth9()));
+        }
+
+        if (interestRate.getMonth12() != null) {
+            data.put("12", Double.parseDouble(interestRate.getMonth12()));
+        }
+
+        if (interestRate.getMonth18() != null) {
+            data.put("18", Double.parseDouble(interestRate.getMonth18()));
+        }
+
+        if (interestRate.getMonth24() != null) {
+            data.put("24", Double.parseDouble(interestRate.getMonth24()));
+        }
+
+        if (interestRate.getMonth36() != null) {
+            data.put("36", Double.parseDouble(interestRate.getMonth36()));
+        }
+
+        return data;
     }
 
     @Override
@@ -393,7 +442,7 @@ public class ChangeSavingMoneyBankActivity extends BaseActivity implements View.
         void onChangeSavingMoneyBankDestroy();
     }
 
-    public static void setChangeSavingMoneyBankListener(ChangeSavingMoneyBankListener listener){
+    public static void setChangeSavingMoneyBankListener(ChangeSavingMoneyBankListener listener) {
         changeSavingMoneyBankListener = listener;
     }
 }

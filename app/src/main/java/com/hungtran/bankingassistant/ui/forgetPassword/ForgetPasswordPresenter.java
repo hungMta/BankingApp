@@ -25,13 +25,13 @@ public class ForgetPasswordPresenter implements ForgetPasswordContract.Presenter
     }
 
     @Override
-    public void getOTP() {
-        getOTPObservable().subscribeWith(getOTPObserver());
+    public void getOTP(String email) {
+        getOTPObservable(email).subscribeWith(getOTPObserver());
     }
 
 
-    public Observable<BaseResponse> getOTPObservable() {
-        return ServiceGenerator.resquest().requestForgotPassword(SharePreference.getStringVal(Constant.TOKEN_KEY))
+    public Observable<BaseResponse> getOTPObservable(String email) {
+        return ServiceGenerator.resquest().requestForgotPassword(email)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -45,8 +45,8 @@ public class ForgetPasswordPresenter implements ForgetPasswordContract.Presenter
 
             @Override
             public void onError(Throwable e) {
-                mView.getOTPFail(AppError.mapError(e));
                 mView.hideProgress();
+                mView.getOTPFail(AppError.mapError(e));
             }
 
             @Override

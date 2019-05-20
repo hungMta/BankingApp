@@ -3,6 +3,7 @@ package com.hungtran.bankingassistant.ui.pressOTP;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.hungtran.bankingassistant.model.base.BaseResponse;
 import com.hungtran.bankingassistant.model.error.AppError;
 import com.hungtran.bankingassistant.model.error.AppErrors;
@@ -15,10 +16,14 @@ import com.hungtran.bankingassistant.network.ServiceGenerator;
 import com.hungtran.bankingassistant.util.Constant;
 import com.hungtran.bankingassistant.util.base.SharePreference;
 
+import java.io.IOException;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 import retrofit2.Response;
 
 import static android.support.constraint.Constraints.TAG;
@@ -56,23 +61,29 @@ public class OTPPresenter implements OTPContract.Presenter {
         forgotPasswordObservable(registerRequest).subscribeWith(forgotPasswordObserver());
     }
 
-    private Observable<BaseResponse> forgotPasswordObservable(RegisterRequest registerRequest){
-        return ServiceGenerator.resquest().forgotPasswordSubmit(SharePreference.getStringVal(Constant.TOKEN_KEY), registerRequest)
+    private Observable<BaseResponse> forgotPasswordObservable(RegisterRequest registerRequest) {
+        return ServiceGenerator.resquest().forgotPasswordSubmit(registerRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private DisposableObserver<BaseResponse> forgotPasswordObserver(){
-        return  new DisposableObserver<BaseResponse>() {
+    private DisposableObserver<BaseResponse> forgotPasswordObserver() {
+        return new DisposableObserver<BaseResponse>() {
             @Override
             public void onNext(BaseResponse response) {
-                mView.changePasswordSuccess();
+                mView.forgotPasswordSuccess();
             }
 
             @Override
             public void onError(Throwable e) {
-                String message = AppError.mapError(e);
-                mView.changePasswordFail(message);
+                try {
+                    String error = ((HttpException) e).response().errorBody().string().toString();
+                    String message = AppError.mapError(error);
+                    mView.forgotPasswordFail(message);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
                 mView.hideProgressBar();
             }
 
@@ -83,14 +94,14 @@ public class OTPPresenter implements OTPContract.Presenter {
         };
     }
 
-    private Observable<BaseResponse> changePasswordObservable(RegisterRequest registerRequest){
+    private Observable<BaseResponse> changePasswordObservable(RegisterRequest registerRequest) {
         return ServiceGenerator.resquest().changePassword(SharePreference.getStringVal(Constant.TOKEN_KEY), registerRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private DisposableObserver<BaseResponse> changePasswordObserver(){
-        return  new DisposableObserver<BaseResponse>() {
+    private DisposableObserver<BaseResponse> changePasswordObserver() {
+        return new DisposableObserver<BaseResponse>() {
             @Override
             public void onNext(BaseResponse response) {
                 mView.changePasswordSuccess();
@@ -98,7 +109,13 @@ public class OTPPresenter implements OTPContract.Presenter {
 
             @Override
             public void onError(Throwable e) {
-                String message = AppError.mapError(e);
+                String error = "";
+                try {
+                    error = ((HttpException) e).response().errorBody().string().toString();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                String message = AppError.mapError(error);
                 mView.changePasswordFail(message);
                 mView.hideProgressBar();
             }
@@ -111,7 +128,7 @@ public class OTPPresenter implements OTPContract.Presenter {
     }
 
 
-    private Observable<retrofit2.Response<Void>> registerObsererable(RegisterRequest registerRequest){
+    private Observable<retrofit2.Response<Void>> registerObsererable(RegisterRequest registerRequest) {
         return ServiceGenerator.resquest()
                 .registerAccount(registerRequest)
                 .subscribeOn(Schedulers.io())
@@ -128,9 +145,14 @@ public class OTPPresenter implements OTPContract.Presenter {
 
             @Override
             public void onError(Throwable e) {
-                AppErrors appErrors = AppError.mapAppErrors(e);
-                String errorMessage = AppError.mapFirstError(appErrors);
-                mView.registerFail(errorMessage);
+                String error = null;
+                try {
+                    error = ((HttpException) e).response().errorBody().string().toString();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                String message = AppError.mapError(error);
+                mView.registerFail(message);
                 mView.hideProgressBar();
             }
 
@@ -142,30 +164,59 @@ public class OTPPresenter implements OTPContract.Presenter {
     }
 
 
-
-
-    private Observable<retrofit2.Response<Void>> submitOTPObserverable(OTPModelRequest otpModel) {
+    private Observable<BaseResponse> submitOTPObserverable(OTPModelRequest otpModel) {
         return ServiceGenerator.resquest()
                 .submitOTP(SharePreference.getStringVal(Constant.TOKEN_KEY), otpModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private DisposableObserver<retrofit2.Response<Void>> submitOTPObserver() {
-        return new DisposableObserver<retrofit2.Response<Void>>() {
+    private DisposableObserver<BaseResponse> submitOTPObserver() {
+        return new DisposableObserver<BaseResponse>() {
             @Override
-            public void onNext(retrofit2.Response<Void> response) {
-                if (response.code() == 200) {
-                    mView.submitOTPSuccess();
-                } else {
-                    mView.submitOTPFail(Constant.ERROR_OTP);
-                }
+            public void onNext(BaseResponse response) {
+                mView.submitOTPSuccess();
+//                if (response.code() == 200) {
+//                    mView.submitOTPSuccess();
+//                } else {
+//                    try {
+//                        assert response.errorBody() != null;
+//                        String responseError = response.errorBody().string().toString();
+//                        Log.d(TAG, "onNext: ");
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    if (response.errorBody() != null) {
+//                        mView.submitOTPFail(AppError.mapError(response.errorBody()));
+//                    } else {
+//                        mView.submitOTPFail(Constant.ERROR_OTP);
+//                    }
+//                }
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d(TAG, "onError: " + e.getMessage());
+
+                try {
+                    String error = "";
+                    error = ((HttpException) e).response().errorBody().string().toString();
+                    String message = AppError.mapError(error);
+                    mView.submitOTPFail(message);
+
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 mView.hideProgressBar();
+                Log.d(TAG, "onError: " + e.getMessage());
+//                try {
+//                    String errorMsg = AppError.mapError(e);
+//                    mView.submitOTPFail(errorMsg);
+//                } catch (Exception e1) {
+//                    String errorMsg = Constant.ERROR_UNKNOWN;
+//                    mView.submitOTPFail(errorMsg);
+//                } finally {
+//                    mView.hideProgressBar();
+//                }
             }
 
             @Override
