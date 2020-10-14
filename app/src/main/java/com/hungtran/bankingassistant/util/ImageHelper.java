@@ -31,4 +31,8 @@ public class ImageHelper {
                 60, 100));
     }
 
+    public static BitmapDescriptor getPositionOfATMIcon(Context context) {
+        return BitmapDescriptorFactory.fromBitmap(resizeMapIcons(context, "icon_atm_place",
+                100, 100));
+    }
 }

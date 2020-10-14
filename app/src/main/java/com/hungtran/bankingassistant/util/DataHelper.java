@@ -119,4 +119,20 @@ public class DataHelper {
             return "" + day + "/" + month;
         }
     }
+
+    public static String getTime2(String time, int type) {
+        Date date = DataHelper.getDateFromString(time);
+        if (date == null) return "";
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        if (type == 0) {
+            int hour = calendar.get(Calendar.HOUR);
+            int min = calendar.get(Calendar.MINUTE);
+            return "" + hour + ":" + min + "abcdef";
+        } else {
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DATE);
+            return "" + day + "/" + month;
+        }
+    }
 }
